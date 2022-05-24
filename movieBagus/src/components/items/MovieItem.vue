@@ -2,10 +2,12 @@
 
 <template>
   <div>
-    <img
-      src="../../assets/images/joker.jpg"
-      class="hover:opacity-75 tansition easy-in-out duration-150"
-    />
+    <RouterLink to="/movie/11">
+      <img
+        src="../../assets/images/joker.jpg"
+        class="hover:opacity-75 tansition easy-in-out duration-150"
+      />
+    </RouterLink>
     <h3>Joker</h3>
 
     <div class="flex">
