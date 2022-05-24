@@ -1,6 +1,16 @@
 <script>
+import { useGadgetStore } from "../stores/gadgets";
+import { mapStores } from "pinia";
 export default {
+  computed: {
+    ...mapStores(useGadgetStore),
+  },
   props: ["gadget"],
+  methods: {
+    toDetail() {
+      this.$router.push(`/detail/${this.gadget.detail}`);
+    },
+  },
 };
 </script>
 
@@ -8,9 +18,22 @@ export default {
   <div class="col">
     <div class="bg-light text-center rounded p-3">
       <div class="my-3">
-        <h2 class="display-5">{{ gadget.phone_name }}</h2>
+        <a
+          class="text-dark"
+          style="text-decoration: none"
+          v-on:click.prevent="toDetail"
+          href=""
+        >
+          <h2 class="display-5">{{ gadget.phone_name }}</h2>
+        </a>
       </div>
-      <img class="img-fluid" v-bind:src="gadget.image" alt="Responsive image" />
+      <a v-on:click.prevent="toDetail" href="">
+        <img
+          class="img-fluid"
+          v-bind:src="gadget.image"
+          alt="Responsive image"
+        />
+      </a>
     </div>
   </div>
 </template>

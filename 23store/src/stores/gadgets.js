@@ -16,5 +16,8 @@ export const useGadgetStore = defineStore({
     getGadgets(brand) {
       return server.get(`/gadgets/${brand}`);
     },
+    getGadget(detail) {
+      return server.get(`/gadgets/detail/${detail}`);
+    },
   },
 });
