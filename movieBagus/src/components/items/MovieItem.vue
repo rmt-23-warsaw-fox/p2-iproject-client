@@ -1,17 +1,46 @@
-<script></script>
+<script>
+export default {
+  props: {
+    movie: {
+      required: true,
+    },
+    genres: {
+      required: true,
+    },
+  },
+
+  computed: {
+    posterPath() {
+      return "https://image.tmdb.org/t/p/w500/" + this.movie.poster_path;
+    },
+  },
+
+  methods: {
+    genreTypeName(genreId, index) {
+      for (const item of this.genres) {
+        if (item.id == genreId) {
+          if (this.movie.genre_ids.length - 1 == index) {
+            return item.name;
+          } else {
+            return item.name + ", ";
+          }
+        }
+      }
+    },
+  },
+};
+</script>
 
 <template>
   <div>
-    <RouterLink to="/movie/11">
+    <router-link :to="`/movie/${movie.id}`">
       <img
-        src="../../assets/images/joker.jpg"
+        :src="posterPath"
         class="hover:opacity-75 tansition easy-in-out duration-150"
       />
-    </RouterLink>
-    <h3>Joker</h3>
-
+    </router-link>
+    <h3>{{ movie.title }}</h3>
     <div class="flex">
-      <!-- BINTANG -->
       <svg
         class="fill-current text-yellow-500 w-4 h-4 mt-1"
         viewBox="0 0 24 24"
@@ -22,11 +51,14 @@
             data-name="star"
           />
         </g></svg
-      ><span class="ml-2"> keren | 2016 </span><br />
+      ><span class="ml-2"
+        >{{ movie.vote_average * 10 }}% | {{ movie.release_date }} </span
+      ><br />
     </div>
-
     <span class="text-sm text-gray-500">
-      <span> Thriller </span>
+      <span :key="genre" v-for="(genre, index) in movie.genre_ids">
+        {{ genreTypeName(genre, index) }}
+      </span>
     </span>
   </div>
 </template>
