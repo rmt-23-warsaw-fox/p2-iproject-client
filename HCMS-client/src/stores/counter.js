@@ -1,10 +1,14 @@
 import { defineStore } from "pinia";
-
+import axios from "axios";
+import Swal from "sweetalert2";
+// const BASE_URL = "http://localhost:3000";
 export const useCounterStore = defineStore({
   id: "counter",
   state: () => ({
     counter: 0,
-    symptomps:[]
+    symptomps: [],
+    ailments: [],
+    readDoctors: [],
   }),
   getters: {
     doubleCount: (state) => state.counter * 2,
@@ -13,8 +17,9 @@ export const useCounterStore = defineStore({
     increment() {
       this.counter++;
     },
-    async getAilments(input) {
-      console.log(input, "input get ailment <<<<<");
+    async diagnose(input) {
+      console.log(input, "input get ailment <<<<< diagnose");
+      console.log(import.meta.env.VITE_APP_KEY);
       if (input.symptomp1 === "") {
         Swal.fire({
           title: "Error!",
@@ -34,7 +39,7 @@ export const useCounterStore = defineStore({
           },
           headers: {
             "X-RapidAPI-Host": "priaid-symptom-checker-v1.p.rapidapi.com",
-            "X-RapidAPI-Key": import.meta.env.VITE_API_SECRET,
+            "X-RapidAPI-Key": import.meta.env.VITE_APP_KEY,
           },
         };
         try {
@@ -59,6 +64,6 @@ export const useCounterStore = defineStore({
           });
         }
       }
-    }
+    },
   },
 });
