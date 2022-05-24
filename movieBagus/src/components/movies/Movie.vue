@@ -1,14 +1,17 @@
-<script></script>
+<script>
+import { RouterLink } from 'vue-router'
+</script>
 
 <template>
-  <div>
-    <img
+<div>
+<RouterLink to="/movie/11">
+  <img
       src="../../assets/images/joker.jpg"
       class="hover:opacity-75 tansition easy-in-out duration-150"
     />
-    <h3>Joker</h3>
-
-    <div class="flex">
+</RouterLink>
+<h3>Joker</h3>
+ <div class="flex">
       <!-- BINTANG -->
       <svg
         class="fill-current text-yellow-500 w-4 h-4 mt-1"
@@ -26,7 +29,9 @@
     <span class="text-sm text-gray-500">
       <span> Thriller </span>
     </span>
-  </div>
+</div>
 </template>
 
-<style></style>
+<style>
+
+</style>
