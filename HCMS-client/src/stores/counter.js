@@ -4,6 +4,7 @@ export const useCounterStore = defineStore({
   id: "counter",
   state: () => ({
     counter: 0,
+    symptomps:[]
   }),
   getters: {
     doubleCount: (state) => state.counter * 2,
@@ -12,5 +13,8 @@ export const useCounterStore = defineStore({
     increment() {
       this.counter++;
     },
+    diagnose(){
+      
+    }
   },
 });
