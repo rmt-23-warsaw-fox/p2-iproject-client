@@ -59,8 +59,11 @@
                 Get all time support for online diagnose. quickly know what is
                 your possible ailments based by your symptomps
               </p>
-              <a href="appoinment.html" class="btn btn-main btn-round-full"
-                >Make a appoinment</a
+              <a
+                @click.prevent="doDiagnose()"
+                href="appoinment.html"
+                class="btn btn-main btn-round-full"
+                >Diagnose your ailments</a
               >
             </div>
 
@@ -100,3 +103,17 @@
     </div>
   </section>
 </template>
+
+<script>
+import { mapActions } from "pinia";
+import { useCounterStore } from "../stores/counter";
+
+export default {
+  methods: {
+    ...mapActions(useCounterStore, ["increment"]),
+    doDiagnose() {
+      this.$router.push("/diagnose");
+    },
+  },
+};
+</script>
