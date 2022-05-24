@@ -8,8 +8,13 @@ export default {
         displayName: "",
         password: "",
       },
+      profilePicture: ''
     };
   },
+  methods: {
+    getImage(event){
+    }
+  }
 };
 </script>
 
@@ -21,33 +26,50 @@ export default {
     >
       <div class="bg-white px-6 py-8 rounded-xl shadow-xl text-black w-full">
         <h1 class="mb-8 text-3xl text-center">Sign up</h1>
-        <input
-          type="text"
-          class="block border border-grey-light w-full p-3 rounded mb-4"
-          name="displayName"
-          placeholder="Display Name"
-        />
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text">Email</span>
+              </label>
+              <input
+                type="text"
+                placeholder="email"
+                class="input input-bordered"
+                v-model="formObject.email"
+              />
+            </div>
+            <div class="form-control mt-3">
+              <label class="label">
+                <span class="label-text">Display Name</span>
+              </label>
+              <input
+                type="text"
+                placeholder="display name"
+                class="input input-bordered"
+                v-model="formObject.displayName"
+              />
+            </div>
+            <div class="form-control mt-3">
+              <label class="label">
+                <span class="label-text">Password</span>
+              </label>
+              <input
+                type="text"
+                placeholder="password"
+                class="input input-bordered"
+                v-model="formObject.password"
+              />
+            </div>
+            <div class="form-control mt-3">
+              <label class="label">
+                <span class="label-text">Profile Picture</span>
+              </label>
+              <input
+                type="file"
+                refs="profilePic"
+              />
+            </div>
 
-        <input
-          type="text"
-          class="block border border-grey-light w-full p-3 rounded mb-4"
-          name="email"
-          placeholder="Email"
-        />
-
-        <input
-          type="password"
-          class="block border border-grey-light w-full p-3 rounded mb-4"
-          name="password"
-          placeholder="Password"
-        />
-        <input
-          type="password"
-          class="block border border-grey-light w-full p-3 rounded mb-4"
-          name="confirm_password"
-          placeholder="Confirm Password"
-        />
-        <div class = "form-control">
+        <div class="form-control mt-6">
             <button
               type="submit"
               class="btn"
