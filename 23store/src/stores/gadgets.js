@@ -13,5 +13,8 @@ export const useGadgetStore = defineStore({
     getDashboardGadgets() {
       return server.get("/gadgets/dashboard");
     },
+    getGadgets(brand) {
+      return server.get(`/gadgets/${brand}`);
+    },
   },
 });
