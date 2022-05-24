@@ -12,8 +12,29 @@ export default {
     ...mapStores(useAuthStore),
   },
   methods: {
+    async logout() {
+      try {
+        localStorage.clear();
+        this.authStore.isLogin = false;
+        this.$router.push("/");
+        this.$toast.success("Logout Success", {
+          position: "top-right",
+          duration: 3000,
+        });
+      } catch (error) {
+        this.$toast.error(error.response.data.message, {
+          position: "top-right",
+          duration: 3000,
+        });
+      }
+    },
+    toLogin() {
+      this.$router.push("/login");
+    },
+    toRegister() {
+      this.$router.push("/register");
+    },
     checkLogin() {
-      console.log("login");
       if (localStorage.getItem("access_token")) {
         this.authStore.isLogin = true;
       }
@@ -29,7 +50,7 @@ export default {
   <header>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
       <div class="container">
-        <a class="navbar-brand" href="#">23-Store</a>
+        <RouterLink to="/" class="navbar-brand" href="#">23-Store</RouterLink>
         <button
           class="navbar-toggler"
           type="button"
@@ -44,27 +65,32 @@ export default {
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav me-auto mb-2 mb-md-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Home</a>
+              <a class="nav-link active" aria-current="page" href="#"
+                >Gadgets</a
+              >
             </li>
           </ul>
           <div class="d-flex flex-wrap text-end">
             <ButtonReus
               v-if="authStore.isLogin"
+              v-on:click.prevent="logout"
               title="Log Out"
               class="btn btn-outline-success text-white"
-              type="submit"
+              type="button"
             />
             <ButtonReus
               v-if="!authStore.isLogin"
+              v-on:click.prevent="toLogin"
               title="Log In"
-              class="btn btn-outline-success text-white me-2"
-              type="submit"
+              class="btn btn-outline-primary text-white me-2"
+              type="button"
             />
             <ButtonReus
               v-if="!authStore.isLogin"
+              v-on:click.prevent="toRegister"
               title="Register"
               class="btn btn-outline-success text-white"
-              type="submit"
+              type="button"
             />
           </div>
         </div>
