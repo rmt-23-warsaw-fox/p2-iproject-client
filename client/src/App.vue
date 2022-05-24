@@ -12,7 +12,7 @@ export default {
 </script>
 
 <template>
-  
+  <Navbar></Navbar>
 
   <RouterView />
 </template>
