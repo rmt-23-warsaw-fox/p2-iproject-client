@@ -24,21 +24,21 @@ import { RouterLink } from 'vue-router'
       </svg>
     </div>
 
-    <!-- <div class="absolute mt-12 rounded bg-gray-600 w-60 z-50">
+    <div v-if="false" class="absolute mt-12 rounded bg-gray-600 w-60 z-50">
       <ul class="mt-3">
         <li>
-          <RouterLink
+          <!-- </RouterLink
             class="flex items-center border-b border-gray-500 p-1"
           >
             <img  alt="" class="w-10" />
             <span class="ml-3">judul film</span>
-          </RouterLink>
+          </RouterLink> -->
         </li>
       </ul>
       <ul class="px-3">
         <li>No result found for ""</li>
       </ul>
-    </div> -->
+    </div>
 
     <img src="../../assets/images/user.jpg" alt="" class="h-10 rounded-full" />
 </div>
