@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from "../components/front/Home.vue"
 import Movie from "../components/movies/Movie.vue"
+import Actors from "../components/actors/Actors.vue"
 
 const router = createRouter({
   history: createWebHistory(),
@@ -14,7 +15,12 @@ const router = createRouter({
       path: "/movie/:id",
       name: "movie",
       component: Movie,
-    }
+    },
+    {
+      path: "/actors",
+      name: "actors",
+      component: Actors,
+    },
   ]
 })
 
