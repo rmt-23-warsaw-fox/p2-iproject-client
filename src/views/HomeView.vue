@@ -1,10 +1,14 @@
 <script>
 import { RouterLink } from "vue-router";
+import NavBar from "../components/NavBar.vue";
 export default {
   name: "HomeView",
   data() {
     return {};
   },
+  components: {
+    NavBar
+  }
 };
 </script>
 <template>
@@ -14,17 +18,7 @@ export default {
     <div class="min-h-[100vh] h-max w-[1240px]">
       <!-- page-header -->
       <div class="w-[100%] h-[400px] guitar-background flex flex-col">
-        <div class="navbar text-white bg-black/30 font-jakarta">
-          <div class="flex-1">
-            <a class="btn btn-ghost normal-case text-xl">Stella</a>
-          </div>
-          <div class="flex-none">
-            <ul class="menu menu-horizontal p-0">
-              <li><RouterLink to="/login">Sign In</RouterLink></li>
-              <li><RouterLink to="/register">Create an account</RouterLink></li>
-            </ul>
-          </div>
-        </div>
+        <NavBar/>
         <div
           class="text-white font-jakarta w-[100%] flex flex-col items-center justify-center bg-black/30 h-[100%]"
         >
