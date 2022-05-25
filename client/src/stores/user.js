@@ -9,6 +9,12 @@ export const useUserStore = defineStore({
 
   },
   actions: {
-
+    async register(){
+      try {
+        
+      } catch (err) {
+        
+      }
+    }
   }
 })
