@@ -32,6 +32,7 @@ export const mainStore = defineStore("mainStore", {
         );
         console.log("Register Successful");
         localStorage.setItem("access_token", response.data.access_token);
+        this.isLoggedIn = true;
         this.router.push({
           path: "/",
         })
@@ -50,6 +51,7 @@ export const mainStore = defineStore("mainStore", {
         // console.log(response);
         localStorage.setItem("access_token", response.data.access_token);
         console.log("Welcome!");
+        this.isLoggedIn = true;
         this.router.push({
           path: '/'
         })

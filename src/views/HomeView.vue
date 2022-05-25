@@ -1,13 +1,15 @@
 <script>
 import { RouterLink } from "vue-router";
 import NavBar from "../components/NavBar.vue";
+import Footer from "../components/footer.vue";
 export default {
   name: "HomeView",
   data() {
     return {};
   },
   components: {
-    NavBar
+    NavBar,
+    Footer
   }
 };
 </script>
@@ -20,7 +22,7 @@ export default {
       <div class="w-[100%] h-[400px] guitar-background flex flex-col">
         <NavBar/>
         <div
-          class="text-white font-jakarta w-[100%] flex flex-col items-center justify-center bg-black/30 h-[100%]"
+          class="text-white font-jakarta w-[100%] flex flex-col items-center justify-center bg-black/80 h-[100%]"
         >
           <h1 class="font-bold text-[3rem]">Find The Next Big Hit!</h1>
         </div>
@@ -179,12 +181,7 @@ export default {
           voluptas atque vero esse eveniet. A, libero eum!
         </div>
       </div>
-      <!-- footer -->
-      <footer class="footer footer-center p-4 bg-base-300 text-base-content">
-        <div>
-          <p>Copyright © 2022 - All right reserved by Audy Wallace Siegle</p>
-        </div>
-      </footer>
+    <Footer/>
     </div>
   </div>
 </template>
