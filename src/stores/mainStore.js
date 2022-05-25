@@ -9,6 +9,9 @@ import mainAxios from "../api/mainApi.js";
 import { app } from "../base";
 
 export const mainStore = defineStore("mainStore", {
+  state: () => ({
+    isLoggedIn: false,
+  }),
   actions: {
     async register(formObject) {
       try {
@@ -29,6 +32,9 @@ export const mainStore = defineStore("mainStore", {
         );
         console.log("Register Successful");
         localStorage.setItem("access_token", response.data.access_token);
+        this.router.push({
+          path: "/",
+        })
       } catch (err) {
         console.log(err);
       }
@@ -44,12 +50,18 @@ export const mainStore = defineStore("mainStore", {
         // console.log(response);
         localStorage.setItem("access_token", response.data.access_token);
         console.log("Welcome!");
+        this.router.push({
+          path: '/'
+        })
       } catch (err) {
         console.log(err);
       }
     },
     async logOut() {
       localStorage.clear();
+      this.router.push({
+        path: '/login'
+      })
     },
     async submitToFirebase(image, music, title) {
       try {
