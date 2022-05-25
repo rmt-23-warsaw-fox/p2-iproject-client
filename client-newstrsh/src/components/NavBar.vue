@@ -22,8 +22,8 @@ export default {
   <nav>
     <div class="nav-logo">
       <a href="#">
-        <i class="bx bxs-trash"></i>
-        <span class="dashboard">Tr@sh News</span>
+        <i class="bx bxs-invader"></i>
+        <span class="dashboard">Tr@sher News</span>
       </a>
       <a href="#">
         <span class="dashboard">Go Premium</span>

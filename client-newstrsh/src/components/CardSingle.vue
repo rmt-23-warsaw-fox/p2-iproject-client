@@ -1,26 +1,38 @@
-<script></script>
+<script>
+export default {
+  props: { data: Object, cat: String },
+};
+</script>
 <template>
   <div class="card">
     <div class="card-header">
-      <a href="#">
-        <img
-          src="https://c0.wallpaperflare.com/preview/483/210/436/car-green-4x4-jeep.jpg"
-          alt="rover"
-        />
+      <a :href="data.url">
+        <img :src="data.image" alt="News Image" />
       </a>
     </div>
     <div class="card-body">
-      <span class="tag tag-teal">Technology</span>
-      <h4>Why is the Tesla Cybertruck designed the way it is?</h4>
-      <p>An exploration into the truck's polarising design</p>
+      <span
+        class="tag"
+        :class="
+          cat == 'technology'
+            ? ' tag-teal'
+            : cat == 'business'
+            ? ' tag-purple'
+            : cat == 'entertainment'
+            ? ' tag-pink'
+            : cat == 'sports'
+            ? ' tag-amber'
+            : ' tag-lime'
+        "
+        >{{ data.category }}</span
+      >
+      <h4>{{ data.title }}</h4>
+      <p>{{ data.description }}</p>
       <div class="user">
-        <img
-          src="https://yt3.ggpht.com/a/AGF-l7-0J1G0Ue0mcZMw-99kMeVuBmRxiPjyvIYONg=s900-c-k-c0xffffffff-no-rj-mo"
-          alt="user"
-        />
+        <img src="https://source.unsplash.com/random/?person" alt="user" />
         <div class="user-info">
-          <h5>July Dec</h5>
-          <small>2h ago</small>
+          <h5>{{ data.author }}</h5>
+          <small>{{ data.published_at }}</small>
         </div>
       </div>
     </div>

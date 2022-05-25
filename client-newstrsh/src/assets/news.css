@@ -172,6 +172,15 @@ nav .login_register a {
 .tag-pink {
   background-color: #cd5b9f;
 }
+.tag-amber {
+  background-color: #ffca28;
+}
+.tag-lime {
+  background-color: #9e9d24;
+}
+.tag-indigo {
+  background-color: #5c6bc0;
+}
 
 .home_section .home_content .cards-section .pagination {
   display: flex;

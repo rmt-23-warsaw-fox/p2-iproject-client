@@ -22,6 +22,6 @@ export default {
 </script>
 
 <template>
-  <NavBar v-if="loginStatus"></NavBar>
+  <NavBar></NavBar>
   <RouterView></RouterView>
 </template>
