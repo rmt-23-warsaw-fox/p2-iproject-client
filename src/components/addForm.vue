@@ -23,7 +23,7 @@ export default {
 };
 </script>
 <template>
-  <div class="hero min-h-screen bg-base-200">
+  <div class="hero min-h-screen bg-white">
     <div class="hero-content flex-col">
       <div class="text-center">
         <h1 class="text-3xl font-bold">Let's share your music to the world!</h1>
