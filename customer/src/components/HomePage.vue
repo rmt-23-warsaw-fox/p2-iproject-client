@@ -39,7 +39,9 @@ export default {
       <div class="card-body">
         <h5 class="card-title">{{ movie.name }}</h5>
         <p class="card-text">{{ movie.synopsis }}</p>
-        <button class="btn btn-primary" v-on:click="">Booking</button>
+        <RouterLink :to="{ name: 'booking', params: { MovieId: movie.id } }">
+          <button class="btn btn-primary" v-on:click="">Booking</button>
+        </RouterLink>
       </div>
     </div>
   </div>

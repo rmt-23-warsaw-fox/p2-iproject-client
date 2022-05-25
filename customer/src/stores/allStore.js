@@ -12,6 +12,7 @@ export const useAllStore = defineStore({
       email: "",
       password: "",
     },
+    seatNumber: "",
     allMovies: [],
     oneMovie: {},
     row: [],
@@ -20,10 +21,7 @@ export const useAllStore = defineStore({
     async home() {
       try {
         const allMovie = await axios.get(`${baseUrl}/movies`, {
-          headers: {
-            access_token:
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJjdXN0b21lcjEiLCJlbWFpbCI6ImN1c3RvbWVyQGVtYWlsLmNvbSIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTY1MzQxNDMyMX0.U7iW54N_5MRm2Gm4fy3Ayp_6mNmRtbORr7o50bJrX9k",
-          },
+          headers: { access_token: localStorage.getItem("access_token") },
         });
         this.$state.allMovies = allMovie.data.allMovie;
         console.log(this.$state.allMovies);
@@ -35,10 +33,7 @@ export const useAllStore = defineStore({
       try {
         console.log(id, "ID");
         const oneMovie = await axios.get(`${baseUrl}/movies/detail/${id}`, {
-          headers: {
-            access_token:
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJjdXN0b21lcjEiLCJlbWFpbCI6ImN1c3RvbWVyQGVtYWlsLmNvbSIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTY1MzQxNDMyMX0.U7iW54N_5MRm2Gm4fy3Ayp_6mNmRtbORr7o50bJrX9k",
-          },
+          headers: { access_token: localStorage.getItem("access_token") },
         });
         this.$state.oneMovie = oneMovie.data.movies;
         console.log(this.$state.oneMovie);
@@ -84,6 +79,30 @@ export const useAllStore = defineStore({
       try {
         this.$state.isLogin = false;
         localStorage.clear();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async booking(id) {
+      try {
+        const bookIt = await axios.post(
+          `${baseUrl}/seats/booking/${id}`,
+          { seatNumber: this.$state.seatNumber },
+          { headers: { access_token: localStorage.getItem("access_token") } }
+        );
+        if (bookIt) {
+          this.router.push("/");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async allRows() {
+      try {
+        const allRows = await axios.get(`${baseUrl}/seats/rows`, {
+          headers: { access_token: localStorage.getItem("access_token") },
+        });
+        this.$state.row = allRows.data.allRow;
       } catch (error) {
         console.log(error);
       }
