@@ -1,4 +1,6 @@
 <script>
+import {mapActions} from 'pinia';
+import {mainStore} from '../stores/mainStore.js';
 export default {
   name: "LoginView",
   data(){
@@ -8,6 +10,9 @@ export default {
               password:"",
           }
       }
+  },
+  methods: {
+    ...mapActions(mainStore, ["login"])
   }
 };
 </script>
@@ -24,7 +29,7 @@ export default {
       </div>
       <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
         <div class="card-body">
-          <form>
+          <form @submit.prevent="login(formObject)">
             <div class="form-control">
               <label class="label">
                 <span class="label-text">Email</span>
@@ -41,7 +46,7 @@ export default {
                 <span class="label-text">Password</span>
               </label>
               <input
-                type="text"
+                type="password"
                 placeholder="password"
                 class="input input-bordered"
                 v-model="formObject.password"

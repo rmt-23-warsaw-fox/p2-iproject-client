@@ -1,4 +1,7 @@
 <script>
+import { RouterLink } from "vue-router";
+import { mapActions } from "pinia";
+import { mainStore } from "../stores/mainStore.js";
 export default {
   name: "RegisterView",
   data() {
@@ -7,14 +10,17 @@ export default {
         email: "",
         displayName: "",
         password: "",
+        profilePic: undefined,
       },
-      profilePicture: ''
     };
   },
   methods: {
-    getImage(event){
-    }
-  }
+    ...mapActions(mainStore, ["register"]),
+    selectFile() {
+      this.formObject.profilePic = this.$refs.profilePic.files[0];
+      console.log(this.formObject.profilePic);
+    },
+  },
 };
 </script>
 
@@ -26,65 +32,62 @@ export default {
     >
       <div class="bg-white px-6 py-8 rounded-xl shadow-xl text-black w-full">
         <h1 class="mb-8 text-3xl text-center">Sign up</h1>
-            <div class="form-control">
-              <label class="label">
-                <span class="label-text">Email</span>
-              </label>
-              <input
-                type="text"
-                placeholder="email"
-                class="input input-bordered"
-                v-model="formObject.email"
-              />
-            </div>
-            <div class="form-control mt-3">
-              <label class="label">
-                <span class="label-text">Display Name</span>
-              </label>
-              <input
-                type="text"
-                placeholder="display name"
-                class="input input-bordered"
-                v-model="formObject.displayName"
-              />
-            </div>
-            <div class="form-control mt-3">
-              <label class="label">
-                <span class="label-text">Password</span>
-              </label>
-              <input
-                type="text"
-                placeholder="password"
-                class="input input-bordered"
-                v-model="formObject.password"
-              />
-            </div>
-            <div class="form-control mt-3">
-              <label class="label">
-                <span class="label-text">Profile Picture</span>
-              </label>
-              <input
-                type="file"
-                refs="profilePic"
-              />
-            </div>
+        <form @submit.prevent = "register(formObject)">
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text">Email</span>
+            </label>
+            <input
+              type="text"
+              placeholder="email"
+              class="input input-bordered"
+              v-model="formObject.email"
+            />
+          </div>
+          <div class="form-control mt-3">
+            <label class="label">
+              <span class="label-text">Display Name</span>
+            </label>
+            <input
+              type="text"
+              placeholder="display name"
+              class="input input-bordered"
+              v-model="formObject.displayName"
+            />
+          </div>
+          <div class="form-control mt-3">
+            <label class="label">
+              <span class="label-text">Password</span>
+            </label>
+            <input
+              type="password"
+              placeholder="password"
+              class="input input-bordered"
+              v-model="formObject.password"
+            />
+          </div>
+          <div class="form-control mt-3">
+            <label class="label">
+              <span class="label-text">Profile Picture</span>
+            </label>
+            <input type="file" ref="profilePic" @change="selectFile()" class="input"/>
+          </div>
+  
+          <div class="form-control mt-6">
+            <button type="submit" class="btn">Create Account</button>
+          </div>
 
-        <div class="form-control mt-6">
-            <button
-              type="submit"
-              class="btn"
-            >
-              Create Account
-            </button>
+        </form>
+        <div class="text-grey-dark mt-6 text-center">
+          Already have an account?
+          <RouterLink
+            class="no-underline border-b border-blue text-blue"
+            to="/login"
+          >
+            Log in </RouterLink
+          >.
         </div>
-      <div class="text-grey-dark mt-6 text-center">
-        Already have an account?
-        <a class="no-underline border-b border-blue text-blue" href="../login/">
-          Log in </a
-        >.
       </div>
-      </div>
-
     </div>
   </div>
 </template>
