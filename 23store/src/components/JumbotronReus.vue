@@ -3,8 +3,8 @@ export default {};
 </script>
 
 <template>
-  <!-- <div class="container py-4">
-    <div class="p-5 mb-4 text-white bg-dark rounded">
+  <div class="container pt-4">
+    <div class="p-4 mb-4 mx-3 text-white bg-dark rounded">
       <div class="container-fluid py-5 d-flex justify-content-end">
         <div class="text-end">
           <h3 class="display-5 fw-bold">| 23 STORE</h3>
@@ -12,14 +12,19 @@ export default {};
         </div>
       </div>
     </div>
-  </div> -->
+  </div>
 
-  <div class="container py-4 rounded">
+  <div class="container rounded">
     <div
       class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light rounded"
     >
       <div class="col-md-5 p-lg-5 mx-auto my-5">
-        <h1 class="display-4 fw-bold">23-STORE</h1>
+        <!-- <h1 class="display-4 fw-bold">23-STORE</h1> -->
+        <h1 class="fw-bold">GACHA keberuntungan mu hari ini.!!!</h1>
+        <h3>
+          Dapatkan gadget yang kamu inginkan dengan harga yang
+          <span class="display-5 fw-bold">SPESIAL !!!</span>
+        </h3>
       </div>
       <div class="product-device shadow-sm d-none d-md-block"></div>
       <div

@@ -55,17 +55,26 @@ export default {
               id="country"
               required
             >
+              <option value="acer-phones-59">Acer</option>
               <option value="apple-phones-48">Apple</option>
-              <option value="samsung-phones-9">Samsung</option>
               <option value="asus-phones-46">Asus</option>
+              <option value="blackview-phones-116">Blackview</option>
+              <option value="google-phones-107">Google</option>
+              <option value="honor-phones-121">Honor</option>
+              <option value="huawei-phones-58">Huawei</option>
+              <option value="realme-phones-118">Realme</option>
+              <option value="samsung-phones-9">Samsung</option>
+              <option value="sony-phones-7">Sony</option>
+              <option value="oneplus-phones-95">One Plus</option>
               <option value="oppo-phones-82">Oppo</option>
+              <option value="xiaomi-phones-80">Xiaomi</option>
             </select>
           </div>
         </form>
       </div>
       <div class="col-md-8 col-lg-9">
         <h4 class="mb-3">Gadget</h4>
-        <div class="row row-cols-1 row-cols-lg-2 g-3">
+        <div class="row row-cols-1 row-cols-lg-2 row-cols-xxl-3 g-3">
           <CompGadgetContent
             v-for="(gadget, iGadget) in gadgetsStore.gadgets"
             v-bind:key="iGadget"

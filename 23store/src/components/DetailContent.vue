@@ -11,6 +11,39 @@ export default {
   computed: {
     ...mapStores(useGadgetStore),
   },
+  methods: {
+    async payment() {
+      await snap.pay("a394b450-26f3-47c4-97f1-b26551b47839", {
+        onSuccess: function (result) {
+          console.log("success");
+          console.log(result);
+        },
+        onPending: function (result) {
+          console.log("pending");
+          console.log(result);
+        },
+        onError: function (result) {
+          console.log("error");
+          console.log(result);
+        },
+        onClose: function () {
+          console.log(
+            "customer closed the popup without finishing the payment"
+          );
+        },
+      });
+    },
+    addQuantity() {
+      if (this.gadgetsStore.buyGadget.quantity < 3) {
+        this.gadgetsStore.buyGadget.quantity++;
+      }
+    },
+    removeQuantity() {
+      if (this.gadgetsStore.buyGadget.quantity > 1) {
+        this.gadgetsStore.buyGadget.quantity--;
+      }
+    },
+  },
 };
 </script>
 
@@ -39,6 +72,9 @@ export default {
               <h5 class="display-7 fw-bold">
                 {{ gadgetsStore.gadget.release_date }}
               </h5>
+              <h6 class="display-6 mt-2 text-primary fw-bold">
+                {{ gadgetsStore.modBuyGadget.priceShow }}
+              </h6>
             </div>
           </div>
         </div>
@@ -52,11 +88,50 @@ export default {
       </div>
       <div class="col-md-4 col-lg-3 order-md-start">
         <h4 class="d-flex justify-content-between align-items-center mb-3">
-          <span class="text-primary">Checkouts</span>
+          <span class="text-primary">Beli Langsung</span>
         </h4>
-
+        <form class="card p-2 my-3">
+          <h4>TOTAL</h4>
+          <input
+            class="form-control form-control-lg"
+            type="text"
+            v-bind:value="gadgetsStore.modBuyGadget.priceTotalShow"
+            aria-label="readonly input example"
+            readonly
+          />
+          <hr />
+          <div class="input-group">
+            <button
+              v-on:click.prevent="removeQuantity"
+              type="button"
+              class="btn btn-outline-secondary btn-lg"
+            >
+              <span class="fw-bold">-</span>
+            </button>
+            <input
+              v-bind:value="gadgetsStore.modBuyGadget.quantity"
+              class="form-control form-control-lg text-center"
+              type="number"
+              placeholder="Default input"
+              aria-label="default input example"
+              readonly
+            />
+            <button
+              v-on:click.prevent="addQuantity"
+              type="button "
+              class="btn btn-outline-secondary btn-lg"
+            >
+              <span class="fw-bold">+</span>
+            </button>
+          </div>
+        </form>
         <div class="d-grid gap-2">
-          <ButtonReus title="Beli" type="button" class="btn btn-primary" />
+          <ButtonReus
+            title="Bayar"
+            v-on:click.prevent="payment"
+            type="button"
+            class="btn btn-primary btn-lg"
+          />
         </div>
       </div>
     </div>

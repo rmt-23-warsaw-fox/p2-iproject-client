@@ -77,6 +77,13 @@ export default {
           <div class="d-flex flex-wrap text-end">
             <ButtonReus
               v-if="authStore.isLogin"
+              v-on:click.prevent=""
+              title="Profile"
+              class="btn btn-outline-info text-white me-2"
+              type="button"
+            />
+            <ButtonReus
+              v-if="authStore.isLogin"
               v-on:click.prevent="logout"
               title="Log Out"
               class="btn btn-outline-success text-white"
