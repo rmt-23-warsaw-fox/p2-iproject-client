@@ -77,12 +77,12 @@ export default {
         Next
       </a>
     </div>
-    <!-- <div class="flex justify-center">
+    <div class="flex justify-center">
       <div class="spinner">11</div>
-    </div> -->
+    </div>
   </div>
 </template>
-
+    
 <style>
 
 </style>
