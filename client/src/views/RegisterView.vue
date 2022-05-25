@@ -17,11 +17,10 @@ export default {
     ...mapActions(useCounterStore, ["registerAction"]),
     async registerEvent() {
       try {
-        // eslint-disable-next-line no-unused-vars
-        const { data } = await this.registerAction(this.userInput);
+        await this.registerAction(this.userInput);
         this.$router.push("/");
       } catch (err) {
-        console.log(err.respones.error.message);
+        console.log(err.response.error.message);
       }
     },
   },
@@ -48,7 +47,7 @@ export default {
                 type="text"
                 name="name"
                 id="name"
-                placeholder="Your Name"
+                placeholder="User Name"
               />
             </div>
             <div class="form-group">

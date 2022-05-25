@@ -1,6 +1,7 @@
 <script>
+import DataService from "../service/dataService";
 import "../assets/css/style.css";
-import { mapActions } from "pinia";
+import { mapActions, mapState, mapWritableState } from "pinia";
 import { useCounterStore } from "../stores/counter";
 
 export default {
@@ -9,8 +10,11 @@ export default {
       userInput: {
         userLogin: "",
         password: "",
-      },
+      }
     };
+  },
+  computed: {
+    ...mapWritableState(useCounterStore, ["user"]),
   },
   methods: {
     ...mapActions(useCounterStore, ["loginAction"]),
@@ -18,11 +22,27 @@ export default {
       try {
         const { data } = await this.loginAction(this.userInput);
         localStorage.setItem("access_token", data.access_token);
+        localStorage.setItem("foundName", data.foundName)
         this.$router.push("/home");
+        this.user = data.foundName
       } catch (err) {
         console.log(err.respones.data.message);
       }
     },
+  },
+   mounted() {
+    DataService.getAll(this.userName).on("value", (snapshot) => {
+      const data = snapshot.val();
+      let userName = [];
+
+      Object.keys(data).forEach((key) => {
+        userName.push({
+          id: key,
+          userName: data[key].userName,
+        });
+      });
+      this.userName = userName;
+    });
   },
 };
 </script>

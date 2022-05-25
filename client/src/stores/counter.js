@@ -3,7 +3,9 @@ import axios from "axios";
 
 export const useCounterStore = defineStore({
   id: "counter",
-  state: () => ({}),
+  state: () => ({
+    user: null,
+  }),
   getters: {},
   actions: {
     loginAction(payLoad) {

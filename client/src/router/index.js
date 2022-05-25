@@ -13,10 +13,10 @@ const routes = [
     component: () => import("../views/HomeView.vue"),
   },
   {
-    path:"/register",
-    name:"register",
-    component: () => import("../views/RegisterView.vue")
-  }
+    path: "/register",
+    name: "register",
+    component: () => import("../views/RegisterView.vue"),
+  },
 ];
 
 const router = createRouter({
@@ -27,9 +27,9 @@ const router = createRouter({
 router.beforeEach((to, from) => {
   if (localStorage.getItem("access_token") && to.name === "Login") {
     return { name: "Home" };
+  } else if (!localStorage.getItem("access_token") && to.name === "Home") {
+    return { name: "Login" };
   }
-
-  return true;
 });
 
 export default router;
