@@ -10,7 +10,7 @@ export default {
     NavBar,
   },
   computed: {
-    ...mapState(useUserStore, ['loginStatus', 'userId']),
+    ...mapState(useUserStore, ['loginStatus']),
   },
   methods: {
     ...mapActions(useUserStore, ['loginCheck']),
@@ -22,6 +22,6 @@ export default {
 </script>
 
 <template>
-  <NavBar></NavBar>
+  <NavBar v-if="loginStatus"></NavBar>
   <RouterView></RouterView>
 </template>

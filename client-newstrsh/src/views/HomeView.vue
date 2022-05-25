@@ -2,10 +2,12 @@
 import CardSingle from '../components/CardSingle.vue';
 import { mapState, mapActions } from 'pinia';
 import { useNewsStore } from '@/stores/newsApi';
+import { useUserStore } from '@/stores/user';
 export default {
   components: { CardSingle },
   computed: {
     ...mapState(useNewsStore, ['newsList', 'totalPages']),
+    ...mapState(useUserStore, ['premium']),
   },
   data() {
     return {
@@ -15,7 +17,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(useNewsStore, ['fetchApiData']),
+    ...mapActions(useNewsStore, ['fetchApiData', 'loginCheck']),
   },
   created() {
     this.fetchApiData();
@@ -27,7 +29,7 @@ export default {
   <section class="home_section">
     <!-- home content -->
     <div class="home_content">
-      <div class="filter-section">
+      <div class="filter-section" v-if="premium">
         <form
           action="/action_page.php"
           @submit.prevent="fetchApiData(null, language, categories, keywords)"

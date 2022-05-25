@@ -8,7 +8,6 @@ export const useUserStore = defineStore({
   id: 'user',
   state: () => ({
     loginStatus: false,
-
     premium: false,
   }),
   getters: {},
@@ -26,8 +25,10 @@ export const useUserStore = defineStore({
         if (response) {
           localStorage.setItem('access_token', response.data.access_token);
           localStorage.setItem('premium', response.data.isPremium);
+          if (response.data.isPremium === true) {
+            this.premium = true;
+          }
           this.loginStatus = true;
-          this.premium = true;
           this.$router.push('/');
 
           //   this.$toast.open({
@@ -53,6 +54,7 @@ export const useUserStore = defineStore({
         // this.statusList = [];
         // await this.$gAuth.signOut();
       } catch (error) {
+        console.log(error.response.data.message);
         // this.$toast.open({
         //   message: error.response.data.message,
         //   type: 'error',
@@ -73,7 +75,6 @@ export const useUserStore = defineStore({
         if (response) {
           this.$router.push('/login');
         }
-        // this.registerStatus = false;
       } catch (error) {
         console.log(error.response.data.message);
         // console.log(error);
@@ -86,11 +87,10 @@ export const useUserStore = defineStore({
     },
     async loginCheck() {
       if (localStorage.getItem('access_token')) {
-        this.premium = true;
-        this.userId = localStorage.getItem('userID');
         this.loginStatus = true;
-      } else {
-        this.loginStatus = false;
+        if (localStorage.getItem('premium') === true) {
+          this.premium = true;
+        }
       }
     },
   },

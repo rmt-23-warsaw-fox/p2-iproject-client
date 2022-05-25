@@ -29,12 +29,12 @@ const router = createRouter({
   ],
 });
 
-// router.beforeEach((to, from, next) => {
-//   const isAuthenticated = localStorage.getItem('access_token');
-//   if (to.name === 'home' && !isAuthenticated) next({ name: 'login' });
-//   else if (to.name === 'login' && isAuthenticated) next({ name: 'home' });
-//   else if (to.name === 'register' && isAuthenticated) next({ name: 'home' });
-//   else next();
-// });
+router.beforeEach((to, from, next) => {
+  const isAuthenticated = localStorage.getItem('access_token');
+  if (to.name === 'home' && !isAuthenticated) next({ name: 'login' });
+  else if (to.name === 'login' && isAuthenticated) next({ name: 'home' });
+  else if (to.name === 'register' && isAuthenticated) next({ name: 'home' });
+  else next();
+});
 
 export default router;

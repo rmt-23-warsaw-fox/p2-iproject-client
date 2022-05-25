@@ -2,12 +2,14 @@
 import { RouterLink } from 'vue-router';
 import { mapActions, mapState } from 'pinia';
 import { useUserStore } from '@/stores/user';
+import { usePaymentStore } from '@/stores/payment';
+
 export default {
   components: {
     RouterLink,
   },
   computed: {
-    ...mapState(useUserStore, ['loginStatus']),
+    ...mapState(useUserStore, ['loginStatus', 'premium']),
   },
   data() {
     return {};
@@ -15,6 +17,7 @@ export default {
 
   methods: {
     ...mapActions(useUserStore, ['BackendLogoutConnection']),
+    ...mapActions(usePaymentStore, ['memberPay']),
   },
 };
 </script>
@@ -25,7 +28,7 @@ export default {
         <i class="bx bxs-invader"></i>
         <span class="dashboard">Tr@sher News</span>
       </a>
-      <a href="#">
+      <a href="#" v-if="!premium" @click.prevent="memberPay">
         <span class="dashboard">Go Premium</span>
       </a>
     </div>
