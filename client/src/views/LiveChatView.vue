@@ -1,7 +1,7 @@
 <script>
 import { useUserStore } from '../stores/user'
 import { mapState,mapActions } from 'pinia'
-import writeMessage from '../firebase'
+import {getMessages,postMessage} from '../methods'
 export default {
   name : 'LiveChatView',
   computed : {  
@@ -17,19 +17,21 @@ export default {
     ...mapActions(useUserStore,['getProfile']),
     sendMsg(){
       
-      
-      const message = {
-        username : this.myProfile.name,
-        content : this.inputMsg
-      }
+      const puuid = this.myProfile.puuid
+      const user = this.myProfile.name
+      const content = this.inputMsg
 
-      writeMessage(message)
+      postMessage(puuid,user,content)
 
       this.inputMsg=''
     }
   },
   created(){
     this.getProfile()
+    getMessages().then((messages)=>{
+      this.messages = messages
+    })
+    
   },
   setup(){
 

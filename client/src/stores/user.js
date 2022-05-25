@@ -54,7 +54,6 @@ export const useUserStore = defineStore({
 
         this.router.push('/myprofile')
       } catch (err) {
-        console.log(err)
         Swal({
           text: err.response.data.message,
           icon : 'error'
@@ -71,7 +70,6 @@ export const useUserStore = defineStore({
             access_token : localStorage.getItem("access_token")
           }
         })
-        console.log(data)
         this.myProfile = data
       } catch (err) {
         console.log(err)
