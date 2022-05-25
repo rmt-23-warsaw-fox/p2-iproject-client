@@ -7,7 +7,8 @@ export const useCounterStore = defineStore({
     counter: 0,
     url: "http://localhost:3000/",
     markets: [],
-    coin: {}
+    coin: {},
+    history: []
   }),
   getters: {
     doubleCount: (state) => state.counter * 2,
@@ -32,6 +33,17 @@ export const useCounterStore = defineStore({
           url: this.url + `coin?coin=${id}`
         })
         this.coin = response.data
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async fetchHistory(id, date) {
+      try {
+        let response = await axios( {
+          method: "get",
+          url: this.url + `coin/history?coin=${id}&dates=${date}`
+        })
+        this.history = response.data
       } catch (error) {
         console.log(error)
       }

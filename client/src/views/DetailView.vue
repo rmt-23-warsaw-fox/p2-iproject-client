@@ -5,13 +5,14 @@ import { useCounterStore } from "../stores/counter";
 export default {
   name: "Detail Page",
   methods: {
-    ...mapActions(useCounterStore, ["fetchDetail"]),
+    ...mapActions(useCounterStore, ["fetchDetail", "fetchHistory"]),
   },
   computed: {
-    ...mapState(useCounterStore, ["coin"]),
+    ...mapState(useCounterStore, ["coin", "history"]),
   },
   created() {
     this.fetchDetail(this.$route.params.id)
+    this.fetchHistory(this.$route.params.id, 1)
   }
 };
 </script>
@@ -29,6 +30,16 @@ export default {
         <p>Market Cap: $ {{coin.market_data.market_cap.usd.toLocaleString("en-EN")}}</p>
       </div>
     </div>
+  </div>
+
+  <div class="container mt-5">
+    <line-chart :data="history" :points="false" :min="null" height="80vh" :colors="['#2ed14e', '#666']"></line-chart>
+  </div>
+  <div class="container d-flex ">
+    <button class="btn btn-success m-1 form-control" @click.prevent="fetchHistory(this.$route.params.id, 1)">24 Hours</button>
+    <button class="btn btn-success m-1 form-control" @click.prevent="fetchHistory(this.$route.params.id, 7)">1 Week</button>
+    <button class="btn btn-success m-1 form-control" @click.prevent="fetchHistory(this.$route.params.id, 14)">2 Weeks</button>
+    <button class="btn btn-success m-1 form-control" @click.prevent="fetchHistory(this.$route.params.id, 30)">1 Month</button>
   </div>
 </template>
 
