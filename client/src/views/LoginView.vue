@@ -10,7 +10,7 @@ export default {
     ...mapWritableState(useUserStore, []),
   },
   methods: {
-    ...mapActions(useUserStore,[]),
+    ...mapActions(useUserStore,["login"]),
     regist(){
       this.$router.push('/register')
     },
