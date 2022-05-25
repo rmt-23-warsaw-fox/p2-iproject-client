@@ -26,7 +26,7 @@ const router = createRouter({
       component: BookingView,
     },
     {
-      path: "/movie",
+      path: "/movie/:id",
       name: "detail",
       component: DetailView,
     },
@@ -41,6 +41,29 @@ const router = createRouter({
       component: LoginRegisterView,
     },
   ],
+});
+
+router.beforeEach((to, from, next) => {
+  if (
+    localStorage.getItem("access_token") &&
+    (to.name === "login" || to.name === "register")
+  ) {
+    next({ name: "home" });
+  } else if (
+    !localStorage.getItem("access_token") &&
+    to.name !== "login" &&
+    to.name !== "register"
+  ) {
+    next({ name: "login" });
+  } else if (
+    !localStorage.getItem("access_token") &&
+    to.name !== "register" &&
+    to.name !== "login"
+  ) {
+    next({ name: "register" });
+  } else {
+    next();
+  }
 });
 
 export default router;

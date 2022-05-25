@@ -1,9 +1,22 @@
 <script>
+import { mapActions, mapWritableState } from "pinia";
 import { RouterLink } from "vue-router";
+import { useAllStore } from "../stores/allStore";
 
 export default {
+  computed: {
+    ...mapWritableState(useAllStore, ["isLogin"]),
+  },
+  methods: {
+    ...mapActions(useAllStore, ["logout"]),
+  },
   components: {
     RouterLink,
+  },
+  created() {
+    if (localStorage.getItem("access_token")) {
+      this.isLogin = true;
+    }
   },
 };
 </script>

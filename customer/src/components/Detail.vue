@@ -1,48 +1,68 @@
-<script></script>
+<script>
+import { mapActions, mapState } from "pinia";
+import { useAllStore } from "../stores/allStore";
+export default {
+  computed: {
+    ...mapState(useAllStore, ["oneMovie"]),
+  },
+  methods: {
+    ...mapActions(useAllStore, ["detail"]),
+    priceInRupiah(price) {
+      const intl = new Intl.NumberFormat("id-ID", {
+        style: "currency",
+        currency: "IDR",
+      });
+      return intl.format(price);
+    },
+  },
+  created() {
+    // console.log(this.$route.params);
+    this.detail(this.$route.params.id);
+  },
+};
+</script>
 
 <template>
-  <template>
-    <div class="Detail">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-4">
-            <!-- <img
-            :src="oneFood.imgUrl"
+  <div class="card">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-4">
+          <img
+            :src="oneMovie.image_url"
             alt="Image"
             srcset=""
             style="size: 50px; max-width: 100%"
-          /> -->
-            IMAGE
+          />
+          <!-- IMAGE -->
+        </div>
+        <div class="col">
+          <div class="row">
+            <h1>
+              {{ oneMovie.name }}
+              <!-- NAME -->
+            </h1>
           </div>
-          <div class="col">
-            <div class="row">
-              <h1>
-                <!-- {{ oneFood.name }} -->
-                NAME
-              </h1>
-            </div>
-            <div class="row">
-              <p>
-                <!-- {{ oneFood.description }} -->
-                SYNOPSIS
-              </p>
-            </div>
-            <!-- <div class="row">
+          <div class="row">
+            <p>
+              {{ oneMovie.synopsis }}
+              <!-- SYNOPSIS -->
+            </p>
+          </div>
+          <!-- <div class="row">
             <h4>
               {{ categoryName }}
             </h4>
           </div> -->
-            <div class="row">
-              <br />
-              <!-- <h5>{{ priceInRupiah(oneFood.price) }}</h5> -->
-              <h5>PRICE</h5>
-            </div>
-            <!-- <div>
+          <div class="row">
+            <br />
+            <h5>{{ priceInRupiah(oneMovie.ticketPrice) }}</h5>
+            <!-- <h5>PRICE</h5> -->
+          </div>
+          <!-- <div>
               <img :src="qrCode" alt="qrCode" />
             </div> -->
-          </div>
         </div>
       </div>
     </div>
-  </template>
+  </div>
 </template>

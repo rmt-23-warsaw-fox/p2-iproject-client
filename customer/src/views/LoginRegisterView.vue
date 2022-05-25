@@ -6,9 +6,6 @@ export default {
   components: {
     LoginRegister,
   },
-  created() {
-    console.log(this.$router.name);
-  },
 };
 </script>
 
