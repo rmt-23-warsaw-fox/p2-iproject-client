@@ -214,6 +214,7 @@
               </div>
 
               <a
+                @click.prevent="doAppointment()"
                 v-if="ailments.data"
                 class="btn btn-main btn-round-full"
                 href="confirmation.html"
@@ -246,6 +247,9 @@ export default {
     doDiagnose2() {
       console.log("diagnose >>>", this.input);
       this.diagnose(this.input);
+    },
+    doAppointment() {
+      this.$router.push("/appoint");
     },
   },
   computed: {

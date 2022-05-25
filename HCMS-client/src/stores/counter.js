@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 import Swal from "sweetalert2";
-// const BASE_URL = "http://localhost:3000";
+const BASE_URL = "http://localhost:3000";
 export const useCounterStore = defineStore({
   id: "counter",
   state: () => ({
@@ -64,6 +64,35 @@ export const useCounterStore = defineStore({
           });
         }
       }
+    },
+    async register(payload) {
+      await axios({
+        method: "POST",
+        url: `${BASE_URL}/patient/register`,
+        data: {
+          name: payload.username,
+          password: payload.password,
+          email: payload.email,
+          phoneNumber: payload.phoneNumber,
+          address: payload.address,
+        },
+      });
+    },
+
+    async loginP(payload) {
+      const response = await axios({
+        method: "POST",
+        url: `${BASE_URL}/patient/login`,
+        data: {
+          email: payload.email,
+          password: payload.password,
+        },
+      });
+      console.log(response, "<<< response pada saat login");
+      localStorage.setItem("access_token", response.data.access_token);
+      localStorage.setItem("customer_id", response.data.customer_id);
+      localStorage.setItem("customer_email", response.data.customer_email);
+      this.access_token1 = response.data.access_token;
     },
   },
 });
