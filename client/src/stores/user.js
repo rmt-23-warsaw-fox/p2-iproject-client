@@ -51,7 +51,7 @@ export const useUserStore = defineStore({
           icon : "success"
         })
 
-        this.router.push('')
+        this.router.push('/myprofile')
       } catch (err) {
         console.log(err)
         Swal({
