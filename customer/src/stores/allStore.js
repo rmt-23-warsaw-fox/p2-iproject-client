@@ -16,6 +16,7 @@ export const useAllStore = defineStore({
     allMovies: [],
     oneMovie: {},
     row: [],
+    booked: [],
   }),
   actions: {
     async home() {
@@ -103,6 +104,16 @@ export const useAllStore = defineStore({
           headers: { access_token: localStorage.getItem("access_token") },
         });
         this.$state.row = allRows.data.allRow;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async checkTicket() {
+      try {
+        const allTicket = await axios.get(`${baseUrl}/seats/booking`, {
+          headers: { access_token: localStorage.getItem("access_token") },
+        });
+        this.$state.booked = allTicket.data.booked;
       } catch (error) {
         console.log(error);
       }

@@ -1,5 +1,6 @@
 <script>
 import { mapActions, mapState } from "pinia";
+import { RouterLink } from "vue-router";
 import { useAllStore } from "../stores/allStore";
 export default {
   computed: {
@@ -15,9 +16,13 @@ export default {
       return intl.format(price);
     },
   },
+  components: {
+    RouterLink,
+  },
   created() {
-    // console.log(this.$route.params);
+    // console.log(this.$route.params, "__THIS IS PARAMS___");
     this.detail(this.$route.params.id);
+    // console.log(this.oneMovie, "HEYO");
   },
 };
 </script>
@@ -61,6 +66,11 @@ export default {
           <!-- <div>
               <img :src="qrCode" alt="qrCode" />
             </div> -->
+          <!-- <RouterLink
+            :to="{ name: 'booking', params: { MovieId: oneMovie.id } }"
+          >
+            <button class="btn btn-primary">Booking</button>
+          </RouterLink> -->
         </div>
       </div>
     </div>

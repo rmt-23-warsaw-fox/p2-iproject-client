@@ -32,7 +32,7 @@ export default {
         <RouterLink to="/login" class="nav-link">Sign In</RouterLink>
       </li>
       <li class="nav-item" v-if="isLogin">
-        <RouterLink to="/favorites" class="nav-link">Favorite</RouterLink>
+        <RouterLink to="/ticket" class="nav-link">Your ticket</RouterLink>
       </li>
       <li class="nav-item" v-if="isLogin">
         <RouterLink v-on:click="logout" to="/login" class="nav-link"

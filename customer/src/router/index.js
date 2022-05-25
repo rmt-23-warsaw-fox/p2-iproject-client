@@ -3,6 +3,7 @@ import HomeView from "../views/HomeView.vue";
 import DetailView from "../views/DetailView.vue";
 import LoginRegisterView from "../views/LoginRegisterView.vue";
 import BookingView from "../views/BookingView.vue";
+import ticket from "../views/TicketView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,7 +16,7 @@ const router = createRouter({
     {
       path: "/ticket",
       name: "yourTicket",
-      component: () => import("../views/AboutView.vue"),
+      component: ticket,
     },
     {
       path: "/ticket/:MovieId",
