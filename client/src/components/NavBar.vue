@@ -1,6 +1,18 @@
 <script>
 export default {
-  
+  data(){
+    return {
+
+    }
+  },
+  computed : {
+
+  },
+  methods : {
+    goToRegist(){
+      this.$router.push('/login')
+    }
+  }
 }
 </script>
 <template>

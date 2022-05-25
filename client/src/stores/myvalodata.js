@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 
 export const useUserStore = defineStore({
-  id: 'user',
+  id: 'valodata',
   state: () => ({
     
   }),
@@ -9,12 +9,6 @@ export const useUserStore = defineStore({
 
   },
   actions: {
-    async register(){
-      try {
-        
-      } catch (err) {
-        
-      }
-    }
+
   }
 })

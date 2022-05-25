@@ -1,3 +1,6 @@
-const axios = require('axios')
 
-export default axios.c
+import axios from "axios";
+
+export default axios.create({
+  baseURL:'http://localhost:7121/'
+})
