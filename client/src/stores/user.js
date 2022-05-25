@@ -1,10 +1,12 @@
 import { defineStore } from 'pinia'
 import axiosInstance from '../api/myserver'
 import Swal from 'sweetalert'
+import { nextTick } from 'vue'
 export const useUserStore = defineStore({
   id: 'user',
   state: () => ({
-    isLogin : false
+    isLogin : false,
+    myProfile : []
   }),
   getters: {
 
@@ -58,6 +60,22 @@ export const useUserStore = defineStore({
           text: err.response.data.message,
           icon : 'error'
         })
+      }
+    },
+
+    async getProfile(){
+      try {
+        const {data} = await axiosInstance({
+          method : 'GET',
+          url : 'valodatas/profile',
+          headers : {
+            access_token : localStorage.getItem("access_token")
+          }
+        })
+
+        this.myProfile = data
+      } catch (err) {
+        console.log(err)
       }
     }
   }

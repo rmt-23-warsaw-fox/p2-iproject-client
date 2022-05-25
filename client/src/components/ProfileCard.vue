@@ -1,4 +1,6 @@
 ><script>
+import { useUserStore } from '../stores/user'
+import { mapState } from 'pinia'
 export default {
   name : 'ProfileCard',
   data(){
@@ -7,15 +9,31 @@ export default {
     }
   },
   computed:{
-
+    ...mapState(useUserStore,['myProfile'])
   },
   methods: {
 
   },
+  created(){
+
+  }
   
 }
 </script>
 
 <template>
-  
+  <div class="flex-col w-3/5 bg-purple-300  h-[400px] rounded-lg shadow-black shadow-md">
+    <div>
+      <img :src="myProfile.card.wide" alt="" class="rounded-t-lg" width="819">
+    </div>
+    <div class="flex items-center gap-10">
+      <div class="ml-4 mt-6">
+        <img :src="myProfile.card.small" class="rounded-full" alt="">
+      </div>
+      <div class="flex-col">
+        <p class="text-sm"> account level {{myProfile.account_level}}</p>
+        <p class="text-xl font-bold text-gray-100">{{myProfile.name}} #{{myProfile.tag}}</p>
+      </div>
+    </div>
+  </div>
 </template>
