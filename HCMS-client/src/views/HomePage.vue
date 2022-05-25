@@ -112,7 +112,13 @@ export default {
   methods: {
     ...mapActions(useCounterStore, ["increment"]),
     doDiagnose() {
-      this.$router.push("/diagnose");
+      console.log("dodiagnose")
+      const access_token = localStorage.getItem("access_token");
+      if (!access_token) {
+        this.$router.push("/login");
+      } else {
+        this.$router.push("/diagnose");
+      }
     },
   },
 };
