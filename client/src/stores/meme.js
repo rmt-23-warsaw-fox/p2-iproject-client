@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 
-export const useCounterStore = defineStore({
-  id: 'counter',
+export const useMemeStore = defineStore({
+  id: 'meme',
   state: () => ({
     counter: 0
   }),
