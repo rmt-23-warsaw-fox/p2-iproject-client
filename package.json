@@ -1,0 +1,20 @@
+{
+  "name": "p2-iproject-client-revised",
+  "version": "1.0.0",
+  "description": "Individual Project - Client",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WibuSyariah/p2-iproject-client-revised.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/WibuSyariah/p2-iproject-client-revised/issues"
+  },
+  "homepage": "https://github.com/WibuSyariah/p2-iproject-client-revised#readme"
+}
