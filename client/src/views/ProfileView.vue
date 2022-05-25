@@ -1,5 +1,4 @@
 <script>
-
 import { mapActions,mapState } from 'pinia'
 import ProfileCard from '../components/ProfileCard.vue'
 import { useUserStore } from '../stores/user'

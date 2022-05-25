@@ -15,6 +15,9 @@ export default {
     logout(){
       localStorage.removeItem("access_token")
       this.$router.push('/login')
+    },
+    goToChat(){
+      this.$router.push('/livechat')
     }
   }
 }
@@ -23,7 +26,9 @@ export default {
   <nav class="flex justify-between bg-purple-800 h-12 items-center text-white ">
     <div class="ml-4 text-xl ">ValoKuy</div>
     <div class="flex gap-4 mr-4">
-      <button>Livechat</button>
+      <button
+      @click.prevent="goToChat"
+      >Livechat</button>
       <button>My Matches</button>
       <button>Agents</button>
       <button
