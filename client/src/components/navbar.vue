@@ -2,12 +2,23 @@
 
 export default {
   name: 'navbarVue',
+  data() {
+    return {
+      token: ''
+    }
+  },
   methods: {
     isLogout() {
+      this.$emit('trueLogoutEmit')
       localStorage.clear()
+      this.token = ''
       this.$router.push('/login')
     }
-  }
+  },
+  created() {
+    this.token = localStorage.getItem('access_token')
+  },
+  props: ['trueLoginprops']
 }
 </script>
 
@@ -26,8 +37,8 @@ export default {
     to="/register">Sign Up</router-link>
     <router-link type="button" class="btn btn-outline-primary sign" 
     to='/login/listFavourite'
+    v-if="trueLoginprops || token"
     >Paket saya</router-link>
-
     </div>
   </div>
 </template>

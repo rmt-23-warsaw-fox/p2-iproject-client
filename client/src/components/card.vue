@@ -5,21 +5,22 @@ import { mapActions, mapStores, mapWritableState } from "pinia";
 export default {
   data() {
     return {
-      favourites: [],
+      buys: [],
     };
   },
   props: ["itemsprops", "cardsProps"],
   methods: {
-    ...mapActions(useCounterStore, ["listsFavourite"]),
+    ...mapActions(useCounterStore, ["listsBuy"]),
   },
   computed: {
     ...mapStores(useCounterStore),
-    ...mapWritableState(useCounterStore, ["myFavourites"]),
+    ...mapWritableState(useCounterStore, ["myBuys"]),
   },
   async created() {
     try {
-      const awaitFavourite = await this.listsFavourite();
-      this.favourites = this.myFavourites;
+      const awaitBuy = await this.listsBuy();
+      this.buys = this.myBuys;
+      console.log(this.buys, '<2');
     } catch (err) {
       console.log(err);
     }
@@ -29,66 +30,28 @@ export default {
 
 <template>
   <div id="items-card">
-    <div id="cards-home" v-if="itemsprops == 'home'">
+    <div id="cards-buy" v-if="itemsprops == 'buy'">
       <div
         class="card card-movie"
         style="width: 16rem; height: 20rem"
-        v-for="data in cardsProps"
+        v-for="data in buys"
         :key="data.id"
       >
         <img
-          :src="data.imgUrl"
+          :src="data.Package.imgUrl"
           class="card-img-top"
           alt="..."
           style="height: 200px"
         />
         <div class="card-body">
-          <div id="title-favourite">
-            <h5 class="card-title">{{ data.name }}</h5>
-            <a class="fa fa-star checked" v-if="data.Favourites[0]"></a>
-            <a
-              class="fa fa-star blank"
-              @click.prevent="isFavourite(data.id)"
-              v-else
-            ></a>
+          <div id="title-buy">
+            <h5 class="card-title">{{ data.Package.name }}</h5>
           </div>
           <p
             class="card-text"
             style="width: 220px; height: 50px; overflow: hidden"
           >
-            {{ data.synopsis }}
-          </p>
-          <button
-            @click.prevent="isDetailStore(data.id)"
-            class="btn btn-primary"
-          >
-            Detail
-          </button>
-        </div>
-      </div>
-    </div>
-    <div id="cards-favourite" v-else-if="itemsprops == 'favourite'">
-      <div
-        class="card card-movie"
-        style="width: 16rem; height: 20rem"
-        v-for="data in favourites"
-        :key="data.id"
-      >
-        <img
-          :src="data.Movie.imgUrl"
-          class="card-img-top"
-          alt="..."
-          style="height: 200px"
-        />
-        <div class="card-body">
-          <div id="title-favourite">
-            <h5 class="card-title">{{ data.Movie.title }}</h5>
-          </div>
-          <p
-            class="card-text"
-            style="width: 220px; height: 50px; overflow: hidden"
-          >
-            {{ data.Movie.synopsis }}
+            {{ data.Package.Major.name }}
           </p>
         </div>
       </div>
@@ -96,7 +59,7 @@ export default {
   </div>
 </template>
 <style>
-#cards-favourite {
+#cards-buy {
   margin-left: 200px;
   margin-top: 50px;
   display: flex;

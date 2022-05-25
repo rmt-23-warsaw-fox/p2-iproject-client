@@ -1,7 +1,7 @@
 <script>
 
-const baseUrl = "http://localhost:3000/";
-import axios from "axios";
+import linkUrl from '../api/axios'
+
 export default {
   name: 'detailVue',
   data() {
@@ -13,13 +13,12 @@ export default {
   name: "detailVue",
   async created() {
     try {
-      const detail = await axios.get(
-        `${baseUrl}products/${this.$route.params.id}/detail`
+      const detail = await linkUrl.get(
+        `products/${this.$route.params.id}/detail`
       );
       this.video = detail.data.data;
 
       this.video.price = new Intl.NumberFormat("id-ID", {style: "currency", currency: "IDR"}).format(+this.video.price);
-      console.log(this.price, '<<<<<<<');
     } catch (err) {
       console.log(err);
     }
@@ -30,7 +29,7 @@ export default {
 <template>
   <div id="detail">
     <div id="box">
-      <h1 style="text-align: center">{{ video.name }}</h1>
+      <h1 style="text-align: center;">{{ video.name }}</h1>
       <hr />
       <br />
       <img :src="video.imgUrl" id="video-image" alt="image" />

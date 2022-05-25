@@ -13,7 +13,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue-3/dist/bootstrap-vue-3.css'
 
 const app = createApp(App)
-const gAuthOptions = { clientId: '575472646971-0jucdsahbrqotd667svh3j77d064boug.apps.googleusercontent.com', scope: 'email', prompt: 'consent', fetch_basic_profile: false }
+const gAuthOptions = { clientId: import.meta.env.VITE_CLIENT, scope: 'email', prompt: 'consent', fetch_basic_profile: false }
 
 app.use(GAuth, gAuthOptions)
 app.use(BootstrapVue3)

@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
-import axios from "axios";
-const baseUrl = "http://localhost:3000/";
+import linkUrl from '../api/axios'
 
 export const useCounterStore = defineStore({
   id: 'counter',
@@ -9,7 +8,7 @@ export const useCounterStore = defineStore({
     filter: 'Filter',
     username: 'bambang',
     numbers: [2, 4],
-    myFavourites: [],
+    myBuys: [],
   }),
   getters: {
     doubleCount: (state) => state.counter * 2,
@@ -25,14 +24,15 @@ export const useCounterStore = defineStore({
       console.log(78);
       this.numbers.push(number)
     },
-    async listsFavourite() {
+    async listsBuy() {
       try {
-        const listsFavourite = await axios.get(`${baseUrl}login/listFavourite`, {
+        const listsBuy = await linkUrl.get(`login/listBuy`, {
           headers: {
             access_token: localStorage.getItem('access_token')
           }
         })
-        this.myFavourites = listsFavourite.data.data.Favourites
+        this.myBuys = listsBuy.data.data.Buys
+        console.log(this.myBuys);
       } catch(err) {
         console.log(err);
       }

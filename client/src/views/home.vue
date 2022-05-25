@@ -4,8 +4,9 @@ import { RouterLink } from "vue-router";
 import { useCounterStore } from "../stores/counter";
 import { mapState, mapStores, mapActions, mapWritableState } from "pinia";
 import Card from "../components/card.vue";
+import linkUrl from '../api/axios'
+import Navbar from '../components/navbar.vue';
 
-const baseUrl = "http://localhost:3000/";
 export default {
   data() {
     return {
@@ -35,8 +36,8 @@ export default {
           this.offset = offset;
         }
 
-        const filter = await axios.get(
-          `${baseUrl}products?offset=${this.offset}&title=${this.title}&major=${this.MajorId}`
+        const filter = await linkUrl.get(
+          `products?offset=${this.offset}&name=${this.title}&major=${this.MajorId}`
         );
         this.movies = filter.data.data.rows;
       } catch (err) {
@@ -51,10 +52,10 @@ export default {
     isDetail(id) {
       this.$router.push(`/products/${id}`);
     },
-    async isFavourite(id) {
+    async isBuy(id) {
       try {
-        const favourite = await axios.post(
-          `${baseUrl}login/${id}/favourite`,
+        await linkUrl.post(
+          `login/${id}/buy`,
           {},
           {
             headers: {
@@ -62,29 +63,30 @@ export default {
             },
           }
         );
-        const filter = await axios.get(
-          `${baseUrl}products?offset=${this.offset}&title=${this.title}&major=${this.MajorId}`
+        const filter = await linkUrl.get(
+          `products?offset=${this.offset}&name=${this.title}&major=${this.MajorId}`
         );
         this.movies = filter.data.data.rows;
       } catch (err) {
         console.log(err);
       }
     },
-    ...mapActions(useCounterStore, ["isDetailStore", "listsFavourite"]),
+    ...mapActions(useCounterStore, ["isDetailStore", "listsBuy"]),
   },
   async created() {
     try {
       if (localStorage.getItem("UserId")) {
-        await this.listsFavourite();
+        await this.listsBuy();
         this.UserId = localStorage.getItem("UserId");
         this.favouriteMovies = this.myFavourite;
       }
 
-      const data = await axios.get(`${baseUrl}products`);
+      const data = await linkUrl.get(`products`);
       this.movies = data.data.data.rows;
-      console.log(this.movies);
-      const major = await axios.get(`${baseUrl}products/majors`);
+      
+      const major = await linkUrl.get(`products/majors`);
       this.majors = major.data.data;
+      console.log(this.favouriteMovies);
     } catch (err) {
       console.log(err);
     }
@@ -95,6 +97,7 @@ export default {
   },
   components: {
     RouterLink,
+    Navbar
   },
 };
 Card;
@@ -112,7 +115,7 @@ Card;
           <div id="searchFilter">
             <input
               type="text"
-              placeholder="title"
+              placeholder="name"
               id="filterTitle"
               v-model="title"
             /><br /><br />
@@ -175,17 +178,6 @@ Card;
           <div class="card-body">
             <div id="title-favourite">
               <h5 class="card-title">{{ data.name }}</h5>
-              <div id="card-favourite1" v-if="UserId">
-                <a
-                  class="fa fa-star checked"
-                  v-if="data.Favourites.map(fav => String(fav.UserId)).includes(String(UserId))"
-                ></a>
-                <a
-                  class="fa fa-star blank"
-                  @click.prevent="isFavourite(data.id)"
-                  v-else
-                ></a>
-              </div>
             </div>
             <p
               class="card-text"
@@ -193,12 +185,25 @@ Card;
             >
               {{ data.Major.name }}
             </p>
+            <div id="button-package">
             <button
               @click.prevent="isDetailStore(data.id)"
-              class="btn btn-primary"
+              class="btn btn-secondary"
             >
               Detail
             </button>
+            <div id="card-buy"
+             v-if="UserId"
+            >
+              <button type="button" class="btn btn-success"
+              v-if="data.Buys.map(el => String(el.UserId)).includes(String(UserId))"
+              >Terpilih</button>
+              <button type="button" class="btn btn-primary"
+              @click.prevent="isBuy(data.id)"
+              v-else
+              >Pilih</button>
+            </div>
+            </div>
           </div>
         </div>
       </div>
@@ -270,6 +275,11 @@ Card;
 
 #side-cards {
   display: flex;
+}
+
+#button-package {
+  display: flex;
+  justify-content: space-between;
 }
 
 #cards {
