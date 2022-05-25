@@ -45,7 +45,7 @@ export const useChatFirebaseStore = defineStore({
     },
 
     fetchMessage() {
-      // this.chats = []
+      this.chats = []
 
       // last
       db.collection("chats").orderBy('createdAt', 'asc')
