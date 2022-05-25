@@ -50,7 +50,12 @@ export default {
     },
 
     castDetails(cast) {
-      return parseInt(cast.release_date) + " .";
+        if (cast.release_date) {
+            return parseInt(cast.release_date) + " .";
+        } 
+        if (!cast.release_date) {
+            return ""
+        }
     },
   },
 };

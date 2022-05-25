@@ -6,5 +6,8 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    // optional configuration for resulting class name and/or tailwind theme key
+    require('tailwindcss-spinner')({ className: 'spinner', themeKey: 'spinner' }),
+  ],
 }
