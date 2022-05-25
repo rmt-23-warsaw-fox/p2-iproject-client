@@ -1,5 +1,23 @@
 <script>
 import { RouterLink } from "vue-router";
+
+export default {
+  props: {
+    casts: {
+      required: true,
+    },
+  },
+  methods: {
+    castProfileImage(cast) {
+      if (cast.profile_path) {
+        return "https://image.tmdb.org/t/p/w300/" + cast.profile_path;
+      } else {
+        return "https://via.placeholder.com/300x450";
+      }
+    },
+  },
+};
+
 </script>
 
 <template>
