@@ -1,18 +1,18 @@
 <script>
 import axios from "axios";
 import { RouterLink } from "vue-router";
-import { useCounterStore } from "../../stores/counter";
+import { useCounterStore } from "../stores/counter";
 import { mapState, mapStores, mapActions, mapWritableState } from "pinia";
-import Card from "./card.vue";
+import Card from "../components/card.vue";
 
 const baseUrl = "http://localhost:3000/";
 export default {
   data() {
     return {
       movies: [],
-      genres: [],
+      majors: [],
       title: "",
-      GenreId: "",
+      MajorId: "",
       offset: 0,
       star: false,
       localName: "wow",
@@ -36,7 +36,7 @@ export default {
         }
 
         const filter = await axios.get(
-          `${baseUrl}products?offset=${this.offset}&title=${this.title}&genre=${this.GenreId}`
+          `${baseUrl}products?offset=${this.offset}&title=${this.title}&major=${this.MajorId}`
         );
         this.movies = filter.data.data.rows;
       } catch (err) {
@@ -45,7 +45,7 @@ export default {
     },
     clearFilter() {
       this.title = "";
-      this.GenreId = "";
+      this.MajorId = "";
       this.isFilter(null, null, null);
     },
     isDetail(id) {
@@ -63,7 +63,7 @@ export default {
           }
         );
         const filter = await axios.get(
-          `${baseUrl}products?offset=${this.offset}&title=${this.title}&genre=${this.GenreId}`
+          `${baseUrl}products?offset=${this.offset}&title=${this.title}&major=${this.MajorId}`
         );
         this.movies = filter.data.data.rows;
       } catch (err) {
@@ -82,8 +82,9 @@ export default {
 
       const data = await axios.get(`${baseUrl}products`);
       this.movies = data.data.data.rows;
-      const genre = await axios.get(`${baseUrl}products/genres`);
-      this.genres = genre.data.data;
+      console.log(this.movies);
+      const major = await axios.get(`${baseUrl}products/majors`);
+      this.majors = major.data.data;
     } catch (err) {
       console.log(err);
     }
@@ -104,14 +105,6 @@ Card;
     <div id="side-cards">
       <div class="d-flex flex-column flex-shrink-0 p-3 bg-light side-bar">
         <br />
-        <img
-          src="https://awsimages.detik.net.id/visual/2018/01/14/354a33c6-bdd5-42fc-80ff-484b3d633d0a_43.jpeg?w=450&q=90"
-          alt="profile"
-          id="profile-image"
-        />
-        <br />
-        <span class="fs-5">Selamat Datang</span>
-        <hr />
         <br />
         <h2 id="filter">{{ counterStore.filter }}</h2>
         <br />
@@ -123,9 +116,9 @@ Card;
               id="filterTitle"
               v-model="title"
             /><br /><br />
-            <h3>Genre</h3>
+            <h3>Jurusan</h3>
             <ul class="nav nav-pills flex-column mb-auto">
-              <div id="genre" v-for="data in genres" :key="data.id">
+              <div id="major" v-for="data in majors" :key="data.id">
                 <div class="form-check">
                   <input
                     class="form-check-input"
@@ -133,7 +126,7 @@ Card;
                     name="flexRadioDefault"
                     id="flexRadioDefault1"
                     :value="data.id"
-                    v-model="GenreId"
+                    v-model="MajorId"
                   />
                   <label class="form-check-label" for="flexRadioDefault1">
                     {{ data.name }}
@@ -158,6 +151,10 @@ Card;
             >
               Clear Filter
             </button>
+            <br><br><br><br>
+            <h3>Penasaran nilai UN tiap provinsi ?</h3>
+            <router-link type="button" class="btn btn-success"
+            to="/un">Klik disini</router-link>
           </div>
         </form>
       </div>
@@ -177,7 +174,7 @@ Card;
           />
           <div class="card-body">
             <div id="title-favourite">
-              <h5 class="card-title">{{ data.title }}</h5>
+              <h5 class="card-title">{{ data.name }}</h5>
               <div id="card-favourite1" v-if="UserId">
                 <a
                   class="fa fa-star checked"
@@ -194,7 +191,7 @@ Card;
               class="card-text"
               style="width: 220px; height: 50px; overflow: hidden"
             >
-              {{ data.synopsis }}
+              {{ data.Major.name }}
             </p>
             <button
               @click.prevent="isDetailStore(data.id)"
@@ -357,7 +354,7 @@ body {
   background-color: rgb(189, 184, 184);
   text-align: center;
 }
-#genre {
+#major {
   font-size: 20px;
 }
 .side-bar {
