@@ -9,7 +9,7 @@ export default {
 
   },
   methods : {
-    goToRegist(){
+    goToLoginPage(){
       this.$router.push('/login')
     }
   }
@@ -22,7 +22,9 @@ export default {
       <button>Livechat</button>
       <button>My Matches</button>
       <button>Agents</button>
-      <button>Sign In</button>
+      <button
+      @click.prevent="goToLoginPage"
+      >Sign In</button>
       <button>Sign Out</button>
     </div>
   </nav>
