@@ -3,12 +3,14 @@ import axios from "axios";
 import { RouterLink } from "vue-router";
 import Cast from "./Cast.vue";
 import Images from "./Images.vue";
+import MediaModel from "../models/MediaModel.vue";
 
 export default {
   components: {
     Cast,
     Images,
-  },
+    MediaModel
+},
   data() {
     return {
       movie: {
@@ -24,10 +26,16 @@ export default {
       mediaURL: "",
     };
   },
-  mounted() {
-    this.fetchMovie(this.$route.params.id)
 
+  watch: {
+    "$route.params.id": {
+      handler() {
+        this.fetchMovie(this.$route.params.id);
+      },
+      immediate: true,
+    },
   },
+
   methods: {
     async fetchMovie(movieId) {
       const response = await axios.get(
@@ -35,8 +43,31 @@ export default {
       )
       // console.log(response.data);
       this.movie = response.data
-    }
+    },
+    
+    openYouTubeModel() {
+      this.mediaURL = this.youtubeVideo();
+      this.isVideo = true;
+      this.modelOpen = true;
+    },
+    openImageModel() {
+      this.isVideo = false;
+      this.modelOpen = true;
+    },
+    youtubeVideo() {
+      if (!this.movie.videos) return;
+      return (
+        "https://www.youtube.com/embed/" + this.movie.videos.results[0].key
+      );
+    },
+    showImageModel(imageFullPath) {
+      this.mediaURL = imageFullPath;
+      this.isVideo = false;
+      this.modelOpen = true;
+    },
   },
+
+
   computed: {
     posterPath() {
       return "https://image.tmdb.org/t/p/w500/" + this.movie.poster_path;
@@ -89,6 +120,7 @@ export default {
         </div>
         <div class="mt-5">
           <a
+            @click.prevent="openYouTubeModel"
             target="blank"
             class="rounded bg-yellow-500 px-5 py-3 inline-flex text-black cursor-auto"
           >
@@ -112,10 +144,18 @@ export default {
         </div>
       </div>
     </div>
-  </div>
 
-  <Cast :casts="movie.credits.cast" />
-  <Images :images="movie.images.backdrops"/>
+    <Cast :casts="movie.credits.cast" />
+    <Images
+      :images="movie.images.backdrops"
+      v-on:on-image-click="showImageModel"
+    />
+    <MediaModel
+      v-model="modelOpen"
+      :mediaURL="mediaURL"
+      :isVideo="this.isVideo"
+    />
+  </div>
 </template>
 
 <style></style>

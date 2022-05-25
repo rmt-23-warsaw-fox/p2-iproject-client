@@ -27,13 +27,13 @@ export default {
     </h2>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-      <div class="mr-2" >
+      <div class="mr-2" :key="index" v-for="(cast, index) in casts">
         <img
-          src="../../assets/images/aktor.jpg"
+          :src="castProfileImage(cast)"
           alt=""
           class="hover:opacity-75 tansition easy-in-out duration-150"
         />
-        <span class="text-gray-300">Contoh aktor</span>
+        <span class="text-gray-300">{{ cast.name }}</span>
       </div>
     </div>
   </div>
