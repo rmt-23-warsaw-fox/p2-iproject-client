@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
-
+import axiosInstance from '../api/myserver'
+import Swal from 'sweetalert'
 export const useUserStore = defineStore({
   id: 'user',
   state: () => ({
@@ -9,19 +10,54 @@ export const useUserStore = defineStore({
 
   },
   actions: {
-    async register(){
+    async register(objUser){
       try {
-        
+        console.log("asd")
+        const {data} = await axiosInstance({
+          url : 'users/register',
+          method : 'POST',
+          data : objUser
+        })
+
+        Swal({
+          text : "Register Success",
+          icon : "success"
+        })
+
+        this.router.push('/login')
       } catch (err) {
-        
+        console.log(err)
+        Swal({
+          text: err.response.data.message,
+          icon : 'error'
+        })
       }
     },
     
-    async login(){
+    async login(objUser){
       try {
-        
+        const {data} = await axiosInstance({
+          method : 'POST',
+          url : 'users/login',
+          data : objUser
+        })
+
+        localStorage.setItem('access_token',data.access_token)
+
+        this.isLogin = true
+
+        Swal({
+          text : "login Success",
+          icon : "success"
+        })
+
+        this.router.push('')
       } catch (err) {
-        
+        console.log(err)
+        Swal({
+          text: err.response.data.message,
+          icon : 'error'
+        })
       }
     }
   }

@@ -20,8 +20,8 @@ export default {
         username : '',
         email : '',
         password : '',
-        phoneNumber : '',
-        address : ''
+        ign : '',
+        tagline : ''
       }
     };
   },
@@ -29,16 +29,16 @@ export default {
 </script>
 
 <template>
-  <div class="flex items-center h-[100vh] justify-center my-auto">
+  <div class="flex items-center h-[90vh] justify-center mt-0">
     <form class="bg-zinc-700 flex-col justify-center p-12 rounded-lg shadow-xl">
-      <h1 class="flex justify-center text-2xl mb-6 text-white">REGISTER</h1>
+      <h1 class="flex justify-center text-2xl mb-2 text-white">REGISTER</h1>
       <div class="flex-col pb-2">
         <label for="" class="text-white">username</label>
         <input
           type="text"
           v-model="objUser.username"
           name=""
-          placeholder="John Doe"
+          placeholder="tenzi"
           class="bg-white rounded-sm w-full h-8"
         />
       </div>
@@ -58,26 +58,27 @@ export default {
           type="password"
           name=""
           v-model="objUser.password"
-          placeholder="chickenNugget123"
+          placeholder="password12345"
           class="bg-white rounded-sm w-full h-8"
         />
       </div>
       <div class="flex-col pb-2">
-        <label for="" class="text-white">phone number</label>
+        <label for="" class="text-white">IGN</label>
         <input
           type="text"
           name=""
-          v-model="objUser.phoneNumber"
-          placeholder=""
+          v-model="objUser.ign"
+          placeholder="TenZ"
           class="bg-white rounded-sm w-full h-8"
         />
       </div>
       <div class="flex-col pb-10">
-        <label for="" class="text-white">address</label>
+        <label for="" class="text-white">tagline</label>
         <input
           type="text"
           name=""
-          v-model="objUser.address"
+          placeholder="2001"
+          v-model="objUser.tagline"
           class="bg-white rounded-sm w-full h-8"
         />
       </div>
