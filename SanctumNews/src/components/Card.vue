@@ -1,12 +1,33 @@
 <script>
+import { mapActions, mapWritableState } from 'pinia';
+import { RouterLink } from 'vue-router'
+import { useDataNews } from '../stores/dataNews';
 export default{
-    props :['news']
-}
+    data(){
+        return{
+            urlForDetail : ""
+        }
+    },
+    props :['news'],
+    components :{
+        RouterLink
+    },
+    methods :{
+        clickURL(params){
+            this.urlForDetail = params
+            this.dataURL = this.urlForDetail
+            this.$router.push("/categories/detail") 
+        }
+    },
+    computed:{
+        ...mapWritableState(useDataNews ,['dataURL'])
+    }
+}   
 </script>
 
 <template>
                 <div v-for="data in news.data" id="card" class="col-md-2 mb-4 p-1 " >
-                    <a href>
+                    <a @click.prevent="clickURL(data.link)" href>
                     <div  class="card h-100">
                         <img :src=data.thumbnail alt="">
                         <div  class="card-body">

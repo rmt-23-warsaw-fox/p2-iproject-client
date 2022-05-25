@@ -7,7 +7,11 @@ export const useDataNews = defineStore('News', {
   state: () => ({
     dataNews: [],
     pages: [],
-    dataWeather : []
+    dataWeather: [],
+    searchWeather: "jakarta",
+    category: '',
+    dataLink: '',
+    dataURL: ''
   }),
   getters: {
 
@@ -21,8 +25,9 @@ export const useDataNews = defineStore('News', {
         })
         this.dataNews = data.data
         this.pages = data.data.pages
+        this.category = data.data.category
       } catch (error) {
-        if(error){
+        if (error) {
           Swal.fire(
             'Something Wrong!',
             'error'
@@ -31,20 +36,94 @@ export const useDataNews = defineStore('News', {
       }
     },
 
-    async Weather(id="jakarta"){
+    async Weather() {
       try {
-          const dataWeather = await axios({
-            method: 'GET',
-            url: base_URL + `weather?place=${id}`
-          })
-          this.dataWeather = dataWeather.data
+        const dataWeather = await axios({
+          method: 'GET',
+          url: base_URL + `weather?place=${this.searchWeather}`
+        })
+        this.dataWeather = dataWeather.data
       } catch (error) {
-        if(error){
+        if (error) {
           Swal.fire(
             'Something Wrong!',
             'error'
           )
         }
+      }
+    },
+    async Category(id) {
+      try {
+        this.category = id
+        const data = await axios({
+          method: 'GET',
+          url: base_URL + `${id}`,
+        })
+        this.dataNews = data.data
+      } catch (error) {
+        Swal.fire(
+          'Ohh Noo',
+          `${error.response.data.message}`,
+          'error'
+        )
+      }
+    },
+
+    async Detail() {
+      try {
+        if (this.dataURL) {
+          localStorage.setItem('url', this.dataURL)
+        }
+        let link = localStorage.getItem('url')
+        if (this.category == undefined) {
+          this.category = 'terbaru'
+        }
+        if (this.category) {
+          localStorage.setItem('category', this.category)
+        }
+        let linkCategory = localStorage.getItem('category')
+        const data = await axios({
+          method: 'POST',
+          url: base_URL + `${linkCategory}/detailNews`,
+          data: {
+            url: link
+          }
+        })
+        this.dataLink = data.data.temp
+      } catch (error) {
+        if (error) {
+          Swal.fire(
+            'Ohh Noo',
+            `Something Wrong`,
+            'error'
+          )
+        }
+      }
+    },
+
+    async AddFavorite() {
+      try {
+        const data = await axios({
+          method: 'POST',
+          url: base_URL + "favoritesNews",
+          headers: {
+            access_token: localStorage.getItem('access_token')
+          },
+          data: {
+            url: localStorage.getItem('url')
+          }
+        })
+        Swal.fire(
+          'Berhasil Ditambahkan',
+          'success'
+        )
+      } catch (error) {
+        console.log(error);
+        Swal.fire(
+          'Ohh Noo',
+          `Something Wrong`,
+          'error'
+        )
       }
     }
   }

@@ -27,7 +27,8 @@ export default {
 </script>
 
 <template>
-    <Navbar />
+    <Navbar 
+    />
     <Weather 
     v-bind:cuaca="dataWeather"
     />
@@ -41,7 +42,6 @@ export default {
             </ul>
         </nav>
     </div>
-                
 </template>
 
 <style>
