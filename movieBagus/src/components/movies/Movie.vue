@@ -11,8 +11,18 @@ export default {
   },
   data() {
     return {
-      movie: []
-    }
+      movie: {
+        credits: {
+          crew: {},
+        },
+        images: {
+          backdrops: {},
+        },
+      },
+      modelOpen: false,
+      isVideo: false,
+      mediaURL: "",
+    };
   },
   mounted() {
     this.fetchMovie(this.$route.params.id)
@@ -105,7 +115,7 @@ export default {
   </div>
 
   <Cast :casts="movie.credits.cast" />
-  <Images />
+  <Images :images="movie.images.backdrops"/>
 </template>
 
 <style></style>
