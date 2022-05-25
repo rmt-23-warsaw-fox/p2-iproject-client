@@ -1,23 +1,26 @@
 <script>
 import { useChatFirebaseStore } from '../stores/chatFirebase.js'
-import { mapActions, mapWritableState } from 'pinia'
+import { useUserStore } from '../stores/user.js'
+import { mapActions, mapState, mapWritableState } from 'pinia'
 
 export default {
   data() {
     return {
       message: null,
-      email: null
+      email: null,
     }
   },
   computed: {
-    ...mapWritableState(useChatFirebaseStore, ['chats'])
+    ...mapWritableState(useChatFirebaseStore, ['chats']),
+    ...mapState(useUserStore, ['foundUser'])
   },
   methods: {
     ...mapActions(useChatFirebaseStore, ['sendMessage', 'fetchMessage']),
+    ...mapActions(useUserStore, ['fetchUserById']),
     localSendMessage() {
       this.sendMessage({
-        senderId: 1,
-        receiverId: 2,
+        senderId: +localStorage.getItem('senderId'),
+        receiverId: +this.foundUser.id,
         message: this.message,
         createdAt: new Date(),
       });
@@ -27,7 +30,8 @@ export default {
   created() {
     this.chats = []
     this.fetchMessage()
-    this.email = localStorage.getItem('email')
+    // this.receiverId = localStorage.getItem('receiverId')
+    this.fetchUserById(this.$route.params.id)
   }
 }
 </script>
@@ -37,13 +41,14 @@ export default {
   <div class="container container-center-x py-4" style="min-height: 92vh">
     <div class="card width-400 bg-white p-2">
       <div class="card-header bg-pink-primary text-white rounded-top">
-        <strong>Faldo</strong>
+        <strong>{{ foundUser.username }}</strong>
       </div>
       <div class="card-body bg-light rounded-bottom">
         <div class="bg-white rounded-3 p-3" style="height: 400px">
           <div class="mb-4 d-grid gap-2">
             <div v-for="chat in chats" v-bind:key="chat.id"
-              v-bind:class="email === chat.senderEmail ? 'container-right' : 'container-left'">
+              v-bind:class="+foundUser.id === +chat.receiverId ? 'container-right' : 'container-left'"
+              >
               <div class="card-text width-200 border p-2 rounded-3 bg-pink-light text-white">
                 <span>{{ chat.message }}</span>
               </div>

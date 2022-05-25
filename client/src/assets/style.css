@@ -50,9 +50,43 @@ body{
 }
 
 .width-400{
+  width: 400px;
+}
+
+.width-600{
+  width: 600px;
+}
+
+.width-500{
   width: 500px;
 }
 
 .width-200{
   width: 200px;
+}
+
+.height-92-percent{
+  min-height: 92vh;
+}
+
+.height-300{
+  height: 300px;
+}
+
+.font-500{
+  font-weight: 500;
+}
+
+.scroller {
+  height: 85vh;
+  overflow: auto;
+  scrollbar-color: rebeccapurple green;
+  scrollbar-width: thin;
+}
+
+.scroller-small {
+  height: 200px;
+  overflow: auto;
+  scrollbar-color: rebeccapurple green;
+  scrollbar-width: thin;
 }
