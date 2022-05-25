@@ -13,18 +13,27 @@ export default {
       inputMsg : ''
     }
   },
+  watch: {
+    inputMsg(newInputMsg,oldInputMsg){
+      if(oldInputMsg.length>0 && newInputMsg.length===0){
+        getMessages().then((messages)=>{
+          this.messages = messages
+        })
+      }
+    }
+  },
   methods : {
     ...mapActions(useUserStore,['getProfile']),
     sendMsg(){
       
       const puuid = this.myProfile.puuid
-      const user = this.myProfile.name
+      const user = this.myProfile.name+'#'+this.myProfile.tag
       const content = this.inputMsg
 
       postMessage(puuid,user,content)
 
       this.inputMsg=''
-    }
+    },
   },
   created(){
     this.getProfile()
@@ -41,7 +50,7 @@ export default {
 </script>
 <template>
   <div class="mt-10 container mx-auto flex justify-center items-center">
-    <div class="max-w-2xl border rounded ">
+    <div class="w-[500px] border rounded ">
       <div>
         <div class="w-full">
           <div class="relative flex items-center p-3 border-b border-gray-300">
@@ -56,35 +65,27 @@ export default {
             >
             </span>
           </div>
-          <div class="relative w-full p-6 overflow-y-auto h-[25rem]">
+          <div class="relative w-full p-6 overflow-y-auto h-[25rem] ">
             <ul class="space-y-2">
-              <li class="flex justify-start">
+              <li 
+              :class="myProfile.puuid===message.puuid ? 'flex justify-end':'flex justify-start'" 
+              v-for="message in messages" :key="message.id"
+              
+              >
+                
                 <div
-                  class="relative max-w-xl px-4 py-2 text-gray-700 rounded shadow"
+                  class="relative max-w-xl px-4 py-2 text-gray-700 bg-gray-100 rounded shadow mb-3"
                 >
-                  <span class="block">Hi</span>
-                </div>
-              </li>
-              <li class="flex justify-end">
-                <div
-                  class="relative max-w-xl px-4 py-2 text-gray-700 bg-gray-100 rounded shadow"
+                <span 
+                :class="myProfile.puuid===message.puuid ? 'absolute right-0 bottom-10 text-[0.6rem]' :
+                'absolute left-0 bottom-10 text-[0.6rem]'
+                "
                 >
-                  <span class="block">Hiiii</span>
-                </div>
-              </li>
-              <li class="flex justify-end">
-                <div
-                  class="relative max-w-xl px-4 py-2 text-gray-700 bg-gray-100 rounded shadow"
-                >
-                  <span class="block">how are you?</span>
-                </div>
-              </li>
-              <li class="flex justify-start">
-                <div
-                  class="relative max-w-xl px-4 py-2 text-gray-700 rounded shadow"
-                >
-                  <span class="block"
-                    >Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                {{message.postedBy}}
+                </span>
+                  <span 
+                  class="block ">
+                  {{message.content}}
                   </span>
                 </div>
               </li>
@@ -94,8 +95,6 @@ export default {
           <div
             class="flex items-center justify-between w-full p-3 border-t border-gray-300"
           >
-    
-
             <input
               type="text"
               placeholder="Message"
@@ -104,17 +103,10 @@ export default {
               required
               v-model="inputMsg"
             />
-            <button @click.prevent="sendMsg" type="submit">
-              <svg
-                class="w-5 h-5 text-gray-500 origin-center transform rotate-90"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"
-                />
-              </svg>
+            <button @click.prevent="sendMsg" type="submit"
+            class="bg-purple-500 py-1 px-2 text-white rounded-lg"
+            >
+              send
             </button>
           </div>
         </div>
@@ -122,3 +114,7 @@ export default {
     </div>
   </div>
 </template>
+
+<style>
+
+</style>
