@@ -249,7 +249,8 @@ export default {
       this.diagnose(this.input);
     },
     doAppointment() {
-      this.$router.push("/appoint");
+      //   this.$router.push("/appoint");
+      this.$router.push({ path: "appoint", query: { page: "1" } });
     },
   },
   computed: {

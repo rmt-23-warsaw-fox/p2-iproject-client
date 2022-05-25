@@ -19,7 +19,7 @@ export default {
     async registerSubmit(payload) {
       console.log("registerSubmit");
       console.log(payload, "<<<< payload");
-      await this.register(payload)
+      await this.register(payload);
       this.$router.push("/login");
     },
   },
