@@ -7,6 +7,13 @@ export default {
   computed: {
     ...mapState(useNewsStore, ['newsList', 'totalPages']),
   },
+  data() {
+    return {
+      keywords: '',
+      language: '',
+      categories: '',
+    };
+  },
   methods: {
     ...mapActions(useNewsStore, ['fetchApiData']),
   },
@@ -21,40 +28,92 @@ export default {
     <!-- home content -->
     <div class="home_content">
       <div class="filter-section">
-        <form action="/action_page.php">
+        <form
+          action="/action_page.php"
+          @submit.prevent="fetchApiData(null, language, categories, keywords)"
+        >
           <div class="input-section">
-            <label for="vehicle1"> price</label><br />
-            <input type="number" style="width: 180px" /><br />
+            <label for="vehicle1"> keywords</label><br />
+            <input type="text" style="width: 180px" v-model="keywords" /><br />
           </div>
           <br />
           <div class="custom-select" style="width: 200px">
-            <select>
-              <option value="0">Select car:</option>
-              <option value="1">Audi</option>
-              <option value="2">BMW</option>
-              <option value="3">Citroen</option>
-              <option value="4">Ford</option>
-              <option value="5">Honda</option>
-              <option value="6">Jaguar</option>
-              <option value="7">Land Rover</option>
-              <option value="8">Mercedes</option>
-              <option value="9">Mini</option>
-              <option value="10">Nissan</option>
-              <option value="11">Toyota</option>
-              <option value="12">Volvo</option>
+            <select v-model="categories">
+              <option disabled value="">Select Categories:</option>
+              <option value="general">General</option>
+              <option value="business">Business</option>
+              <option value="entertainment">Entertainment</option>
+              <option value="health">Health</option>
+              <option value="science">Science</option>
+              <option value="sports">Sports</option>
+              <option value="technology">Technology</option>
             </select>
           </div>
 
           <div class="checkboxes-section">
-            <p>categories</p>
-            <input type="radio" id="html" name="fav_language" value="HTML" />
-            <label for="vehicle1"> I have a bike</label><br />
-            <input type="radio" id="html" name="fav_language" value="HTML" />
-            <label for="vehicle2"> I have a car</label><br />
-            <input type="radio" id="html" name="fav_language" value="HTML" />
-            <label for="vehicle3"> I have a boat</label><br /><br />
-            <input type="submit" value="Submit" />
+            <p>language</p>
+            <input
+              type="radio"
+              id="language"
+              name="language"
+              value="ar"
+              v-model="language"
+            />
+            <label for="language1">
+              <img
+                src="https://img.icons8.com/color/28/000000/saudi-arabia-circular.png"
+            /></label>
+            <br />
+            <input
+              type="radio"
+              id="language"
+              name="language"
+              value="de"
+              v-model="language"
+            />
+            <label for="language1">
+              <img
+                src="https://img.icons8.com/color/28/000000/germany-circular.png"
+            /></label>
+            <br />
+            <input
+              type="radio"
+              id="language"
+              name="language"
+              value="en"
+              v-model="language"
+            />
+            <label for="language1">
+              <img
+                src="https://img.icons8.com/color/28/000000/usa-circular.png"
+            /></label>
+            <br />
+            <input
+              type="radio"
+              id="language"
+              name="language"
+              value="fr"
+              v-model="language"
+            />
+            <label for="language1">
+              <img
+                src="https://img.icons8.com/color/28/000000/france-circular.png"
+            /></label>
+            <br />
+            <input
+              type="radio"
+              id="language"
+              name="language"
+              value="ru"
+              v-model="language"
+            />
+            <label for="language1">
+              <img
+                src="https://img.icons8.com/color/28/000000/russian-federation-circular.png"
+            /></label>
+            <br />
           </div>
+          <input type="submit" value="search" />
         </form>
       </div>
       <!-- cards -->

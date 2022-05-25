@@ -213,12 +213,12 @@ nav .login_register a {
   display: flex;
   justify-content: center;
   /* flex-wrap: wrap; */
-  margin-top: 90px;
+  margin-top: 50px;
   margin-left: 20px;
   align-self: start;
   align-items: center;
   width: 20%;
-  height: 25%;
+  height: 50%;
   border-radius: 10px;
   background: #81d4fa;
 }
