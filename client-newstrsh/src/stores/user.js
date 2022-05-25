@@ -8,7 +8,8 @@ export const useUserStore = defineStore({
   id: 'user',
   state: () => ({
     loginStatus: false,
-    userId: localStorage.getItem('userID'),
+
+    premium: false,
   }),
   getters: {},
   actions: {
@@ -24,8 +25,9 @@ export const useUserStore = defineStore({
         // console.log(response);
         if (response) {
           localStorage.setItem('access_token', response.data.access_token);
-          localStorage.setItem('userID', response.data.userId);
+          localStorage.setItem('premium', response.data.isPremium);
           this.loginStatus = true;
+          this.premium = true;
           this.$router.push('/');
 
           //   this.$toast.open({
@@ -84,6 +86,8 @@ export const useUserStore = defineStore({
     },
     async loginCheck() {
       if (localStorage.getItem('access_token')) {
+        this.premium = true;
+        this.userId = localStorage.getItem('userID');
         this.loginStatus = true;
       } else {
         this.loginStatus = false;
