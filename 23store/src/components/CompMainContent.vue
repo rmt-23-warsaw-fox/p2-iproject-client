@@ -34,6 +34,9 @@ export default {
           alt="Responsive image"
         />
       </a>
+      <!-- <h6 class="display-6 mt-2 text-primary fw-bold">
+        {{ gadget.priceShow }}
+      </h6> -->
     </div>
   </div>
 </template>

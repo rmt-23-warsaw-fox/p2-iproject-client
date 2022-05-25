@@ -30,6 +30,7 @@ export default {
   },
   created() {
     this.getGadget();
+    this.gadgetsStore.buyGadget.quantity = 1;
   },
 };
 </script>

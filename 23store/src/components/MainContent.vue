@@ -14,6 +14,7 @@ export default {
       try {
         const data = await this.gadgetsStore.getDashboardGadgets();
         this.gadgetsStore.dashboardGadgets = data.data;
+        console.log(this.gadgetsStore.dashboardGadgets);
       } catch (error) {
         this.$toast.error(error.response.data.message, {
           position: "top-right",
