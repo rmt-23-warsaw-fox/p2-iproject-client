@@ -30,4 +30,10 @@ const router = createRouter({
   ]
 })
 
+router.beforeEach((to, from) => {
+  if (to.name === 'profile' && !localStorage.getItem('access_token')) {
+    return ({path: '/login'});
+  }
+})
+
 export default router
