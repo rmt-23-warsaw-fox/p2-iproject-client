@@ -9,6 +9,7 @@ export const useCounterStore = defineStore({
     symptomps: [],
     ailments: [],
     readDoctors: [],
+    page: 1,
   }),
   getters: {
     doubleCount: (state) => state.counter * 2,
@@ -93,6 +94,58 @@ export const useCounterStore = defineStore({
       localStorage.setItem("customer_id", response.data.customer_id);
       localStorage.setItem("customer_email", response.data.customer_email);
       this.access_token1 = response.data.access_token;
+    },
+
+    async getDoctors() {
+      console.log("getDoctorsStore");
+      const condition = {
+        page: this.page,
+      };
+      try {
+        const response = await axios({
+          method: "GET",
+          url: `${BASE_URL}/patient/read`,
+          headers: {
+            access_token: this.access_token1,
+          },
+          params: condition,
+        });
+        this.readDoctors = response;
+      } catch (err) {
+        Swal.fire({
+          title: "Error!",
+          text: "Sorry, there is problem",
+          icon: "error",
+          confirmButtonText: "Ok",
+        });
+      }
+    },
+
+    async appointStore(doctor_id, patient_id) {
+      console.log("appoint <<<<<");
+      console.log(doctor_id, patient_id);
+      try {
+        const response = await axios({
+          method: "POST",
+          url: `${BASE_URL}/patient/request`,
+          data: {
+            PatientId: patient_id,
+            DoctorId: doctor_id,
+          },
+          headers: {
+            access_token: this.access_token1,
+          },
+        });
+        console.log(response, "<<<< response");
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
+    assignToken() {
+      console.log("assign token");
+      this.access_token1 = localStorage.getItem("access_token");
+      console.log(this.access_token1, "<<<<<<");
     },
   },
 });

@@ -112,7 +112,7 @@ export default {
   methods: {
     ...mapActions(useCounterStore, ["increment"]),
     doDiagnose() {
-      console.log("dodiagnose")
+      console.log("dodiagnose");
       const access_token = localStorage.getItem("access_token");
       if (!access_token) {
         this.$router.push("/login");
