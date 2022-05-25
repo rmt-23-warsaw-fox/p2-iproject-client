@@ -50,27 +50,19 @@ export const useChatFirebaseStore = defineStore({
       //   console.log(this.chats); 
       // })
       // this.router.push('/chat')
-      console.log('fetch message');
 
       db.collection("chats")
         .onSnapshot((snapshot) => {
           let coba = []
           snapshot.docChanges().forEach((change) => {
             coba.push(change.doc.data())
-            // if (change.type === "added") {
-            //     console.log("New city: ", change.doc.data());
-            // }
-            // if (change.type === "modified") {
-            //     console.log("Modified city: ", change.doc.data());
-            // }
-            // if (change.type === "removed") {
-            //     console.log("Removed city: ", change.doc.data());
-            // }
             this.chats.push(change.doc.data().data)
           });
       
           console.log('>>>>>>>>>>>>>>>>>>>>..', coba);
         });
+
+        
     }
   }
 })
