@@ -1,75 +1,76 @@
 <script >
 import axios from "axios"
 import { RouterLink } from 'vue-router'
+import AccountDropDown from "./AccountDropDown.vue";
+
 
 export default {
-  data() {
-    return {
-      searchResult: [],
-      searchTerm: "",
-      showSearchResult: false,
-    };
-  },
-  mounted() {
-    this.keyboardEvents();
-  },
-  methods: {
-    debounceSearch(event) {
-      clearTimeout(this.debounce);
-      this.debounce = setTimeout(() => {
-        if (event.target.value.length > 3) {
-          this.fetchSearch(event.target.value);
-        } else {
-          this.showSearchResult = false;
-        }
-      }, 600);
+    data() {
+        return {
+            searchResult: [],
+            searchTerm: "",
+            showSearchResult: false,
+        };
     },
-
-    async fetchSearch(term) {
-      try {
-        const response = await axios.get(
-          "https://api.themoviedb.org/3/search/movie?api_key=93a882d2427e407e913daed9d97fc683&query=" + term);
-        this.searchResult = response.data.results;
-        this.showSearchResult = response.data.results ? true : false;
-      } catch (error) {
-        console.log(error);
-      }
+    mounted() {
+        this.keyboardEvents();
     },
-
-    handleFocus() {
-      if (this.searchTerm != "") {
-        this.showSearchResult = true;
-      }
+    methods: {
+        debounceSearch(event) {
+            clearTimeout(this.debounce);
+            this.debounce = setTimeout(() => {
+                if (event.target.value.length > 3) {
+                    this.fetchSearch(event.target.value);
+                }
+                else {
+                    this.showSearchResult = false;
+                }
+            }, 600);
+        },
+        async fetchSearch(term) {
+            try {
+                const response = await axios.get("https://api.themoviedb.org/3/search/movie?api_key=93a882d2427e407e913daed9d97fc683&query=" + term);
+                this.searchResult = response.data.results;
+                this.showSearchResult = response.data.results ? true : false;
+            }
+            catch (error) {
+                console.log(error);
+            }
+        },
+        handleFocus() {
+            if (this.searchTerm != "") {
+                this.showSearchResult = true;
+            }
+        },
+        keyboardEvents() {
+            let windowObj = this;
+            window.addEventListener("click", (e) => {
+                if (!this.$el.contains(e.target)) {
+                    this.showSearchResult = false;
+                }
+            });
+            window.addEventListener("keypress", (e) => {
+                if (e.keyCode == "47") {
+                    e.preventDefault();
+                    windowObj.$refs.searchBox.focus();
+                }
+            });
+            window.addEventListener("keydown", (e) => {
+                if (e.key == "Escape") {
+                    this.showSearchResult = false;
+                }
+            });
+        },
+        posterPath(poster_path) {
+            if (poster_path) {
+                return "https://image.tmdb.org/t/p/w500/" + poster_path;
+            }
+            else {
+                return "https://via.placeholder.com/50x75";
+            }
+        },
     },
-    keyboardEvents() {
-      let windowObj = this;
-
-      window.addEventListener("click", (e) => {
-        if (!this.$el.contains(e.target)) {
-          this.showSearchResult = false;
-        }
-      });
-
-      window.addEventListener("keypress", (e) => {
-        if (e.keyCode == "47") {
-          e.preventDefault();
-          windowObj.$refs.searchBox.focus();
-        }
-      });
-      window.addEventListener("keydown", (e) => {
-        if (e.key == "Escape") {
-          this.showSearchResult = false;
-        }
-      });
-    },
-    posterPath(poster_path) {
-      if (poster_path) {
-        return "https://image.tmdb.org/t/p/w500/" + poster_path;
-      } else {
-        return "https://via.placeholder.com/50x75";
-      }
-    },
-  },
+    components: { AccountDropDown }
 };
 
 </script>
@@ -113,9 +114,10 @@ export default {
       <ul class="px-3" v-if="searchResult.length == 0 && showSearchResult">
         <li>No result found for "{{ searchTerm }}"</li>
       </ul>
+      
     </div>
-
-    <img src="@/assets/images/avatar.jpg" alt="" class="h-10 rounded-full" />
+    <AccountDropDown />
+    <!-- <img src="../../assets/images/user.jpg" alt="" class="h-10 rounded-full" /> -->
   </div>
 </template>
 
