@@ -19,7 +19,7 @@ export default{
 </script>
 
 <template>
-  <div class="full-screen-height bg-white">
+  <div class="full-screen-height bg-light">
     <div class="container container-center">
       <div>
         <div class="row my-4">
@@ -56,14 +56,14 @@ export default{
                     <img v-bind:src="meme.image" class="d-block w-100" alt="...">
                   </div>
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+                <button class="carousel-control-prev " type="button" data-bs-target="#carouselExampleControls"
                   data-bs-slide="prev">
-                  <span class="carousel-control-prev-icon bg-dark" aria-hidden="true"></span>
+                  <span class="carousel-control-prev-icon bg-dark rounded-3" aria-hidden="true"></span>
                   <span class="visually-hidden">Previous</span>
                 </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+                <button class="carousel-control-next " type="button" data-bs-target="#carouselExampleControls"
                   data-bs-slide="next">
-                  <span class="carousel-control-next-icon bg-dark" aria-hidden="true"></span>
+                  <span class="carousel-control-next-icon bg-dark rounded-3" aria-hidden="true"></span>
                   <span class="visually-hidden">Next</span>
                 </button>
               </div>
