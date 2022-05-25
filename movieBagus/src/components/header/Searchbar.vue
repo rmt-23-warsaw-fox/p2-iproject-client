@@ -115,7 +115,7 @@ export default {
       </ul>
     </div>
 
-    <img src="../../assets/images/user.jpg" alt="" class="h-10 rounded-full" />
+    <img src="@/assets/images/avatar.jpg" alt="" class="h-10 rounded-full" />
   </div>
 </template>
 
