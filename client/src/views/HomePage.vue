@@ -25,7 +25,9 @@ export default{
         <div class="row my-4">
           <div class="col d-grid gap-3">
             <div class="card  width-400">
-              <h6 class="card-header">Faldo - 24 minute ago</h6>
+              <div class="card-header">
+                <strong>Faldo - 24 minute ago</strong>
+                </div>
               <div class="card-body">
                 <img src="https://qph.fs.quoracdn.net/main-qimg-c7a176cb5bcaec3f681b2b69b2e6f158-lq" alt=""
                   style="width: 100%" />

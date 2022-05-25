@@ -2,11 +2,30 @@ body{
   padding: 0
 }
 
+.bg-pink-primary{
+  background-color: #f06292;
+}
+
+.bg-pink-dark{
+  background-color: #ba2d65;
+}
+
+.bg-pink-light{
+  background-color: #ff94c2;
+}
+
 .container-center{
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.container-center-x{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  /* align-items: center; */
 }
 .container-right{
   display: flex;
@@ -18,6 +37,12 @@ body{
   display: flex;
   flex-direction: row;
   justify-content: start;
+}
+
+.container-down{
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
 }
 
 .full-screen-height {
