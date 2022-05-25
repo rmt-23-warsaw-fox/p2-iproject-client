@@ -7,11 +7,11 @@ export default {
   methods: {
     ...mapActions(useCounterStore, ["fetchMarkets"]),
     fetchMarketsChild(id) {
-      this.fetchMarkets(id)
+      this.fetchMarkets(id);
     },
     detailView(id) {
-      this.$router.push(`/coins/${id}`)
-    }
+      this.$router.push(`/coins/${id}`);
+    },
   },
   computed: {
     ...mapState(useCounterStore, ["markets"]),
@@ -38,28 +38,43 @@ export default {
       <thead>
         <tr>
           <th class="h4">#</th>
-          <th>Name</th>
           <th>Price</th>
+          <th>24h High / Low</th>
           <th>24h % Change</th>
           <th>Market Cap</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="coin in markets" @click.prevent="detailView(coin.name.toLowerCase())">
+        <tr
+          v-for="coin in markets"
+          @click.prevent="detailView(coin.id)"
+          style="cursor: pointer"
+        >
           <td>
             <div class="d-flex">
-              <img :src="coin.image" style="height:50px">
+              <img :src="coin.image" style="height: 50px" />
               <div class="d-flex flex-column ml-3">
-                <p class="mb-1">{{coin.name}}</p>
-                <p class="ticker">{{coin.symbol.toUpperCase()}}</p>
+                <p class="mb-1">{{ coin.name }}</p>
+                <p class="ticker">{{ coin.symbol.toUpperCase() }}</p>
               </div>
             </div>
           </td>
-          <td>{{ coin.name }}</td>
           <td>$ {{ coin.current_price.toLocaleString("en-EN") }}</td>
-          <td v-if=" coin.price_change_percentage_24h > 0" class="text-success">{{ coin.price_change_percentage_24h.toFixed(2) }}%</td>
-          <td v-else-if=" coin.price_change_percentage_24h == 0" class="text-success">{{ coin.price_change_percentage_24h.toFixed(2) }}%</td>
-          <td v-else class="text-danger">{{ coin.price_change_percentage_24h.toFixed(2) }}%</td>
+          <td>
+            <p class="mb-1 highlow">{{ coin.high_24h.toLocaleString("en-EN") }} / {{coin.low_24h.toLocaleString("en-EN") }}</p>
+          </td>
+          <td v-if="coin.price_change_percentage_24h > 0" class="text-success">
+            {{ coin.price_change_percentage_24h.toFixed(2) }}%
+          </td>
+          <td
+            v-else-if="coin.price_change_percentage_24h == 0"
+            class="text-success"
+          >
+            {{ coin.price_change_percentage_24h.toFixed(2) }}%
+          </td>
+          <td v-else class="text-danger">
+            {{ coin.price_change_percentage_24h.toFixed(2) }}%
+          </td>
           <td>$ {{ coin.market_cap.toLocaleString("en-EN") }}</td>
         </tr>
       </tbody>
@@ -67,7 +82,11 @@ export default {
   </div>
   <nav>
     <ul class="pagination justify-content-center">
-      <li class="page-item" v-for="n in 10"><a class="page-link" href="#" @click.prevent="fetchMarketsChild(n)">{{n}}</a></li>
+      <li class="page-item" v-for="n in 10">
+        <a class="page-link" href="#" @click.prevent="fetchMarketsChild(n)">{{
+          n
+        }}</a>
+      </li>
     </ul>
   </nav>
 </template>
@@ -110,5 +129,8 @@ tr td {
   background: #575757;
   border: none;
   color: white;
+}
+.highlow {
+  font-size: 0.9em;
 }
 </style>

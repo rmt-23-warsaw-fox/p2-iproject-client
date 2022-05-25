@@ -9,6 +9,9 @@ export default {
   },
   computed: {
     ...mapState(useCounterStore, ["coin", "history"]),
+    description() {
+      return this.coin.description.en.split(". ")[0]
+    }
   },
   created() {
     this.fetchDetail(this.$route.params.id)
@@ -18,13 +21,13 @@ export default {
 </script>
 
 <template>
-  <div class="container mt-4">
+  <div class="container mt-4" >
     <div class="d-flex">
       <img :src="coin.image.large" alt="" style="width:300px;height:300px" class="flex-shrink-0">
 
-      <div class="ml-3 d-flex flex-column">
+      <div class="ml-5 d-flex flex-column justify-content-center">
         <h2>{{coin.name}}</h2>
-        <p>{{coin.description.en.slice(0, coin.description.en.indexOf("."))}}</p>
+        <p><span v-html="description"></span>.</p>
         <p>Rank: {{coin.market_cap_rank}}</p>
         <p>Current Price: $ {{coin.market_data.current_price.usd.toLocaleString("en-EN")}}</p>
         <p>Market Cap: $ {{coin.market_data.market_cap.usd.toLocaleString("en-EN")}}</p>
@@ -33,7 +36,7 @@ export default {
   </div>
 
   <div class="container mt-5">
-    <line-chart :data="history" :points="false" :min="null" height="80vh" :colors="['#2ed14e', '#666']"></line-chart>
+    <line-chart :data="history" :library="{grid: 'white'}" :points="false" :min="null" height="80vh" :colors="['#2ed14e', '#666']"></line-chart>
   </div>
   <div class="container d-flex ">
     <button class="btn btn-success m-1 form-control" @click.prevent="fetchHistory(this.$route.params.id, 1)">24 Hours</button>
