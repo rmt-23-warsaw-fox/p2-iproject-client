@@ -18,6 +18,7 @@ export default {
       this.sendMessage({
         senderId: 1,
         receiverId: 2,
+        message: this.message,
         createdAt: new Date(),
       });
       this.message = null
