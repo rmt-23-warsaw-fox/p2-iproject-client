@@ -38,12 +38,14 @@ async function getMessages(){
         id : key,
         postedBy : data[key].postedBy,
         content : data[key].content,
-        puuid : data[key].puuid
+        puuid : data[key].puuid,
+        createdAt : data[key].createdAt
       })
     })
     
-     messages.sort((a,b) => Date.parse(b.createdAt) - Date.parse(a.createdAt))
-    return messages
+     const sorted = messages.sort((a,b) => Date.parse(a.createdAt) - Date.parse(b.createdAt))
+
+    return sorted
   } catch (err) {
     console.log(err)
   }
