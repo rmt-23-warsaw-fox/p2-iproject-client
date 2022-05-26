@@ -2,9 +2,7 @@
 import "bootstrap/dist/css/bootstrap.css"
 import "./assets/style.css";
 //vue-toast
-import VueToastify from "vue-toastify";
 //audio-player
-// import AudioPlayer from 'vue3-audio-player'
 import 'vue3-audio-player/dist/style.css'
 //fontawsome
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -31,6 +29,7 @@ app.use(VueGoogleMaps, {
       key: 'AIzaSyBNiFyEf2zwam45WwAbdMjcsZkWcWnFqz8',
   },
 })
+
 app.use(pinia);
 app.use(router);
 app.component('fa', FontAwesomeIcon)

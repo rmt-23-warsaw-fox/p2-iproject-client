@@ -89,15 +89,7 @@ export default {
   <!-- <pre>{{ oneData }}</pre>
   <pre>{{ this.$route.name }} </pre> -->
 
-  <button
-    v-if="this.$route.name === 'detailMusic'"
-    @click.prevent="move('music')"
-  >
-    back
-  </button>
-  <button v-if="this.$route.name === 'player'" @click.prevent="move('radios')">
-    back
-  </button>
+  
   
     <div id="audio-visual" class="d-flex  ">
       <div class="audio-wire audio-wire-1"></div>
@@ -120,6 +112,20 @@ export default {
     @click="playPause()"
     id="music"
   />
+  <div class="container">
+    <button
+      class="btn btn-primary"
+      v-if="this.$route.name === 'detailMusic'"
+      @click.prevent="move('music')"
+    >
+      back
+    </button>
+    <button 
+    class="btn btn-primary"
+    v-if="this.$route.name === 'player'" @click.prevent="move('radios')">
+      back
+    </button>
+  </div>
 
 </template>
 

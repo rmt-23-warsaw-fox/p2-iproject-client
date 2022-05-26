@@ -14,8 +14,6 @@ export default {
 
 <template>
 <h1 class="mt-5">
-  <pre>{{songName}}</pre>
-  <!-- <pre>{{allMusic}}</pre> -->
     <span class="yellow">Search music</span>
   </h1>
   <div class="search-box">

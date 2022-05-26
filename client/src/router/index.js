@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "../views/HomeView.vue";
 import Player from '../components/Player.vue'
 import Radios from '../components/Radios.vue'
 import MapView from '../views/MapView.vue'
@@ -10,7 +9,7 @@ const router = createRouter({
     {
       path: "/",
       name: "home",
-      component: HomeView,
+      component: Radios,
     },
     {
       path: "/player/:stationId",

@@ -7,32 +7,6 @@ export default {
   data() {
     return {
       center: { lat: -6.496294, lng: 106.836295 },
-      // markers: [
-      //   {
-      //     // position: {
-      //     //   lat: -7.301446478281644,
-      //     //   lng: 112.73895263671876,
-      //     // },
-      //   },
-      //   {
-      //     // position: {
-      //     //   lat: 51.198429,
-      //     //   lng: 6.69529,
-      //     // },
-      //   },
-      //   {
-      //     // position: {
-      //     //   lat: 51.165218,
-      //     //   lng: 7.067116,
-      //     // },
-      //   },
-      //   {
-      //     // position: {
-      //     //   lat: 51.09256,
-      //     //   lng: 6.84074,
-      //     // },
-      //   },
-      // ],
     };
   },
   methods: {
@@ -49,7 +23,7 @@ export default {
 
 <template>
   <h1>Location of the radio station</h1>
-  <GMapMap
+  <GMapMap class="center"
     :center="center"
     :zoom="7"
     map-type-id="terrain"
@@ -76,6 +50,11 @@ export default {
 <style>
 body {
   margin: 0;
+  justify-content: center;
+}
+
+.center {
+  display: flex;
   justify-content: center;
 }
 </style>

@@ -11,10 +11,11 @@ export default {
       "getAllRadio",
       "getRadioById",
       "clearSearch",
+      "isVote"
     ]),
   },
   computed: {
-    ...mapState(useRadioStore, ["listRadio", "totalPage"]),
+    ...mapState(useRadioStore, ["listRadio", "totalPage", 'votes']),
     ...mapWritableState(useRadioStore, ["searchName"]),
   },
   created() {
@@ -49,7 +50,10 @@ export default {
       </span>
     </div>
   </div>
-  <table class="container">
+  <div class="search-box mt-2">
+    <a href="" @click.prevent="isVote" style=" color: white"> <fa icon="fire"/> Most popular radio by votes</a>
+  </div>
+  <table class="container mb-5">
     <thead>
       <tr>
         <th>
@@ -72,7 +76,11 @@ export default {
         <td>{{ el.state }}</td>
         <td>{{ el.votes }}</td>
         <td>
-          <button @click.prevent="getRadioById(el.stationId)">Listen</button>
+          <button 
+          class="btn btn-secondary"
+          @click.prevent="getRadioById(el.stationId)">
+          <fa icon="play"/>
+          Listen</button>
         </td>
       </tr>
     </tbody>

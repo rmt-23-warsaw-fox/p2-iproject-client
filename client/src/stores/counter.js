@@ -16,28 +16,33 @@ export const useRadioStore = defineStore({
     oneData: '',
     musicId: '',
     radioPosition: '',
-    markers: []
+    markers: [],
+    votes: false
   }),
   getters: {
-    doubleCount: (state) => state.counter * 2,
+
   },
   actions: {
     async getAllRadio(page) {
       try {
         this.page = page
         page == typeof ('NaN') ? page = 0 : page
-        const url = this.baseUrl + `/?page=${page - 1}&radioName=${this.searchName}`
+        let url = this.baseUrl + `/?page=${page - 1}&radioName=${this.searchName}`
+        if(this.votes === true) {
+          url += `&votes=desc`
+        }
         let resposnse = await axios(url)
         this.listRadio = resposnse.data.data
         this.totalPage = resposnse.data.totalPage
         console.log(resposnse);
         this.router.push(`/radios`)
         this.searchName = ''
-
+        this.votes = false
       } catch (err) {
         console.log(this.page);
         this.getAllRadio(this.page)
         console.log(err);
+        
       }
     },
     async getRadioById(id) {
@@ -117,7 +122,11 @@ export const useRadioStore = defineStore({
         this.getRadioPos()
         console.log(err);
       }
-    }
+    },
+    isVote(){
+      this.votes = true
+      this.getAllRadio()
+    },
 
   },
 });
