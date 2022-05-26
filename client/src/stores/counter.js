@@ -29,7 +29,12 @@ export const useCounterStore = defineStore({
         });
         this.news = response.data.articles;
       } catch (error) {
-        console.log(error);
+        Swal.fire({
+          title: "Error!",
+          text: error.response,
+          icon: "error",
+          confirmButtonText: "Ok",
+        });
       }
     },
     async fetchMarkets(id) {
@@ -73,7 +78,12 @@ export const useCounterStore = defineStore({
         });
         this.compareInfo = response.data
       } catch (error) {
-        console.log(error)
+        Swal.fire({
+          title: "Error!",
+          text: error.response,
+          icon: "error",
+          confirmButtonText: "Ok",
+        });
       }
     },
     async fetchHistory(id, date) {
