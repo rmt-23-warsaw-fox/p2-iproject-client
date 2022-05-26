@@ -77,7 +77,7 @@ export default {
             :href="playerDetail.profile.profileurl"
             target="_blank"
             rel="noopener noreferrer"
-            class="align-middle hover:underline hover:text-sky-700"
+            class="align-middle hover:underline text-sky-600 hover:text-sky-800"
           >
             Click Here!
           </a>
