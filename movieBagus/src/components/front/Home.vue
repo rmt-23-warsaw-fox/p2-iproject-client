@@ -5,18 +5,16 @@ import UpcomingMovies from "./UpcomingMovies.vue";
 export default {
   components: {
     PopularMovies,
-    UpcomingMovies
-}
+    UpcomingMovies,
+  },
 };
 </script>
 
 <template>
-<div class="container mx-auto">
+  <div class="container mx-auto">
     <PopularMovies />
     <UpcomingMovies />
   </div>
 </template>
 
-<style>
-
-</style>
+<style></style>

@@ -6,6 +6,7 @@ export default {};
 
 <template>
   <div class="flex">
+    
     <RouterLink to="/">
       <img src="../../assets/images/mF.png" alt="" />
     </RouterLink>
@@ -16,14 +17,10 @@ export default {};
           Movies
         </RouterLink>
       </li>
+      
       <li>
         <RouterLink to="/actors" class="ml-5">
           Actors
-        </RouterLink>
-      </li>
-      <li>
-        <RouterLink to="/profile" class="ml-5">
-          Profile
         </RouterLink>
       </li>
     </ul>

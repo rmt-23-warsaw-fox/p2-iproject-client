@@ -15,14 +15,15 @@ export default {
   mounted() {
     this.fetchUpcomingMovies();
   },
+
   methods: {
     async fetchUpcomingMovies() {
       const response = await axios.get(
         "https://api.themoviedb.org/3/movie/upcoming?api_key=93a882d2427e407e913daed9d97fc683&language=en-US&page=1"
       );
 
-      this.upcomingMovies = response.data.results.slice(1, 6);
-      console.log(this.upcomingMovies);
+      this.upcomingMovies = response.data.results.slice(1, 2);
+      // console.log(this.upcomingMovies);
     },
   },
 };
@@ -47,6 +48,7 @@ export default {
         </router-link>
       </div>
     </Slide>
+
   </Carousel>
   </div>
 </template>

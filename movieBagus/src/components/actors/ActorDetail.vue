@@ -16,6 +16,7 @@ export default {
     this.fetchSocial(this.$route.params.id);
   },
   methods: {
+
     async fetchActor(actorId) {
       const response = await axios.get(
         "https://api.themoviedb.org/3/person/" + actorId + "?api_key=93a882d2427e407e913daed9d97fc683&language=en-US"
@@ -23,10 +24,12 @@ export default {
 
       this.actor = response.data;
     },
+
     async fetchCredits(actorId) {
       const response = await axios.get(
         "https://api.themoviedb.org/3/person/"+ actorId +"/combined_credits?api_key=93a882d2427e407e913daed9d97fc683&language=en-US"
       );
+      // console.log(response.data.cast, "===================");
       this.castMovies = response.data.cast;
       this.knownFor = response.data.cast.slice(
         Math.max(response.data.cast.length - 5, 1)
@@ -64,13 +67,18 @@ export default {
 <template>
 <div>
     <div class="container mx-auto px-4 py-16 flex">
+
       <div class="flex-none">
+        <!-- PROFILE PICTURE -->
         <img
           :src="'https://image.tmdb.org/t/p/w300/' + this.actor.profile_path"
           alt=""
         />
-
+        
+        <!-- SOCIAL MEDIA -->
         <ul class="flex items-center mt-4">
+
+          <!-- FACEBOOK -->
           <li>
             <a
               :href="'https://facebook.com/' + socialDetails.facebook_id"
@@ -87,6 +95,7 @@ export default {
             </a>
           </li>
 
+          <!-- INSTAGRAM -->
           <li class="ml-6">
             <a
               :href="'https://instagram.com/' + socialDetails.instagram_id"
@@ -103,6 +112,7 @@ export default {
             </a>
           </li>
 
+          <!-- TWITTER -->
           <li class="ml-6">
             <a
               :href="'https://twitter.com/' + socialDetails.twitter_id"
@@ -119,6 +129,7 @@ export default {
             </a>
           </li>
 
+          <!-- WEBSITE -->
           <li class="ml-6">
             <a href="" title="Website">
               <svg
@@ -131,15 +142,23 @@ export default {
               </svg>
             </a>
           </li>
+
         </ul>
+
       </div>
 
+      <!-- PROFILE ACTOR -->
       <div class="ml-20">
+
+        <!-- AKTOR NAME -->
         <h2 class="text-4xl font-semibold">
           {{ this.actor.name }}
         </h2>
 
+          <!-- AKTOR DOB -->
         <div class="flex">
+
+          <!-- LOGO DOB -->
           <svg
             class="fill-current text-gray-400 hover:text-white w-4"
             viewBox="0 0 448 512"
@@ -150,12 +169,14 @@ export default {
           </svg>
           <span class="ml-2 text-gray-400 text-sm">1988-12-16 (31)</span>
         </div>
+
+        <!-- BIOGRAPHY -->
         <p class="text-gray-300 mt-8">
           {{ this.actor.biography }}
         </p>
 
+        <!-- KNOWN FOR -->
         <h4 class="mt-12 font-semibold">Known For</h4>
-
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8">
           <div :key="movie.id" v-for="movie in this.knownFor">
             <router-link
@@ -167,14 +188,16 @@ export default {
                 alt="poster"
                 class="mt-1 hover:opacity-75 transition ease-in-out duration-150"
               />
-
               {{ movie.name }}
             </router-link>
           </div>
         </div>
+
       </div>
+
     </div>
-    <!--  -->
+
+    <!-- CREDIT -->
     <div class="credits border-b border-gray-800">
       <div class="container mx-auto px-4 py-16">
         <h2 class="text-4xl font-semibold">Credits</h2>
@@ -190,7 +213,6 @@ export default {
       </div>
     </div>
 
-    <!--  -->
   </div>
 </template>
 
