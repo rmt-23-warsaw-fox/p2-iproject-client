@@ -20,8 +20,8 @@ export default {
   methods: {
     ...mapActions(useOrderStore, ["addOrder", "finishOrder"]),
 
-    order() {
-      this.addOrder(this.objOrder, this.$route.params.id);
+    async order() {
+      await this.finishOrder(this.objOrder, this.$route.params.id);
     },
   },
   created() {},
