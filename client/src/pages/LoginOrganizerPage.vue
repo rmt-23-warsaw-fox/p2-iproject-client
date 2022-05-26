@@ -49,7 +49,7 @@
 <script>
 import { defineComponent } from 'vue'
 import { useCounterStore } from 'src/stores/info'
-import { mapActions } from 'pinia'
+import { mapActions, mapWritableState } from 'pinia'
 
 export default defineComponent({
   name: 'LoginOrganizerPage',
@@ -60,6 +60,9 @@ export default defineComponent({
         password:""
       }
     }
+  },
+  computed:{
+    ...mapWritableState(useCounterStore, ['persistent'])
   },
   methods: {
     ...mapActions(useCounterStore, ['LoginOrganizer']),

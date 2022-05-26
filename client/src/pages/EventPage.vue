@@ -1,6 +1,9 @@
 <template>
-  <div class="fullscreen bg-primary text-primary text-center q-pa-md flex flex-center">
-    <div class="col wrap" style="max-width:300px">
+  <div class="fullscreen bg-primary text-primary text-center q-pa-md flex flex-center" >
+    <h1 class="absolute text-white" v-if="organizers.length === 0">Nobody's here</h1>
+    <h2 class="absolute" style="top:45%" v-if="organizers.length === 0">🐜🐜🐜</h2>
+    <q-btn unelevated rounded color="grey" label="See you later ..." v-if="organizers.length === 0" class="absolute" style="top:55%" @click.prevent="end()" />
+    <div class="col wrap" style="max-width:300px" v-if="organizers.length !== 0">
       <q-card bordered class="col my-card bg-grey-1 q-ma-md" v-for="organizer in organizers">
         <q-card-section>
           <div class="row items-center no-wrap">
@@ -47,6 +50,10 @@ import { mapActions } from 'pinia';
         this.fetchImgUrl()
         this.createParticipant()
         this.$router.push('/')
+      },
+      end(){
+        localStorage.clear()
+        this.$router.push('/login')
       }
     },
     mounted(){

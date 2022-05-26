@@ -38,7 +38,7 @@
 
 <script>
 import { useCounterStore } from '../stores/info'
-import { mapActions } from 'pinia'
+import { mapActions, mapWritableState } from 'pinia'
 import { defineComponent } from 'vue'
 
 export default defineComponent({
@@ -51,6 +51,9 @@ export default defineComponent({
         password:""
       }
     }
+  },
+  computed:{
+    ...mapWritableState(useCounterStore, ['persistent'])
   },
   methods: {
     ...mapActions(useCounterStore, ['registerParticipant']),

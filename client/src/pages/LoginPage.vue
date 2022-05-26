@@ -41,24 +41,44 @@
         style="width:300px;"   
       />
 
+      <q-dialog v-model="persistent" persistent transition-show="scale" transition-hide="scale">
+      <q-card class="bg-negative text-white" style="width: 300px">
+        <q-card-section>
+          <div class="text-h6">Oops!</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          Something went wrong...
+        </q-card-section>
+
+        <q-card-actions align="center" class="bg-white text-teal">
+          <q-btn flat label="OK" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
     </div>
   </div>
 </template>
 
 <script>
 import { useCounterStore } from '../stores/info'
-import { mapActions } from 'pinia'
+import { mapActions, mapWritableState } from 'pinia'
 import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'LoginPage',
   data(){
     return {
+      
       participant: {
         email:"",
         password:""
       }
     }
+  },
+  computed:{
+    ...mapWritableState(useCounterStore, ['persistent'])
   },
   methods: {
     ...mapActions(useCounterStore, ['loginParticipant']),
