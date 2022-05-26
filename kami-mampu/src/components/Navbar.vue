@@ -5,9 +5,34 @@ import { useCustomerStore } from "../stores/customer";
 export default {
   name: "Navbar",
   computed: {
-    ...mapWritableState(useCustomerStore, ["isLoggedIn"]),
+    ...mapWritableState(useCustomerStore, ["isLoggedIn", "orderedHands"]),
   },
   methods: {
+    ...mapActions(useCustomerStore, ["beforeTransaction", "afterTransaction"]),
+
+    async beforeTransactionHandler() {
+      try {
+        const { data } = await this.beforeTransaction();
+
+        await snap.pay(data.token, {
+          onSuccess: () => {
+            this.afterTransaction();
+
+            this.$toast.success("Transaction Success!", {
+              position: "top-right",
+              duration: 3000,
+            });
+          },
+        });
+      } catch (error) {
+        console.log(error);
+        this.$toast.error("Something went wrong", {
+          position: "top-right",
+          duration: 3000,
+        });
+      }
+    },
+
     signOutHandler() {
       localStorage.clear();
       this.isLoggedIn = false;
@@ -43,7 +68,12 @@ export default {
                 <a class="nav-link">Help History</a>
               </li>
             </router-link>
-            <li v-if="isLoggedIn" class="nav-item">
+            <li
+              v-if="isLoggedIn"
+              class="nav-item"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+            >
               <a class="nav-link">Order Hands</a>
             </li>
             <router-link to="/login">
@@ -68,6 +98,40 @@ export default {
       </div>
     </div>
   </nav>
+  <div
+    class="modal fade"
+    id="exampleModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Order Hands</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form v-on:submit.prevent="beforeTransactionHandler">
+            <div class="mb-3">
+              <label class="form-label">Hands</label>
+              <input
+                type="number"
+                class="form-control"
+                v-model="orderedHands"
+              />
+            </div>
+            <button class="btn btn-primary">Order</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <style scoped>

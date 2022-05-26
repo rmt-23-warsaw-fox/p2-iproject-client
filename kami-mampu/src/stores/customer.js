@@ -7,6 +7,7 @@ export const useCustomerStore = defineStore({
   state: () => ({
     isLoggedIn: false,
     histories: [],
+    orderedHands: 0,
   }),
   getters: {},
   actions: {
@@ -48,6 +49,30 @@ export const useCustomerStore = defineStore({
           duration: 3000,
         });
       }
+    },
+    beforeTransaction() {
+      return axios({
+        method: "post",
+        url: `${baseUrl}/before-transaction`,
+        headers: {
+          access_token: localStorage.getItem("access_token"),
+        },
+        data: {
+          orderedHands: this.orderedHands,
+        },
+      });
+    },
+    afterTransaction() {
+      return axios({
+        method: "patch",
+        url: `${baseUrl}/after-transaction`,
+        headers: {
+          access_token: localStorage.getItem("access_token"),
+        },
+        data: {
+          orderedHands: this.orderedHands,
+        },
+      });
     },
   },
 });
