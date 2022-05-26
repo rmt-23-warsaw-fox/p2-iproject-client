@@ -3,6 +3,7 @@ import CompDetailContent from "./CompDetailContent.vue";
 import ButtonReus from "./ButtonReus.vue";
 import { useAuthStore } from "../stores/auth";
 import { useGadgetStore } from "../stores/gadgets";
+import { usePaymentStore } from "../stores/payment";
 import { mapStores } from "pinia";
 export default {
   components: {
@@ -10,7 +11,7 @@ export default {
     ButtonReus,
   },
   computed: {
-    ...mapStores(useAuthStore, useGadgetStore),
+    ...mapStores(useAuthStore, useGadgetStore, usePaymentStore),
   },
   methods: {
     async payment() {
@@ -18,7 +19,7 @@ export default {
         if (!this.authStore.isLogin) {
           throw new Error("Silahkan login terlebih dahulu");
         }
-        console.log(this.authStore.userProfile.firstName);
+
         if (
           !this.authStore.userProfile.firstName ||
           !this.authStore.userProfile.lastName ||
@@ -32,10 +33,36 @@ export default {
           throw new Error("Lengkapi data profile anda terlebih dahulu");
         }
 
-        await snap.pay("a394b450-26f3-47c4-97f1-b26551b47839", {
-          onSuccess: function (result) {
+        const sendOrder = {
+          firstName: this.authStore.userProfile.firstName,
+          lastName: this.authStore.userProfile.lastName,
+          email: this.authStore.userProfile.email,
+          phone: this.authStore.userProfile.phone,
+          priceTotal: this.gadgetsStore.buyGadget.priceTotal,
+        };
+
+        const { data } = await this.paymentStore.getPaymentToken(sendOrder);
+
+        const payment = {
+          brand: this.gadgetsStore.gadget.brand,
+          productName: this.gadgetsStore.gadget.phone_name,
+          price: this.gadgetsStore.buyGadget.price,
+          amount: this.gadgetsStore.buyGadget.quantity,
+          priceTotal: this.gadgetsStore.buyGadget.priceTotal,
+          detailProduct: this.$route.params.detail,
+          orderId: data.orderId,
+        };
+
+        snap.pay(data.orderToken, {
+          onSuccess: async (result) => {
             console.log("success");
             console.log(result);
+            const { data } = await this.paymentStore.successPayment(payment);
+            this.$router.push("/transaction-history");
+            this.$toast.success(data.message, {
+              position: "top-right",
+              autoClose: 5000,
+            });
           },
           onPending: function (result) {
             console.log("pending");
@@ -44,6 +71,10 @@ export default {
           onError: function (result) {
             console.log("error");
             console.log(result);
+            this.$toast.error("Pembayaran gagal", {
+              position: "top-right",
+              autoClose: 3000,
+            });
           },
           onClose: function () {
             console.log(
