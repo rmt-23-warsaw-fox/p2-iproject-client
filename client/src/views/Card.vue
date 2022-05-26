@@ -12,18 +12,27 @@
       >
         Bookmark
       </button>
+      <button
+        v-if="this.$route.name === `bookmarkPage`"
+        @click.prevent="clickRemove(el.id)"
+        class="btn btn-danger"
+      >
+        Remove
+      </button>
     </div>
   </div>
 </template>
 
 <script>
 import { useCardStore } from "../stores/card";
+import { useBookmarkStore } from "../stores/bookmark";
 import { mapActions } from "pinia";
 export default {
   name: "card",
   props: ["data"],
   methods: {
-    ...mapActions(useCardStore, ["addBookmark"]),
+    ...mapActions(useCardStore, ["addBookmark", "removeBookmark"]),
+    ...mapActions(useBookmarkStore, ["getBookmarks"]),
     async clickBookmark(id, name, img) {
       try {
         await this.addBookmark(id, name, img);
@@ -33,6 +42,14 @@ export default {
           title: err.response.status,
           text: err.response.data.message,
         });
+      }
+    },
+    async clickRemove(id) {
+      try {
+        await this.removeBookmark(id);
+        await this.getBookmarks();
+      } catch (err) {
+        console.log(err);
       }
     },
   },

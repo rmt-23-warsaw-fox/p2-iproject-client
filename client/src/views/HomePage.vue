@@ -59,9 +59,36 @@
         <Cards :data="foods" />
       </div>
     </div>
-
     <div class="footer">
-      <div class="container-footer"></div>
+      <div class="row g-0 container-footer">
+        <div class="col-4 mt-3">
+          <p>Homie</p>
+          <p>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nulla quam
+            provident, unde, repellat suscipit deleniti voluptatum dignissimos
+            molestias ad asperiores eveniet doloremque voluptatem soluta!
+            Eveniet corrupti explicabo repellat nobis eaque.
+          </p>
+        </div>
+        <div class="col-4 mt-3">
+          <p>Links</p>
+          <p>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nulla quam
+            provident, unde, repellat suscipit deleniti voluptatum dignissimos
+            molestias ad asperiores eveniet doloremque voluptatem soluta!
+            Eveniet corrupti explicabo repellat nobis eaque.
+          </p>
+        </div>
+        <div class="col-4 mt-3">
+          <p>Opening hours</p>
+          <p>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nulla quam
+            provident, unde, repellat suscipit deleniti voluptatum dignissimos
+            molestias ad asperiores eveniet doloremque voluptatem soluta!
+            Eveniet corrupti explicabo repellat nobis eaque.
+          </p>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -114,7 +141,7 @@ export default {
 }
 .container-footer {
   margin: 200px 0;
-  height: 30vh;
+  height: 40vh;
   background-color: #f7f3e9;
 }
 </style>

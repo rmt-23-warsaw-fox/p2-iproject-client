@@ -19,5 +19,18 @@ export const useCardStore = defineStore({
         },
       });
     },
+    async removeBookmark(id) {
+      try {
+        const res = await instance({
+          method: "delete",
+          url: `/public/bookmarks/${id}`,
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    },
   },
 });
