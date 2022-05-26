@@ -9,7 +9,6 @@ export default {
     changeCurrencyToRupiah(value) {
       return new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR" }).format(value);
     },
-
     clickDetail(id) {
       this.$router.push(`/destination/${id}`);
     },

@@ -432,177 +432,59 @@ section {
   color: #fff;
 }
 
-.review {
-  display: -webkit-box;
-  display: -ms-flexbox;
+.booking .book-form {
+  padding: 2rem;
+  margin-top: 0cm;
+  margin-bottom: 1cm;
+  background: #29d9d5;
+}
+
+.booking .heading-title {
+  margin-top: 3cm;
+  font-size:30px;
+  text-align: center;
+  color: #29d9d5;
+}
+
+.booking .book-form .flex {
   display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -ms-flex-wrap: wrap;
   flex-wrap: wrap;
   gap: 2rem;
 }
 
-.review .content {
-  -webkit-box-flex: 1;
-  -ms-flex: 1 1 42rem;
-  flex: 1 1 42rem;
+.booking .book-form .flex .inputBox {
+  flex: 1 1 41rem;
 }
 
-.review .content span {
-  font-size: 2rem;
+.booking .book-form .flex .inputBox input {
+  width: 100%;
+  padding: 1.2rem 1.4rem;
+  background-color: #222;
+  font-size: 1.6rem;
   color: #29d9d5;
+  text-transform: none;
+  margin-top: 1.5rem;
+  border: var(--border);
 }
 
-.review .content h3 {
-  font-size: 3rem;
-  color: #fff;
+.booking .book-form .flex .inputBox input:focus {
+  background: var(--black);
+  color: var(--white);
 }
 
-.review .content p {
-  font-size: 1.4rem;
-  color: #aaa;
-  padding: 1rem 0;
-  line-height: 2;
+.booking .book-form .flex .inputBox input:focus::placeholder {
+  color: var(--light-white);
 }
 
-.review .box-container {
-  -webkit-box-flex: 1;
-  -ms-flex: 1 1 42rem;
-  flex: 1 1 42rem;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-}
-
-.review .box-container .box {
-  -webkit-box-flex: 1;
-  -ms-flex: 1 1 20rem;
-  flex: 1 1 20rem;
-  border-radius: 1rem;
-  padding: 2rem;
-  background: #222;
-  border: 0.2rem solid #111;
-}
-
-.review .box-container .box:hover {
-  border: 0.2rem solid #29d9d5;
-}
-
-.review .box-container .box p {
-  font-size: 1.4rem;
-  padding-bottom: 1rem;
-  line-height: 2;
-  color: #aaa;
-}
-
-.review .box-container .box .user {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  gap: 1rem;
-}
-
-.review .box-container .box .user img {
-  height: 5rem;
-  width: 5rem;
-  border-radius: 50%;
-}
-
-.review .box-container .box .user h3 {
-  font-size: 1.7rem;
-  color: #fff;
-}
-
-.review .box-container .box .user span {
-  color: #aaa;
+.booking .book-form .flex .inputBox span {
   font-size: 1.5rem;
+  color: var(--light-black);
 }
 
-.blogs .box-container {
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-columns: (minmax(32rem, 1fr)) [auto-fit];
-  grid-template-columns: repeat(auto-fit, minmax(32rem, 1fr));
-  gap: 1.5rem;
-}
-
-.blogs .box-container .box {
-  border-radius: 1rem;
-  background: #222;
-  overflow: hidden;
-}
-
-.blogs .box-container .box:hover .image img {
-  -webkit-transform: scale(1.1);
-  transform: scale(1.1);
-}
-
-.blogs .box-container .box .image {
-  height: 25rem;
-  overflow: hidden;
-  width: 100%;
-}
-
-.blogs .box-container .box .image img {
-  height: 100%;
-  width: 100%;
-  -o-object-fit: cover;
-  object-fit: cover;
-}
-
-.blogs .box-container .box .content {
-  padding: 2rem;
-}
-
-.blogs .box-container .box .content .link {
-  font-size: 2rem;
-  color: #fff;
-}
-
-.blogs .box-container .box .content .link:hover {
+.booking .book-form .btn {
+  background-color: #222;
   color: #29d9d5;
-}
-
-.blogs .box-container .box .content p {
-  padding: 1rem 0;
-  font-size: 1.4rem;
-  color: #aaa;
-  line-height: 2;
-}
-
-.blogs .box-container .box .content .icon {
-  padding-top: 1rem;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-}
-
-.blogs .box-container .box .content .icon a {
-  font-size: 1.4rem;
-  color: #aaa;
-}
-
-.blogs .box-container .box .content .icon a:hover {
-  color: #29d9d5;
-}
-
-.blogs .box-container .box .content .icon a i {
-  padding-right: 0.5rem;
-  color: #29d9d5;
+  margin-top: 2rem;
 }
 
 .banner {
