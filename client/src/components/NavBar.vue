@@ -23,6 +23,12 @@ export default {
     },
     goToProfile(){
       this.$router.push('/myprofile')
+    },
+    goToForum(){
+      this.$router.push('/forum')
+    },
+    goToMm(){
+      this.$router.push('/mymatches')
     }
   },
   created(){
@@ -39,15 +45,23 @@ export default {
     >ValoKuy</div>
     <div class="flex gap-4 mr-4">
       <button
+      v-if="isLogin"
       @click.prevent="goToChat"
       >Livechat</button>
-      <button>My Matches</button>
-      <button>Forum</button>
+      <button
+      v-if="isLogin"
+      @click.prevent="goToMm"
+      >My Matches</button>
+      <button
+      v-if="isLogin"
+      @click.prevent="goToForum"
+      >Forum</button>
       <button
       @click.prevent="goToLoginPage"
       v-if="!isLogin"
       >Sign In</button>
       <button
+      v-if="isLogin"
       @click.prevent="logout"
       >Sign Out</button>
     </div>
