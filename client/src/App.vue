@@ -7,11 +7,7 @@ export default {
   components: { navbar },
   data() {
     return {
-      login: false,
-      name: "",
-      email: "",
-      password: "",
-      phoneNumber: "",      
+      login: false,     
       form: {
         message: "",
         type: "error",
@@ -26,40 +22,26 @@ export default {
   },
   name: "appVue",
   methods: {
-    async checkRegister(name, email, password, phoneNumber) {
+    async isRegister(name, email, password, phoneNumber) {
       try {
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.phoneNumber = phoneNumber;
-        const emailRegister = await linkUrl.post(`users/checkRegister`, {
+        const emailRegister = await linkUrl.post(`users/register`, {
           name,
           email,
           password,
           phoneNumber,
         })
-      } catch (err) {
-        this.form.message = err.response.data.message;
+        this.form.type = 'success'
+        this.form.message = 'Berhasil registrasi, silahkan check email';
         this.$toast.open(this.form);
-      }
-    },
-    async isRegister() {
-      try {
-        await linkUrl.post(`users/register`, {
-          name: this.name,
-          email: this.email,
-          password: this.password,
-          phoneNumber: this.phoneNumber,
-        });
-        this.$router.push("/login");
+        this.isLogin(email, password)
       } catch (err) {
+        this.form.type = 'error'
         this.form.message = err.response.data.message;
         this.$toast.open(this.form);
       }
     },
     async isLogin(email, password) {
       try {
-        console.log(312);
         const login = await linkUrl.post(`users/login`, {
           email,
           password,
@@ -69,6 +51,7 @@ export default {
         this.login = true;
         this.$router.push("/");
       } catch (err) {
+        this.form.type = 'error'
         this.form.message = err.response.data.message;
         this.$toast.open(this.form);
       }
@@ -76,6 +59,10 @@ export default {
     trueLogout() {
       this.login = false;
     },
+    isLoginGoogle() {
+      this.login = true;
+      this.$router.push('/')
+    }
   },
 };
 </script>
@@ -83,6 +70,10 @@ export default {
 <template>
   <div id="app">
     <navbar @trueLogoutEmit="trueLogout" :trueLoginprops="login" />
-    <router-view @isLoginEmit="isLogin" @registerEmit="checkRegister" />
+    <router-view 
+    @isLoginEmit="isLogin" 
+    @registerEmit="isRegister"
+    @isGoogle='isLoginGoogle'
+    />
   </div>
 </template>

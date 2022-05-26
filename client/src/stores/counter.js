@@ -21,7 +21,6 @@ export const useCounterStore = defineStore({
       this.counter++
     },
     addNumber(number) {
-      console.log(78);
       this.numbers.push(number)
     },
     async listsBuy() {
@@ -32,7 +31,6 @@ export const useCounterStore = defineStore({
           }
         })
         this.myBuys = listsBuy.data.data.Buys
-        console.log(this.myBuys);
       } catch(err) {
         console.log(err);
       }

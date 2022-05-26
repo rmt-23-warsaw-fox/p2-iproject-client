@@ -132,12 +132,6 @@ export default {
             <a class="page-link" href="#">{{ digit }}</a>
           </li>
           <li class="page-item">
-            <a class="page-link" href="#">{{ digit + 1 }}</a>
-          </li>
-          <li class="page-item">
-            <a class="page-link" href="#">{{ digit + 2 }}</a>
-          </li>
-          <li class="page-item">
             <a class="page-link" href="#" @click.prevent="isPage(1, 'plus')"
               >Next</a
             >

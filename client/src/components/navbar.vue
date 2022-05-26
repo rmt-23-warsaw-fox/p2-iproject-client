@@ -28,17 +28,25 @@ export default {
       <router-link to="/" id="home-tag">Veducation</router-link>
     </div>
     <div>
+
+    <div id="true-login-navbar"
+    v-if="trueLoginprops || token"
+    >
     <button type="button" class="btn btn-outline-primary sign"
     @click.prevent="isLogout"
     >Logout</button>
     <router-link type="button" class="btn btn-outline-primary sign" 
-    to='/login'>Sign In</router-link>
-    <router-link type="button" class="btn btn-outline-primary sign" 
-    to="/register">Sign Up</router-link>
-    <router-link type="button" class="btn btn-outline-primary sign" 
     to='/login/listFavourite'
-    v-if="trueLoginprops || token"
     >Paket saya</router-link>
+    </div>
+    <div id="false-login-navbar"
+    v-else
+    >
+      <router-link type="button" class="btn btn-outline-primary sign" 
+      to='/login'>Sign In</router-link>
+      <router-link type="button" class="btn btn-outline-primary sign" 
+      to="/register">Sign Up</router-link>
+    </div>
     </div>
   </div>
 </template>

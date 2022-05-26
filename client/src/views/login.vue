@@ -27,9 +27,9 @@ export default {
             token: googleUser.getAuthResponse().id_token,
           }
         );
-        console.log(signGoogle);
         localStorage.setItem('access_token', signGoogle.data.access_token)
-        this.$router.push('/')
+        localStorage.setItem("UserId", signGoogle.data.id);
+        this.$emit('isGoogle')
       } catch (error) {
         //on fail do something
         console.error(error);

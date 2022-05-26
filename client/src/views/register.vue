@@ -14,7 +14,7 @@ export default {
     isRegister() {
       this.$emit(
       'registerEmit',
-      this.username,
+      this.name,
       this.email,
       this.password,
       this.phoneNumber,
@@ -33,7 +33,7 @@ export default {
           <input
             type="text"
             class="form-control"
-            placeholder="Username"
+            placeholder="name"
             v-model="name"
           />
         </div>

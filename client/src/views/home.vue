@@ -86,7 +86,6 @@ export default {
       
       const major = await linkUrl.get(`products/majors`);
       this.majors = major.data.data;
-      console.log(this.favouriteMovies);
     } catch (err) {
       console.log(err);
     }
