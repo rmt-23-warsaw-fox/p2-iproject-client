@@ -27,7 +27,11 @@ export default {
 <template>
   <div class="card">
     <!-- IMG, HEADER -->
-    <img :src="oneMovie.backdrop_path" :alt="oneMovie.title" />
+    <img
+      :src="oneMovie.backdrop_path"
+      :alt="oneMovie.title"
+      style="width: 40%"
+    />
     <div class="card-body">{{ oneMovie.name }}</div>
     <form action="" v-on:submit.prevent="booking">
       <label for="seatNumber">Choose your seat :</label><br />

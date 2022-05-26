@@ -21,7 +21,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(useAllStore, ["login", "register"]),
+    ...mapActions(useAllStore, ["login", "register", "signInGoogle"]),
     submit() {
       console.log(this.data);
       if (this.$route.name === "register") {
@@ -36,9 +36,21 @@ export default {
     toLogin() {
       this.$router.push("/login");
     },
+    async signGoogle() {
+      try {
+        const googleUser = await this.$gAuth.signIn();
+        const tokenGoogle = googleUser.xc.id_token;
+        const signIn = await this.signInGoogle(tokenGoogle);
+        this.$router.push("/");
+        // if (this.isLogin) {
+        // }
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
   created() {
-    console.log(this.$route.name);
+    // console.log(this.$route.name);
   },
 };
 </script>
@@ -104,7 +116,7 @@ export default {
         />
         <br />
         <br />
-        <a
+        <!-- <a
           href="#"
           v-on:click.prevent="toRegister"
           style="float: left"
@@ -119,12 +131,12 @@ export default {
           v-if="$route.name === 'register'"
         >
           Login
-        </button>
+        </button> -->
         <button
+          v-on:click.prevent="signGoogle"
           style="width: 100%"
           class="btn btn-outline-secondary"
-          id="button"
-          type="submit"
+          id="loginGoogle"
         >
           Use Google Account
         </button>

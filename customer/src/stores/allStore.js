@@ -125,6 +125,18 @@ export const useAllStore = defineStore({
         console.log(error);
       }
     },
+    async signInGoogle(tokenGoogle) {
+      try {
+        const googleLogin = await axios.post(`${baseUrl}/users/loginGoogle`, {
+          token: tokenGoogle,
+        });
+        const access_token = googleLogin.data.access_token;
+        localStorage.setItem("access_token", access_token);
+        this.$state.isLogin = true;
+      } catch (error) {
+        console.log(error);
+      }
+    },
     async logout() {
       try {
         this.$state.isLogin = false;

@@ -21,10 +21,10 @@ export default {
 </script>
 
 <template>
-  <div style="">
+  <div class="card-deck row row-sm-3" style="gap: 30px">
     <div
-      class="card bg-warning"
-      style="width: 13rem"
+      class="card bg-warning col-md-6"
+      style="width: 20rem; padding;: 5%"
       v-for="movie in allMovies"
     >
       <RouterLink :to="{ name: 'detail', params: { id: movie.id } }">
@@ -39,10 +39,10 @@ export default {
       <div class="card-body">
         <h5 class="card-title">{{ movie.title }}</h5>
         <p class="card-text">{{ movie.overview }}</p>
-        <RouterLink :to="{ name: 'booking', params: { MovieId: movie.id } }">
-          <button class="btn btn-primary" v-on:click="">Booking</button>
-        </RouterLink>
       </div>
+      <RouterLink :to="{ name: 'booking', params: { MovieId: movie.id } }">
+        <button class="btn btn-primary" v-on:click="">Booking</button>
+      </RouterLink>
     </div>
   </div>
 </template>
