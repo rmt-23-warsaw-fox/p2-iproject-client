@@ -155,7 +155,7 @@ Card;
               Clear Filter
             </button>
             <br><br><br><br>
-            <h3>Penasaran nilai UN tiap provinsi ?</h3>
+            <h3>Penasaran lokasi SMA/SMK yang ada di Indonesia?</h3>
             <router-link type="button" class="btn btn-success"
             to="/un">Klik disini</router-link>
           </div>

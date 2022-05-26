@@ -2,23 +2,23 @@
 export default {
   data() {
     return {
-      username: '',
+      name: '',
       email: '',
       password: '',
-      phoneNumber: '',
-      address: '',
+      phoneNumber: ''
     }
   },
   name: "registerUser",
   emits: [],
   methods: {
     isRegister() {
-      this.$emit('registerEmit', 
+      this.$emit(
+      'registerEmit',
       this.username,
       this.email,
       this.password,
       this.phoneNumber,
-      this.address)
+      )
     }
   },
 };
@@ -34,7 +34,7 @@ export default {
             type="text"
             class="form-control"
             placeholder="Username"
-            v-model="username"
+            v-model="name"
           />
         </div>
         <div class="mb-3">
@@ -59,14 +59,6 @@ export default {
             class="form-control"
             placeholder="Phone Number"
             v-model="phoneNumber"
-          />
-        </div>
-        <div class="mb-3">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Address"
-            v-model="address"
           />
         </div>
         <button
