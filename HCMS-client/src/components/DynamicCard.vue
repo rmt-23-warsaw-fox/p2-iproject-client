@@ -1,9 +1,10 @@
 <script>
 import { mapActions } from "pinia";
+import Swal from "sweetalert2";
 import { useCounterStore } from "../stores/counter";
 mapActions;
 export default {
-  props: ["element"],
+  props: ["element", "flag", "status"],
   methods: {
     ...mapActions(useCounterStore, ["appointStore"]),
     async appoint(doctor_id) {
@@ -13,6 +14,15 @@ export default {
       console.log("bbbbb");
       await this.appointStore(doctor_id, +patient_id);
       console.log("aaaaaa");
+    },
+    async appoint2(doctor_id) {
+      console.log(doctor_id);
+      Swal.fire({
+        title: "Pending Notice",
+        text: "Please wait for your approval",
+        icon: "info",
+        confirmButtonText: "Ok",
+      });
     },
   },
 };
@@ -26,10 +36,18 @@ export default {
         Speciality: {{ element.speciality }}
       </p>
       <a
+        v-if="flag === 1"
         href="#"
         @click.prevent="appoint(element.id)"
-        class="btn btn-outline-info"
+        class="btn btn-info"
         >Appoint</a
+      >
+      <a
+        v-if="flag === 2"
+        href="#"
+        @click.prevent="appoint2(element.id)"
+        class="btn btn-outline-info"
+        >{{ status }}</a
       >
     </div>
   </div>

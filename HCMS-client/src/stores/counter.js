@@ -10,6 +10,11 @@ export const useCounterStore = defineStore({
     ailments: [],
     readDoctors: [],
     page: 1,
+    access_token1: "",
+    input: {
+      name: "",
+      speciality: "",
+    },
   }),
   getters: {
     doubleCount: (state) => state.counter * 2,
@@ -149,6 +154,42 @@ export const useCounterStore = defineStore({
         console.log(response, "<<<< response");
       } catch (err) {
         console.log(err);
+      }
+    },
+
+    async getDoctors2(input) {
+      console.log("getDoctorsStore2");
+      console.log(input);
+      try {
+        let condition = {
+          page: this.page,
+        };
+        if (input.speciality.length !== 0) {
+          condition.speciality = input.speciality;
+        }
+
+        if (input.name.length !== 0) {
+          condition.name = input.name;
+        }
+
+        const response = await axios({
+          method: "GET",
+          url: `${BASE_URL}/patient/myAppointments`,
+          headers: {
+            access_token: this.access_token1,
+          },
+          params: condition,
+        });
+        this.readDoctors = response.data
+        console.log(response.data)
+        
+      } catch (err) {
+        Swal.fire({
+          title: "Error!",
+          text: err,
+          icon: "error",
+          confirmButtonText: "Ok",
+        });
       }
     },
 

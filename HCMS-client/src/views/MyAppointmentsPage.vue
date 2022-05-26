@@ -6,11 +6,11 @@ import DynamicCard from "@/components/DynamicCard.vue";
 export default {
   data() {
     return {
-      flag: 1,
+      flag: 2,
     };
   },
   methods: {
-    ...mapActions(useCounterStore, ["getDoctors", "assignToken"]),
+    ...mapActions(useCounterStore, ["getDoctors2", "assignToken"]),
     src() {
       this.getDoctors(this.input);
     },
@@ -36,7 +36,7 @@ export default {
   },
   created() {
     this.assignToken();
-    this.getDoctors(this.input);
+    this.getDoctors2(this.input);
   },
 };
 </script>
@@ -47,7 +47,7 @@ export default {
       <div class="row">
         <div class="col-lg-12">
           <div class="title-box">
-            <h2>Appoint Us</h2>
+            <h2>Your Appointments</h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
           </div>
         </div>
@@ -101,10 +101,11 @@ export default {
       </nav>
       <div class="dynamic-card" style="margin-bottom: 50px">
         <DynamicCard
-          v-for="(element, index) in readDoctors.data"
+          v-for="(element, index) in readDoctors"
           :key="index"
-          :element="element"
+          :element="element.Doctor"
           :flag="flag"
+          :status="element.status"
           class="dynamic-component"
         />
       </div>
