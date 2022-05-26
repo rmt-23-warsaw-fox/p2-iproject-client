@@ -36,7 +36,7 @@ export const useNewsStore = defineStore({
         this.totalPages = Math.ceil(response.data.pagination.total / limit);
         this.newsList = response.data.data;
       } catch (error) {
-        console.log(error);
+        console.log(error.response.data.errors.message);
       }
     },
   },
