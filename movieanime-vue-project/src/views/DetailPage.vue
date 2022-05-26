@@ -1,13 +1,18 @@
 <script>
 import { mapActions, mapState } from 'pinia';
 import { useAllInOne } from '../stores';
+import YouTube from 'vue3-youtube';
 
 export default {
+  components: { YouTube },
   computed: {
     ...mapState(useAllInOne, ['movieDetail', 'movieId']),
   },
   methods: {
     ...mapActions(useAllInOne, ['fetchDetail']),
+    onReady() {
+      this.$refs.youtube.playVideo();
+    },
   },
   created() {
     this.fetchDetail(this.movieId);
@@ -29,10 +34,10 @@ export default {
           <p class="card-text" style="font-weight: bolder; margin-bottom: 5px">
             {{ movieDetail.original_title }}
           </p>
-          <a class="btn btn-primary" href="" style="margin-left: 20px"
-            ><p style="margin-bottom: 0">Watch Trailer</p></a
-          >
         </div>
+      </div>
+      <div>
+        <YouTube src="https://www.youtube.com/watch?v=jNQXAC9IVRw" ref="youtube" />
       </div>
     </div>
   </div>
