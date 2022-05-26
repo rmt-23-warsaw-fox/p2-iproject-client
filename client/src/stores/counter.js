@@ -7,7 +7,7 @@ export const useCounterStore = defineStore({
   id: "counter",
   state: () => ({
     counter: 0,
-    url: "http://localhost:3000/",
+    url: "https://cryptosphereserver.herokuapp.com/",
     markets: [],
     coin: {},
     history: [],
