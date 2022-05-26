@@ -1,6 +1,7 @@
 <script>
 import CompDetailContent from "./CompDetailContent.vue";
 import ButtonReus from "./ButtonReus.vue";
+import { useAuthStore } from "../stores/auth";
 import { useGadgetStore } from "../stores/gadgets";
 import { mapStores } from "pinia";
 export default {
@@ -9,29 +10,62 @@ export default {
     ButtonReus,
   },
   computed: {
-    ...mapStores(useGadgetStore),
+    ...mapStores(useAuthStore, useGadgetStore),
   },
   methods: {
     async payment() {
-      await snap.pay("a394b450-26f3-47c4-97f1-b26551b47839", {
-        onSuccess: function (result) {
-          console.log("success");
-          console.log(result);
-        },
-        onPending: function (result) {
-          console.log("pending");
-          console.log(result);
-        },
-        onError: function (result) {
-          console.log("error");
-          console.log(result);
-        },
-        onClose: function () {
-          console.log(
-            "customer closed the popup without finishing the payment"
-          );
-        },
-      });
+      try {
+        if (!this.authStore.isLogin) {
+          throw new Error("Silahkan login terlebih dahulu");
+        }
+        console.log(this.authStore.userProfile.firstName);
+        if (
+          !this.authStore.userProfile.firstName ||
+          !this.authStore.userProfile.lastName ||
+          !this.authStore.userProfile.phone ||
+          !this.authStore.userProfile.address ||
+          this.authStore.userProfile.firstName === "-" ||
+          this.authStore.userProfile.lastName === "-" ||
+          this.authStore.userProfile.phone === "-" ||
+          this.authStore.userProfile.address === "-"
+        ) {
+          throw new Error("Lengkapi data profile anda terlebih dahulu");
+        }
+
+        await snap.pay("a394b450-26f3-47c4-97f1-b26551b47839", {
+          onSuccess: function (result) {
+            console.log("success");
+            console.log(result);
+          },
+          onPending: function (result) {
+            console.log("pending");
+            console.log(result);
+          },
+          onError: function (result) {
+            console.log("error");
+            console.log(result);
+          },
+          onClose: function () {
+            console.log(
+              "customer closed the popup without finishing the payment"
+            );
+          },
+        });
+      } catch (error) {
+        let message = "Internal Server Error";
+
+        if (error.message === "Silahkan login terlebih dahulu") {
+          message = error.message;
+        }
+        if (error.message === "Lengkapi data profile anda terlebih dahulu") {
+          message = error.message;
+        }
+
+        this.$toast.error(message, {
+          position: "top-right",
+          autoClose: 3000,
+        });
+      }
     },
     addQuantity() {
       if (this.gadgetsStore.buyGadget.quantity < 3) {
@@ -53,7 +87,7 @@ export default {
       <div class="col-md-8 col-lg-9">
         <h2 class="mb-3">{{ gadgetsStore.gadget.brand }}</h2>
 
-        <div class="bg-light rounded mb-3">
+        <div class="bg-light rounded mb-3 shadow">
           <div class="container-fluid py-5 d-flex justify-content-between">
             <div>
               <img v-bind:src="gadgetsStore.gadget.thumbnail" alt="" />

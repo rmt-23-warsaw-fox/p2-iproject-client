@@ -9,6 +9,14 @@ export const useAuthStore = defineStore({
       email: "",
       password: "",
     },
+    userProfile: {
+      id: "",
+      email: "",
+      firstName: "",
+      lastName: "",
+      phone: "",
+      address: "",
+    },
   }),
   getters: {},
   actions: {
@@ -22,6 +30,30 @@ export const useAuthStore = defineStore({
       return server.post("/auth/login", {
         email: this.inputUser.email,
         password: this.inputUser.password,
+      });
+    },
+    checkToken() {
+      return server({
+        url: "/auth/check-token",
+        method: "GET",
+        headers: {
+          access_token: localStorage.getItem("access_token"),
+        },
+      });
+    },
+    updateProfile(userProfile) {
+      return server({
+        url: "/auth/update-profile",
+        method: "PUT",
+        headers: {
+          access_token: localStorage.getItem("access_token"),
+        },
+        data: {
+          firstName: userProfile.firstName,
+          lastName: userProfile.lastName,
+          phone: userProfile.phone,
+          address: userProfile.address,
+        },
       });
     },
   },

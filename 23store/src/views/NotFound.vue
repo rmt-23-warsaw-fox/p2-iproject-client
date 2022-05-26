@@ -1,16 +1,14 @@
 <script>
 import MainHeader from "../components/MainHeader.vue";
 import MainFooter from "../components/MainFooter.vue";
-import JumbotronReus from "../components/JumbotronReus.vue";
-import MainContent from "../components/MainContent.vue";
+import ButtonReus from "../components/ButtonReus.vue";
 import { useAuthStore } from "../stores/auth";
 import { mapStores } from "pinia";
 export default {
   components: {
     MainHeader,
     MainFooter,
-    JumbotronReus,
-    MainContent,
+    ButtonReus,
   },
   computed: {
     ...mapStores(useAuthStore),
@@ -48,8 +46,12 @@ export default {
 <template>
   <MainHeader />
   <div class="b-example-divider"></div>
-  <JumbotronReus />
-  <MainContent />
+  <div class="container my-5">
+    <div class="bg-light shadow p-5 text-danger text-center">
+      <h1 class="display-1 fw-bold">- 404 -</h1>
+      <h2 class="display-4 fw-bold">Page Not Found !!!</h2>
+    </div>
+  </div>
   <MainFooter />
 </template>
 

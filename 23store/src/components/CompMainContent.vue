@@ -16,7 +16,7 @@ export default {
 
 <template>
   <div class="col">
-    <div class="bg-light text-center rounded p-3">
+    <div class="bg-light text-center rounded p-3 rounded border">
       <div class="my-3">
         <a
           class="text-dark"

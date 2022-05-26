@@ -34,6 +34,12 @@ export default {
     toRegister() {
       this.$router.push("/register");
     },
+    toProfile() {
+      this.$router.push("/profile");
+    },
+    toTransactionHistories() {
+      this.$router.push("/transaction-history");
+    },
     checkLogin() {
       if (localStorage.getItem("access_token")) {
         this.authStore.isLogin = true;
@@ -77,9 +83,16 @@ export default {
           <div class="d-flex flex-wrap text-end">
             <ButtonReus
               v-if="authStore.isLogin"
-              v-on:click.prevent=""
-              title="Profile"
+              v-on:click.prevent="toTransactionHistories"
+              title="Log Transaction"
               class="btn btn-outline-info text-white me-2"
+              type="button"
+            />
+            <ButtonReus
+              v-if="authStore.isLogin"
+              v-on:click.prevent="toProfile"
+              title="Profile"
+              class="btn btn-outline-light text-white me-2"
               type="button"
             />
             <ButtonReus

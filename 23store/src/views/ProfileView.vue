@@ -1,16 +1,14 @@
 <script>
 import MainHeader from "../components/MainHeader.vue";
 import MainFooter from "../components/MainFooter.vue";
-import JumbotronReus from "../components/JumbotronReus.vue";
-import MainContent from "../components/MainContent.vue";
+import ProfileContent from "../components/ProfileContent.vue";
 import { useAuthStore } from "../stores/auth";
 import { mapStores } from "pinia";
 export default {
   components: {
     MainHeader,
     MainFooter,
-    JumbotronReus,
-    MainContent,
+    ProfileContent,
   },
   computed: {
     ...mapStores(useAuthStore),
@@ -48,8 +46,7 @@ export default {
 <template>
   <MainHeader />
   <div class="b-example-divider"></div>
-  <JumbotronReus />
-  <MainContent />
+  <ProfileContent />
   <MainFooter />
 </template>
 
