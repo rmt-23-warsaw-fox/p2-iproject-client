@@ -3,8 +3,10 @@ import { useUserStore } from '../stores/user';
 import { mapActions, mapState } from 'pinia';
 import { postingComment } from '../methods';
 import CommentBox from '../components/CommentBox.vue'
+import { getPosts } from '../methods';
 export default {
     props: ["post", "id"],
+    emits : ['submit'],
     data() {
         return {
             writeComment: false,
@@ -36,6 +38,8 @@ export default {
             const content = this.commentContent;
             const postId = this.id;
             postingComment(puuid, user, content, postId);
+            this.$emit('submit')
+            
             this.commentContent = "";
         }
     },

@@ -53,4 +53,22 @@ const router = createRouter({
   ]
 })
 
+router.beforeEach((to,from,next)=>{
+  //global nav guard
+  const isLogin = localStorage.access_token;
+  if(to.path === '/myprofile' && !isLogin) {
+    next("/login")
+  } else if (to.path === '/login' && isLogin) {
+    next("/myprofile")
+  } else if (to.path === '/livechat' && !isLogin) {
+    next("/myprofile")
+  } else if (to.path === '/mymatches' && !isLogin) {
+    next("/myprofile")
+  } else if (to.path === '/forum' && !isLogin) {
+    next("/myprofile")
+  } else {
+    next()
+  }
+})
+
 export default router

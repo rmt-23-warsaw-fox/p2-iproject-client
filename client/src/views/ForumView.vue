@@ -35,6 +35,11 @@ export default {
       posting(puuid, user, content);
       this.text = "";
     },
+    fetch(){
+      getPosts().then((x)=>{
+          this.posts=x
+        })
+    }
   },
   created() {
     this.getProfile()
@@ -74,6 +79,7 @@ export default {
       :key="post.id"
       :post="post"
       :id="post.id"
+      @submit="fetch"
       />
     </div>
   </div>

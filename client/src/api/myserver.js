@@ -2,5 +2,5 @@
 import axios from "axios";
 
 export default axios.create({
-  baseURL: "http://localhost:1200/"
+  baseURL: "https://valo-kuy-bray.herokuapp.com/"
 })
