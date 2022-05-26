@@ -19,6 +19,7 @@ export default {
     ...mapActions(useUserStore, ['fetchUser', 'fetchUserById']),
     goToChats(id) {
       this.$router.push(`/chat/${id}`)
+      localStorage.setItem('receiverId', id)
     }
   },
   created() {
@@ -29,7 +30,7 @@ export default {
 </script>
 
 <template>
-  <div class="container-fluid bg-light">
+  <div class="container-fluid bg-white">
     <div class="container container-center height-92-percent ">
 
       <div class="row">
@@ -75,7 +76,7 @@ export default {
                 <div class="">
                   <ul class="list-group scroller-small">
                     <li v-for="user in users"  v-bind:key="user.id" class="list-group-item">
-                      <a v-on:click.prevent="goToChats(user.id)" href="" class="text-decoration-none">{{ user.username }}</a>
+                      <a v-on:click.prevent="goToChats(user.id)" href="" class="text-decoration-none font-500">{{ user.username }}</a>
                     </li>
                   </ul>
                 </div>

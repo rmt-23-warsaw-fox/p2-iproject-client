@@ -44,48 +44,49 @@ export const useChatFirebaseStore = defineStore({
       newChatRef.set(data);
     },
 
-    fetchMessage() {
+    fetchMessage(senderId, receiverId) {
+      console.log(senderId, receiverId);
       this.chats = []
 
       // last
-      db.collection("chats").orderBy('createdAt', 'asc')
+      db.collection("chats")
+        .orderBy('createdAt', 'asc')
         .onSnapshot((snapshot) => {
           let coba = []
           snapshot.docChanges().forEach((change) => {
             coba.push(change.doc.data())
-            this.chats.push(change.doc.data())
+            let firebaseSenderId = change.doc.data().senderId
+            let firebaseReceiverId = change.doc.data().receiverId
+            if( (firebaseSenderId === senderId || firebaseSenderId === receiverId) && ( firebaseReceiverId === receiverId || firebaseReceiverId === senderId)) {
+              this.chats.push(change.doc.data())
+              console.log(this.chats.senderId, this.chats.receiverId);
+            }
           });
 
           console.log('>>>>>>>>>>>>>>>>>>>>..', this.chats);
         });
 
-      // db.collection("chats").orderBy('createdAt', 'asc')
+      // db.collection("chats").where("senderId", "==", senderId).where("receiverId", "==", receiverId)
+      //   .orderBy('createdAt', 'asc')
       //   .get()
       //   .then((querySnapshot) => {
       //     querySnapshot.forEach((doc) => {
       //       // doc.data() is never undefined for query doc snapshots
-      //       this.chats.push(doc.data())
+      //       console.log(doc.id, " => ", doc.data());
       //     });
-      //     console.log(this.chats);
       //   })
-      //   .catch((err) => {
-      //     console.log(err);
+      //   .catch((error) => {
+      //     console.log("Error getting documents: ", error);
       //   });
 
-      // db.collection("chats").orderBy('createdAt', 'asc')
-      //   .onSnapshot((querySnapshot) => {
-          
-      //     querySnapshot.forEach((doc) => {
-      //       this.chats.push(doc.data());
-      //     });
-      //     console.log("Current cities in CA: ", this.chats);
-      //   });
+
+
     },
 
     listenNewMessage() {
       db.collection("chats").orderBy('createdAt', 'asc')
         .onSnapshot((querySnapshot) => {
-          
+
           querySnapshot.forEach((doc) => {
             this.chats.push(doc.data());
           });
