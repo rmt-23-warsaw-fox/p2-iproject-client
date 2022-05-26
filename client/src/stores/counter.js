@@ -95,7 +95,9 @@ export const usePoofStore = defineStore({
         console.log(err)
       }
     },
-
+    async getTeamDetail(id) {
+      console.log(id)
+    },
     async getProfile() {
       try {
         this.move("/profile")
