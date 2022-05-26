@@ -17,7 +17,6 @@ export default {
     },
   },
   created() {
-    // console.log(this.$route.params);
     this.detail(this.$route.params.MovieId);
     this.allRows();
   },

@@ -1,15 +1,14 @@
 <script>
-import Detail from "../components/Detail.vue";
-
+import NotFoundVue from "../components/NotFound.vue";
 export default {
   components: {
-    Detail,
+    NotFoundVue,
   },
 };
 </script>
 
 <template>
   <main>
-    <Detail />
+    <NotFoundVue />
   </main>
 </template>

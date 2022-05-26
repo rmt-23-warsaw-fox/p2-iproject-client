@@ -14,7 +14,7 @@ const Toast = Swal.mixin({
   },
 });
 
-const baseUrl = "http://localhost:1000";
+const baseUrl = "https://watchthecinema.herokuapp.com";
 const tmdbUrl = "https://api.themoviedb.org/3";
 const imgUrl = "https://image.tmdb.org/t/p/original";
 const api_key = "9b0b4216296cf8879ace43db3e62f6e9";
@@ -37,17 +37,6 @@ export const useAllStore = defineStore({
     totalPages: 1,
   }),
   actions: {
-    // async home() {
-    //   try {
-    //     const allMovie = await axios.get(`${baseUrl}/movies`, {
-    //       headers: { access_token: localStorage.getItem("access_token") },
-    //     });
-    //     this.$state.allMovies = allMovie.data.allMovie;
-    //     console.log(this.$state.allMovies);
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // },
     async home(page) {
       try {
         let currentPage = "";
@@ -64,30 +53,21 @@ export const useAllStore = defineStore({
           movie.backdrop_path = `${imgUrl}/${movie.backdrop_path}`;
           movie.poster_path = `${imgUrl}/${movie.poster_path}`;
           if (movie.vote_average >= 7.5) {
-            // console.log(movie.title, "WOW");
             movie.ticketPrice = 85000;
           } else if (movie.vote_average >= 7) {
             movie.ticketPrice = 75000;
-            // console.log(movie.title, "Good");
           } else if (movie.vote_average >= 6) {
             movie.ticketPrice = 60000;
-            // console.log(movie.title, "OK");
           } else {
             movie.ticketPrice = 50000;
-            // console.log(movie.title, "Not Bad");
           }
         });
-        // console.log(this.$state.allMovies, "TEST");
       } catch (error) {
         console.log(error);
       }
     },
     async detail(MovieId) {
       try {
-        // console.log(id, "ID");
-        // const oneMovie = await axios.get(`${baseUrl}/movies/detail/${id}`, {
-        //   headers: { access_token: localStorage.getItem("access_token") },
-        // });
         const oneMovie = await axios.get(
           `${tmdbUrl}/movie/${MovieId}?api_key=${api_key}`
         );
@@ -95,19 +75,14 @@ export const useAllStore = defineStore({
         this.$state.oneMovie.backdrop_path = `${imgUrl}/${this.$state.oneMovie.backdrop_path}`;
         this.$state.oneMovie.poster_path = `${imgUrl}/${this.$state.oneMovie.poster_path}`;
         if (this.$state.oneMovie.vote_average >= 7.5) {
-          // console.log(movie.title, "WOW");
           this.$state.oneMovie.ticketPrice = 85000;
         } else if (this.$state.oneMovie.vote_average >= 7) {
           this.$state.oneMovie.ticketPrice = 75000;
-          // console.log(movie.title, "Good");
         } else if (this.$state.oneMovie.vote_average >= 6) {
           this.$state.oneMovie.ticketPrice = 60000;
-          // console.log(movie.title, "OK");
         } else {
           this.$state.oneMovie.ticketPrice = 50000;
-          // console.log(movie.title, "Not Bad");
         }
-        console.log(this.$state.oneMovie);
       } catch (error) {
         console.log(error);
       }

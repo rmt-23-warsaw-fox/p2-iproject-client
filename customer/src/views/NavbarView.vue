@@ -1,5 +1,4 @@
 <script>
-// import TheWelcome from '@/components/TheWelcome.vue'
 import Navbar from "../components/Navbar.vue";
 
 export default {
@@ -11,7 +10,6 @@ export default {
 
 <template>
   <main>
-    <!-- <TheWelcome /> -->
     <Navbar />
   </main>
 </template>

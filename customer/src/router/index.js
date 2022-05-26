@@ -4,6 +4,7 @@ import DetailView from "../views/DetailView.vue";
 import LoginRegisterView from "../views/LoginRegisterView.vue";
 import BookingView from "../views/BookingView.vue";
 import ticket from "../views/TicketView.vue";
+import NotFoundView from "../views/NotFoundView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -37,6 +38,11 @@ const router = createRouter({
       path: "/register",
       name: "register",
       component: LoginRegisterView,
+    },
+    {
+      path: "/:notfound",
+      name: "notfound",
+      component: NotFoundView,
     },
   ],
 });

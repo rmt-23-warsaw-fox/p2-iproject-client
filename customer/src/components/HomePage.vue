@@ -28,7 +28,6 @@ export default {
       v-for="movie in allMovies"
     >
       <RouterLink :to="{ name: 'detail', params: { id: movie.id } }">
-        <!-- IMG -->
         <img
           class="card-img-top"
           :src="movie.poster_path"
