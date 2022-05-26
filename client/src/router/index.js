@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomePage from '../views/HomePage.vue'
 import ChatPage from '../views/ChatPage.vue'
 import LoginPage from '../views/LoginPage.vue'
+import PostPage from '../views/PostPage.vue'
+import RegisterPage from '../views/RegisterPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -12,14 +14,6 @@ const router = createRouter({
       component: HomePage
     },
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue')
-    },
-    {
       path: '/chat/:id',
       name: 'chat',
       component: ChatPage
@@ -28,8 +22,27 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component: LoginPage
+    },
+    {
+      path: '/post',
+      name: 'post',
+      component: PostPage
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: RegisterPage
     }
   ]
+})
+
+router.beforeEach((to, from) => {
+  if (localStorage.getItem('access_token') !== null && (to.name === 'login' || to.name === 'register')) {
+    console.log('to name', to.name);
+    return {name: 'home'}
+  } else if (localStorage.getItem('access_token') === null && (to.name === 'post' || to.name === 'chat')) {
+    return {name: 'home'}
+  } 
 })
 
 export default router

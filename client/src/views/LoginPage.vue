@@ -1,8 +1,13 @@
 <script>
 import { mapActions } from 'pinia'
 import {useUserStore} from '../stores/user'
+import Navbar from '../components/Navbar.vue'
+import { RouterLink } from 'vue-router'
 
 export default {
+  components: {
+    Navbar
+  },
   data() {
     return {
       email: null,
@@ -19,6 +24,7 @@ export default {
 </script>
 
 <template>
+<Navbar></Navbar>
   <div class="container-fluid container-center height-92-percent bg-light">
     <div class="card p-2 rounded-3 width-400">
       <div class="card-header bg-pink-primary rounded-top text-white text-center">
@@ -42,7 +48,7 @@ export default {
           </div>
         </form>
         <small class="font-500 text-muted">Don't have an account? </small>
-        <a href="" class="text-decoration-none"><small class="font-500">Sign Up</small></a>
+        <RouterLink to="/register" href="" class="text-decoration-none"><small class="font-500">Sign Up</small></RouterLink>
       </div>
     </div>
 
