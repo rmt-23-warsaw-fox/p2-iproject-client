@@ -104,11 +104,11 @@ export const useCounterStore = defineStore({
           page: this.page,
         };
         if (input.speciality.length !== 0) {
-          condition.speciality = input.speciality
+          condition.speciality = input.speciality;
         }
 
         if (input.name.length !== 0) {
-          condition.name = input.name
+          condition.name = input.name;
         }
 
         console.log(condition, "<<< condition");
