@@ -1,5 +1,5 @@
 <script>
-import { mapActions, mapState } from "pinia";
+import { mapActions, mapState, mapWritableState } from "pinia";
 import { useCounterStore } from "../stores/counter";
 import DynamicCard from "@/components/DynamicCard.vue";
 
@@ -15,12 +15,24 @@ export default {
   methods: {
     ...mapActions(useCounterStore, ["getDoctors", "assignToken"]),
     src() {
-      console.log(this.input, "<<< namesrc");
+      this.getDoctors(this.input);
+    },
+    pagination1() {
+      this.page = 1;
+      this.getDoctors(this.input);
+    },
+    pagination2() {
+      this.page = 2;
+      this.getDoctors(this.input);
+    },
+    pagination3() {
+      this.page = 3;
       this.getDoctors(this.input);
     },
   },
   computed: {
     ...mapState(useCounterStore, ["readDoctors"]),
+    ...mapWritableState(useCounterStore, ["page"]),
   },
   components: {
     DynamicCard,
@@ -65,6 +77,31 @@ export default {
         />
       </div>
       <br />
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+              <span class="sr-only">Previous</span>
+            </a>
+          </li>
+          <li class="page-item">
+            <a @click.prevent="pagination1()" class="page-link" href="#">1</a>
+          </li>
+          <li @click.prevent="pagination2()" class="page-item">
+            <a class="page-link" href="#">2</a>
+          </li>
+          <li @click.prevent="pagination3()" class="page-item">
+            <a class="page-link" href="#">3</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+              <span class="sr-only">Next</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
       <div class="dynamic-card" style="margin-bottom: 50px">
         <DynamicCard
           v-for="(element, index) in readDoctors.data"
@@ -83,7 +120,6 @@ export default {
 }
 .dynamic-card {
   display: flex;
-  justify-content: space-between;
 }
 .dynamic-component {
   margin-right: 40px;

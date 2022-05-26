@@ -21,7 +21,7 @@ export default {
   <div class="card" style="width: 18rem">
     <img :src="element.imageUrl" class="card-img-top" alt="..." />
     <div class="card-body">
-      <h5 class="card-title">{{ element.name }}</h5>
+      <h5 style="font-size: 1.15vw" class="card-title">{{ element.name }}</h5>
       <p style="font-size: 1vw" class="card-text">
         Speciality: {{ element.speciality }}
       </p>
