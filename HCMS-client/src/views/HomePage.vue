@@ -77,9 +77,9 @@
                 Get all time support for online reservation. See available beds
                 in hospitals and quickly make a reservation.
               </p>
-              <a href="appoinment.html" class="btn btn-main btn-round-full"
+              <!-- <a href="appoinment.html" class="btn btn-main btn-round-full"
                 >Make a booking</a
-              >
+              > -->
             </div>
 
             <div class="feature-item mb-5 mb-lg-0">
@@ -112,7 +112,13 @@ export default {
   methods: {
     ...mapActions(useCounterStore, ["increment"]),
     doDiagnose() {
-      this.$router.push("/diagnose");
+      console.log("dodiagnose");
+      const access_token = localStorage.getItem("access_token");
+      if (!access_token) {
+        this.$router.push("/login");
+      } else {
+        this.$router.push("/diagnose");
+      }
     },
   },
 };

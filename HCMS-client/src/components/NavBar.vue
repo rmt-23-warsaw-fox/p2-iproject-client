@@ -7,7 +7,8 @@
             <ul class="top-bar-info list-inline-item pl-0 mb-0">
               <li class="list-inline-item">
                 <a href="mailto:support@gmail.com"
-                  ><i class="icofont-support-faq mr-2"></i>support@novena.com</a
+                  ><i class="icofont-support-faq mr-2"></i
+                  >edgar.dimas.ir@gmail.com</a
                 >
               </li>
               <li class="list-inline-item">
@@ -53,88 +54,38 @@
         <div class="collapse navbar-collapse" id="navbarmain">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="index.html">Home</a>
+              <a @click.prevent="doHome()" class="nav-link" href="index.html"
+                >Home</a
+              >
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="about.html">About</a>
+              <a @click.prevent="doLogin()" class="nav-link" href="about.html"
+                >Login</a
+              >
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="service.html">Services</a>
-            </li>
-
-            <li class="nav-item dropdown">
               <a
-                class="nav-link dropdown-toggle"
-                href="department.html"
-                id="dropdown02"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-                >Department <i class="icofont-thin-down"></i
-              ></a>
-              <ul class="dropdown-menu" aria-labelledby="dropdown02">
-                <li>
-                  <a class="dropdown-item" href="department.html"
-                    >Departments</a
-                  >
-                </li>
-                <li>
-                  <a class="dropdown-item" href="department-single.html"
-                    >Department Single</a
-                  >
-                </li>
-              </ul>
-            </li>
-
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="doctor.html"
-                id="dropdown03"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-                >Doctors <i class="icofont-thin-down"></i
-              ></a>
-              <ul class="dropdown-menu" aria-labelledby="dropdown03">
-                <li><a class="dropdown-item" href="doctor.html">Doctors</a></li>
-                <li>
-                  <a class="dropdown-item" href="doctor-single.html"
-                    >Doctor Single</a
-                  >
-                </li>
-                <li>
-                  <a class="dropdown-item" href="appoinment.html">Appoinment</a>
-                </li>
-              </ul>
-            </li>
-
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="blog-sidebar.html"
-                id="dropdown05"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-                >Blog <i class="icofont-thin-down"></i
-              ></a>
-              <ul class="dropdown-menu" aria-labelledby="dropdown05">
-                <li>
-                  <a class="dropdown-item" href="blog-sidebar.html"
-                    >Blog with Sidebar</a
-                  >
-                </li>
-
-                <li>
-                  <a class="dropdown-item" href="blog-single.html"
-                    >Blog Single</a
-                  >
-                </li>
-              </ul>
+                @click.prevent="doLogout()"
+                class="nav-link"
+                href="service.html"
+                >Logout</a
+              >
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="contact.html">Contact</a>
+              <a
+                @click.prevent="doAppoint()"
+                class="nav-link"
+                href="service.html"
+                >Appoint Doctors</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                @click.prevent="doMyAppoint()"
+                class="nav-link"
+                href="service.html"
+                >MyAppointments</a
+              >
             </li>
           </ul>
         </div>
@@ -142,3 +93,38 @@
     </nav>
   </header>
 </template>
+
+<script>
+import { mapActions } from "pinia";
+import { useCounterStore } from "../stores/counter";
+import Swal from "sweetalert2";
+mapActions;
+export default {
+  props: ["element"],
+  methods: {
+    ...mapActions(useCounterStore, ["appointStore", "getDoctors2"]),
+    doMyAppoint() {
+      this.$router.push("/myappointments");
+    },
+    doAppoint() {
+      this.$router.push("/appoint");
+    },
+    doLogin() {
+      this.$router.push("/login");
+    },
+    doLogout() {
+      localStorage.clear();
+      this.$router.push("/");
+      Swal.fire({
+        title: "Logged out notice",
+        text: "You have been logged out",
+        icon: "info",
+        confirmButtonText: "Ok",
+      });
+    },
+    doHome() {
+      this.$router.push("/");
+    },
+  },
+};
+</script>

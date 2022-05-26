@@ -200,8 +200,8 @@
                     {{ index + 1 }}. Name: {{ element.Issue.Name }} /
                     {{ element.Issue.ProfName }}
                   </h3>
-                  <h5>IcdName: {{ element.Issue.IcdName }}</h5>
-                  <h5>
+                  <h6>IcdName: {{ element.Issue.IcdName }}</h6>
+                  <h6>
                     Recommended consultation:
                     <li
                       v-for="(x, index) in element.Specialisation"
@@ -209,11 +209,12 @@
                     >
                       {{ x.Name }}
                     </li>
-                  </h5>
+                  </h6>
                 </div>
               </div>
 
               <a
+                @click.prevent="doAppointment()"
                 v-if="ailments.data"
                 class="btn btn-main btn-round-full"
                 href="confirmation.html"
@@ -246,6 +247,10 @@ export default {
     doDiagnose2() {
       console.log("diagnose >>>", this.input);
       this.diagnose(this.input);
+    },
+    doAppointment() {
+      //   this.$router.push("/appoint");
+      this.$router.push({ path: "appoint", query: { page: "1" } });
     },
   },
   computed: {
