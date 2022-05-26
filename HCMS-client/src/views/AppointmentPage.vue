@@ -4,8 +4,20 @@ import { useCounterStore } from "../stores/counter";
 import DynamicCard from "@/components/DynamicCard.vue";
 
 export default {
+  data() {
+    return {
+      input: {
+        name: "",
+        speciality: "",
+      },
+    };
+  },
   methods: {
     ...mapActions(useCounterStore, ["getDoctors", "assignToken"]),
+    src() {
+      console.log(this.input, "<<< namesrc");
+      this.getDoctors(this.input);
+    },
   },
   computed: {
     ...mapState(useCounterStore, ["readDoctors"]),
@@ -15,7 +27,7 @@ export default {
   },
   created() {
     this.assignToken();
-    this.getDoctors();
+    this.getDoctors(this.input);
   },
 };
 </script>
@@ -33,6 +45,8 @@ export default {
       </div>
       <div class="input-group rounded">
         <input
+          v-on:keyup.enter="src()"
+          v-model="input.name"
           type="search"
           class="form-control rounded"
           placeholder="Search by name"
@@ -41,9 +55,11 @@ export default {
         />
         <p style="margin: 0px 20px 0px 20px">Or</p>
         <input
+          v-on:keyup.enter="src()"
+          v-model="input.speciality"
           type="search"
           class="form-control rounded"
-          placeholder="Search by name"
+          placeholder="Search by speciality"
           aria-label="Search"
           aria-describedby="search-addon"
         />
