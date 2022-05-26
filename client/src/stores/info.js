@@ -102,6 +102,31 @@ export const useCounterStore = defineStore('counter', {
       db.collection("organizers").doc(localStorage.getItem("eventId")).set(event)
       .then(response => console.log('Success creating event'))
       .catch(error => console.log(error))
+    },
+    async registerParticipant(user){
+      try {
+        const response = await axios.post(
+          BASE_URL + '/participants/register',
+          user
+        )
+
+        const { email, password } = user
+        await this.loginParticipant({email, password})
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async registerOrganizer(user){
+      try {
+        const response = await axios.post(
+          BASE_URL + '/organizers/register',
+          user
+        )
+        const { email, password } = user
+        await this.LoginOrganizer({email, password})
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 })

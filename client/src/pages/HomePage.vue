@@ -60,6 +60,19 @@
       </q-item>
       <!-- End of Participants -->
 
+      <q-dialog v-model="next" persistent>
+      <q-card>
+        <q-card-section class="row items-center">
+          <span class="q-ml-sm">Are you sure?</span>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Cancel" color="primary" v-close-popup />
+          <q-btn flat label="Yes" color="primary" @click.prevent="localQuit()" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
     </q-list>
   </q-page>
 </template>
@@ -83,7 +96,7 @@ export default ({
         // message: "",
         // date: 1653441322577,
         // organizerId:1
-      }
+      },
     }
   },
   methods:{
@@ -136,18 +149,25 @@ export default ({
           let participantChange = change.doc.data()
           participantChange.id = change.doc.id
           if (change.type === "added") {
-              console.log("New participant: ", participantChange)
+              // console.log("New participant: ", participantChange)
               this.participants.push(participantChange)
           }
           if (change.type === "modified") {
-              console.log("Modified participant: ", participantChange)
+              // console.log("Modified participant: ", participantChange)
               let index = this.participants.findIndex(participant => participant.id === participantChange.id)
               Object.assign(this.participants[index], participantChange)
           }
           if (change.type === "removed") {
-              console.log("Removed participant: ", participantChange)
+
+              if(localStorage.getItem('id') == participantChange.id && localStorage.getItem('name') == participantChange.name){
+                localStorage.removeItem('eventId')
+                this.$router.push('/events')
+              }
+
+              // console.log("Removed participant: ", participantChange)
               let index = this.participants.findIndex(participant => participant.id === participantChange.id)
               this.participants.splice(index, 1)
+              
           }
         })
     })

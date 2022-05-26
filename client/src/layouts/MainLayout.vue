@@ -61,7 +61,7 @@
         clickable
         v-ripple
         exact
-        @click.prevent="localQuit()"
+        @click.prevent="quit = true"
         v-if="role !== 'organizer'"
       >
         <q-item-section avatar>
@@ -76,7 +76,7 @@
         clickable
         v-ripple
         exact
-        @click.prevent="localLogout()"
+        @click.prevent="confirm = true"
         v-if="role !== 'organizer'"
       >
         <q-item-section avatar>
@@ -91,7 +91,7 @@
         clickable
         v-ripple
         exact
-        @click.prevent="localLogout()"
+        @click.prevent="confirm = true"
         v-if="role === 'organizer'"
       >
         <q-item-section avatar>
@@ -123,9 +123,37 @@
           </q-item-section>
         </q-item>
 
+      
       </q-list>
-
     </q-drawer>
+
+    <q-dialog v-model="confirm" persistent>
+      <q-card>
+        <q-card-section class="row items-center">
+          <span class="q-ml-sm">Are you sure?</span>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Cancel" color="primary" v-close-popup />
+          <q-btn flat label="Yes" color="primary" @click.prevent="localLogout()" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog v-model="quit" persistent>
+      <q-card>
+        <q-card-section class="row items-center">
+          <span class="q-ml-sm">Are you sure?</span>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Cancel" color="primary" v-close-popup />
+          <q-btn flat label="Yes" color="primary" @click.prevent="localQuit()" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    
 
     <q-page-container>
       <router-view />
@@ -139,6 +167,7 @@
 import { formatDistance } from 'date-fns'
 import db from '../boot/firebase'
 // import { onMounted } from 'vue'
+
 
 
 
@@ -226,6 +255,8 @@ export default {
       rightDrawerOpen:false,
       announcements:[],
       role:"",
+      confirm:false,
+      quit:false,
     }
   },
   created(){
@@ -246,7 +277,6 @@ export default {
     localQuit(){
       db.collection("participants").doc(localStorage.getItem("id")).delete()
       .then(response => {
-        console.log("quitted")
         localStorage.removeItem("eventId")
         this.$router.push('/events')
       })
@@ -256,24 +286,23 @@ export default {
       if(localStorage.getItem('role') === "organizer"){
         db.collection("organizers").doc(localStorage.getItem("eventId")).delete()
         .then(response => {
-          console.log('1');
           return db.collection("announcements").where('OrganizerId', '==', localStorage.getItem("eventId"))
         })
         .then(response => {
-          console.log('2');
           return response.get()
         })
         .then(response => {
-          console.log('3');
           response.forEach(res => {
             res.ref.delete()
           })
+          localStorage.clear()
           this.$router.push('/login')
         })
         .catch(error => console.log(error))
+      } else {
+        localStorage.clear()
+        this.$router.push('/login')
       }
-      localStorage.clear()
-      this.$router.push('/login')
     }
   },
   mounted(){
@@ -283,16 +312,22 @@ export default {
         let announcementChange = change.doc.data()
         announcementChange.id = change.doc.id
         if (change.type === "added") {
-            console.log("New announcement: ", announcementChange)
+            // console.log("New announcement: ", announcementChange)
             this.announcements.push(announcementChange)
         }
         if (change.type === "modified") {
-            console.log("Modified announcement: ", announcementChange)
+            // console.log("Modified announcement: ", announcementChange)
             let index = this.announcements.findIndex(announcement => announcement.id === announcementChange.id)
             Object.assign(this.announcements[index], announcementChange)
         }
         if (change.type === "removed") {
-            console.log("Removed announcement: ", announcementChange)
+            // console.log("Removed announcement: ", announcementChange)
+
+            if(localStorage.getItem('role') == 'participant'){
+                localStorage.removeItem('eventId')
+                this.$router.push('/events')
+            }
+
             let index = this.announcements.findIndex(announcement => announcement.id === announcementChange.id)
             this.announcements.splice(index, 1)
         }

@@ -19,6 +19,11 @@ const routes = [{
   name: "Login"
 },
 {
+  path:"/register",
+  component: () => import('pages/RegisterPage.vue'),
+  name: "Register"
+},
+{
   path:"/events",
   component: () => import('pages/EventPage.vue'),
   name: "Events"
@@ -27,6 +32,11 @@ const routes = [{
   path:"/organizers/login",
   component: () => import('pages/LoginOrganizerPage.vue'),
   name: "Login Organizer"
+},
+{
+  path:"/organizers/register",
+  component: () => import('pages/RegisterOrganizerPage.vue'),
+  name: "Register Organizer"
 },
 {
   path:"/organizers/create-event",
