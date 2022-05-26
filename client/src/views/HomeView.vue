@@ -4,24 +4,24 @@ import { useCounterStore } from "../stores/counter";
 import NewsCard from "../components/NewsCard.vue";
 
 export default {
-    name: "Home Page",
-    methods: {
-        ...mapActions(useCounterStore, ["fetchMarkets", "logout", "fetchNews"]),
-        fetchMarketsChild(id) {
-            this.fetchMarkets(id);
-        },
-        detailView(id) {
-            this.$router.push(`/coins/${id}`);
-        },
+  name: "Home Page",
+  methods: {
+    ...mapActions(useCounterStore, ["fetchMarkets", "logout", "fetchNews"]),
+    fetchMarketsChild(id) {
+      this.fetchMarkets(id);
     },
-    computed: {
-        ...mapState(useCounterStore, ["markets", "loggedIn", "news"]),
+    detailView(id) {
+      this.$router.push(`/coins/${id}`);
     },
-    created() {
-        this.fetchMarkets();
-        this.fetchNews()
-    },
-    components: { NewsCard }
+  },
+  computed: {
+    ...mapState(useCounterStore, ["markets", "loggedIn", "news"]),
+  },
+  created() {
+    this.fetchMarkets();
+    this.fetchNews();
+  },
+  components: { NewsCard },
 };
 </script>
 
@@ -29,12 +29,21 @@ export default {
   <nav
     class="container d-flex justify-content-between align-items-center mt-3 mb-3"
   >
-    <router-link
+  <div>
+<router-link
       to="/"
       class="h3 mb-0"
       style="text-decoration: none; color: #2ed14e"
       >CryptoSphere</router-link
     >
+    <router-link
+      to="/compare"
+      class="h5 mb-0 ml-3"
+      style="text-decoration: none; color: gray"
+      >Compare (beta)</router-link
+    >
+  </div>
+    
     <div>
       <div
         v-if="loggedIn"
@@ -127,7 +136,7 @@ export default {
 
   <div class="container mt-3 mb-5 d-flex flex-column justify-content-center">
     <h3>Lates Crypto News</h3>
-    <NewsCard v-for="(article, id) in news" :key="id" :articleInfo="article"/>
+    <NewsCard v-for="(article, id) in news" :key="id" :articleInfo="article" />
   </div>
 </template>
 

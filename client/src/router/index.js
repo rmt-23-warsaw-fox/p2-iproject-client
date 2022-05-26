@@ -4,6 +4,7 @@ import DetailView from '../views/DetailView.vue'
 import LoginView from '../views/LoginView.vue'
 import SignupView from '../views/SignupView.vue'
 import WatchlistView from '../views/WatchlistView.vue'
+import CompareView from '../views/CompareView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,6 +33,11 @@ const router = createRouter({
       path: '/watchlist',
       name: 'Watchlist Page',
       component: WatchlistView
+    },
+    {
+      path: '/compare',
+      name: 'Compare Page',
+      component: CompareView
     }
   ]
 })

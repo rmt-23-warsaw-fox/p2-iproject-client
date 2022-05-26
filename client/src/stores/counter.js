@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 import router from "../router/index";
+import Swal from "sweetalert2";
 
 export const useCounterStore = defineStore({
   id: "counter",
@@ -12,7 +13,9 @@ export const useCounterStore = defineStore({
     history: [],
     loggedIn: true,
     watchlist: [],
-    news: []
+    news: [],
+    compareInfo: {},
+    compareData: []
   }),
   getters: {
     doubleCount: (state) => state.counter * 2,
@@ -24,7 +27,6 @@ export const useCounterStore = defineStore({
           method: "get",
           url: this.url + `news`,
         });
-        console.log(response)
         this.news = response.data.articles;
       } catch (error) {
         console.log(error);
@@ -39,7 +41,12 @@ export const useCounterStore = defineStore({
 
         this.markets = response.data;
       } catch (error) {
-        console.log(error);
+        Swal.fire({
+          title: "Error!",
+          text: error.response.data.message,
+          icon: "error",
+          confirmButtonText: "Ok",
+        });
       }
     },
     async fetchDetail(id) {
@@ -50,7 +57,23 @@ export const useCounterStore = defineStore({
         });
         this.coin = response.data;
       } catch (error) {
-        console.log(error);
+        Swal.fire({
+          title: "Error!",
+          text: error.response.data.message,
+          icon: "error",
+          confirmButtonText: "Ok",
+        });
+      }
+    },
+    async fetchCompare(obj) {
+      try {
+        let response = await axios({
+          method: "get",
+          url: this.url + `compare?coin1=${obj.coin1}&coin2=${obj.coin2}&dates=${obj.date}`,
+        });
+        this.compareInfo = response.data
+      } catch (error) {
+        console.log(error)
       }
     },
     async fetchHistory(id, date) {
@@ -61,7 +84,28 @@ export const useCounterStore = defineStore({
         });
         this.history = response.data;
       } catch (error) {
-        console.log(error);
+        Swal.fire({
+          title: "Error!",
+          text: error.response.data.message,
+          icon: "error",
+          confirmButtonText: "Ok",
+        });
+      }
+    },
+    async fetchCompareHistory(obj) {
+      try {
+        let response = await axios({
+          method: "get",
+          url: this.url + `compare/history?coin1=${obj.coin1}&coin2=${obj.coin2}&dates=${obj.date}`,
+        });
+        this.compareData = response.data
+      } catch (error) {
+        Swal.fire({
+          title: "Error!",
+          text: error.response,
+          icon: "error",
+          confirmButtonText: "Ok",
+        });
       }
     },
     async register(obj) {
@@ -75,9 +119,21 @@ export const useCounterStore = defineStore({
             password: obj.password,
           },
         });
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Register Success",
+          showConfirmButton: false,
+          timer: 1500,
+        });
         router.push("/login");
       } catch (error) {
-        console.log(error);
+        Swal.fire({
+          title: "Error!",
+          text: error.response.data.message,
+          icon: "error",
+          confirmButtonText: "Ok",
+        });
       }
     },
     async login(obj) {
@@ -92,15 +148,34 @@ export const useCounterStore = defineStore({
         });
         localStorage.setItem("access_token", response.data.access_token);
         this.loggedIn = true;
+
         router.push("/");
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Login Success",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       } catch (error) {
-        console.log(error);
+        Swal.fire({
+          title: "Error!",
+          text: error.response.data.message,
+          icon: "error",
+          confirmButtonText: "Ok",
+        });
       }
     },
     async logout() {
       this.loggedIn = false;
       localStorage.clear();
-
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Logout Success",
+        showConfirmButton: false,
+        timer: 1500,
+      });
       router.push("/");
     },
     async getWatchlist() {
@@ -114,7 +189,12 @@ export const useCounterStore = defineStore({
         });
         this.watchlist = response.data.Watchlists;
       } catch (error) {
-        console.log(error);
+        Swal.fire({
+          title: "Error!",
+          text: error.response.data.message,
+          icon: "error",
+          confirmButtonText: "Ok",
+        });
       }
     },
     async addWatchlist(coin) {
@@ -126,12 +206,24 @@ export const useCounterStore = defineStore({
             access_token: localStorage.getItem("access_token"),
           },
           data: {
-            coin
-          }
+            coin,
+          },
         });
-        router.push("/watchlist")
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Added to Watchlist",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        router.push("/watchlist");
       } catch (error) {
-        console.log(error)
+        Swal.fire({
+          title: "Error!",
+          text: error.response.data.message,
+          icon: "error",
+          confirmButtonText: "Ok",
+        });
       }
     },
     async deleteWatchlist(coin) {
@@ -143,13 +235,25 @@ export const useCounterStore = defineStore({
             access_token: localStorage.getItem("access_token"),
           },
           data: {
-            coin
-          }
+            coin,
+          },
         });
-        this.getWatchlist()
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Deleted from Watchlist",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        this.getWatchlist();
       } catch (error) {
-        console.log(error)
+        Swal.fire({
+          title: "Error!",
+          text: error.response.data.message,
+          icon: "error",
+          confirmButtonText: "Ok",
+        });
       }
-    }
+    },
   },
 });
