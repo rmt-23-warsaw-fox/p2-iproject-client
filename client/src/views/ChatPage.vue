@@ -8,6 +8,8 @@ export default {
     return {
       message: null,
       email: null,
+      senderId: +localStorage.getItem('senderId'),
+      receiverId: +localStorage.getItem('receiverId')
     }
   },
   computed: {
@@ -19,8 +21,8 @@ export default {
     ...mapActions(useUserStore, ['fetchUserById']),
     localSendMessage() {
       this.sendMessage({
-        senderId: +localStorage.getItem('senderId'),
-        receiverId: +this.foundUser.id,
+        senderId: this.senderId,
+        receiverId: this.receiverId,
         message: this.message,
         createdAt: new Date(),
       });
@@ -29,7 +31,7 @@ export default {
   },
   created() {
     this.chats = []
-    this.fetchMessage()
+    this.fetchMessage(this.senderId, this.receiverId)
     // this.receiverId = localStorage.getItem('receiverId')
     this.fetchUserById(this.$route.params.id)
   }
@@ -38,7 +40,7 @@ export default {
 
 <template>
 <div class="bg-light">
-  <div class="container container-center-x py-4" style="min-height: 92vh">
+  <div class="container container-center-x py-4 height-92-percent">
     <div class="card width-400 bg-white p-2">
       <div class="card-header bg-pink-primary text-white rounded-top">
         <strong>{{ foundUser.username }}</strong>
