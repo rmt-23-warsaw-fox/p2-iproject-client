@@ -2,7 +2,7 @@
 import BannerComp from "../components/BannerComp.vue";
 import CardSearchComp from "../components/CardSearchComp.vue";
 import { useAccomodationStore } from "../stores/accomodation";
-import { mapState } from "pinia";
+import { mapActions, mapState } from "pinia";
 export default {
   name: "SearchView",
   components: {
@@ -15,8 +15,11 @@ export default {
       return this.accomodations.length;
     }
   },
+  methods: {
+    ...mapActions(useAccomodationStore, ['cekLogin'])
+  },
   created() {
-    
+    this.cekLogin();
   }
 };
 </script>

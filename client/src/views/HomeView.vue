@@ -1,18 +1,31 @@
 <script>
 import SearchComp from '../components/SearchComp.vue'
 import RoomList from '../components/RoomListComp.vue'
-
+import LoadingComp from '../components/LoadingComp.vue';
+import { useAccomodationStore } from '../stores/accomodation';
+import { mapActions, mapState } from 'pinia';
 export default {
   name: "HomeView",
   components: {
       SearchComp,
-      RoomList
+      RoomList,
+      LoadingComp
+  },
+  computed: {
+    ...mapState(useAccomodationStore, ['isLoading'])
+  },
+  methods: {
+    ...mapActions(useAccomodationStore, ['cekLogin'])
+  },
+  created() {
+    this.cekLogin();
   }
 };
 </script>
 
 <template>
   <div>
+    <LoadingComp v-if="isLoading"/>
     <div id="demo" class="carousel slide banner-carousel" data-bs-ride="carousel">
       <div class="carousel-indicators">
         <button

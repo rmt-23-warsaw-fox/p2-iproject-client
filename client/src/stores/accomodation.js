@@ -5,8 +5,10 @@ import cityOfJava from "../api/cityOfJava";
 export const useAccomodationStore = defineStore("accomodation", {
   state() {
     return {
+      isLoading: false,
       accomodations: [],
       accomodation: {},
+      isLogin: false,
       dataLogin: {
         email: "",
         password: "",
@@ -34,13 +36,7 @@ export const useAccomodationStore = defineStore("accomodation", {
     };
   },
   getters: {
-    isLogin() {
-      if (localStorage.getItem("access_token")) {
-        return true;
-      } else {
-        return false;
-      }
-    },
+    
     getTotalNight() {
       if (this.toDate === "" || this.fromDate === "") {
         return 1;
@@ -63,21 +59,35 @@ export const useAccomodationStore = defineStore("accomodation", {
       this.toDate = "";
       this.roomType = "";
     },
+    cekLogin() {
+      if (localStorage.getItem("access_token")) {
+        this.isLogin = true;
+        return true
+      } else {
+        this.isLogin = false;
+        return false;
+      }
+    },
     async fetchAllAccomodation() {
+      this.isLoading = true;
       try {
         const { data } = await baseUrl.get("/public/accomodation");
         this.accomodations = data;
+        this.isLoading = false;
       } catch (err) {
         console.log(err);
       }
     },
     async fetchAccomodationById(id) {
+      this.isLoading = true;
       try {
         const { data } = await baseUrl.get(
           `/public/accomodation/detail/${+id}`
         );
         this.accomodation = data;
+        this.isLoading = false;
       } catch (err) {
+        this.isLoading = false
         console.log(err);
       }
     },
@@ -88,14 +98,17 @@ export const useAccomodationStore = defineStore("accomodation", {
           text: "Please select location or room type",
         });
       } else {
+        this.isLoading = true;
         try {
           const { data } = await baseUrl.get(
             `/public/accomodation/search?location=${this.location}&TypeId=${this.roomType}`
           );
           this.accomodations = data;
+          this.isLoading = false;
           this.router.push({ name: "search" });
           this.clearInputSearch();
         } catch (err) {
+          this.isLoading = false;
           console.log(err);
         }
       }
@@ -111,6 +124,7 @@ export const useAccomodationStore = defineStore("accomodation", {
       }
     },
     async addAccomodationToWishlist(AccomodationId, TypeId) {
+      this.isLoading = true;
       try {
         const { data } = await baseUrl.post(
           "/public/wishlist/add",
@@ -124,6 +138,7 @@ export const useAccomodationStore = defineStore("accomodation", {
             },
           }
         );
+        this.isLoading = false;
         Swal.fire({
           icon: "success",
           title: "Success",
@@ -133,6 +148,7 @@ export const useAccomodationStore = defineStore("accomodation", {
           this.router.push({ name: "wishlist" });
         });
       } catch ({ response }) {
+        this.isLoading = false
         Swal.fire({
           icon: "error",
           text: response.data.message,
@@ -148,6 +164,7 @@ export const useAccomodationStore = defineStore("accomodation", {
       }
     },
     async fetchAllWishlist() {
+      this.isLoading = true;
       try {
         const { data } = await baseUrl.get("/public/wishlist", {
           headers: {
@@ -155,17 +172,21 @@ export const useAccomodationStore = defineStore("accomodation", {
           },
         });
         this.wishlists = data;
+        this.isLoading = false;
       } catch (err) {
+        this.isLoading = false;
         console.log(err);
       }
     },
     async deleteWishlist(id) {
+      this.isLoading = true;
       try {
         const { data } = await baseUrl.delete(`/public/wishlist/${id}`, {
           headers: {
             access_token: localStorage.getItem("access_token"),
           },
         });
+        this.isLoading = false;
         Swal.fire({
           icon: "success",
           text: data.message,
@@ -173,6 +194,7 @@ export const useAccomodationStore = defineStore("accomodation", {
         });
         this.fetchAllWishlist();
       } catch ({ response }) {
+        this.isLoading = false;
         Swal.fire({
           icon: "error",
           text: response.data.message,
@@ -197,14 +219,17 @@ export const useAccomodationStore = defineStore("accomodation", {
       }
     },
     async login() {
+      this.isLoading = true;
       try {
         const { data } = await baseUrl.post("/public/user/login", {
           email: this.dataLogin.email,
           password: this.dataLogin.password,
         });
         localStorage.setItem("access_token", data.access_token);
+        this.isLoading = false;
         this.router.push({ name: "home" });
       } catch ({ response }) {
+        this.isLoading = false;
         Swal.fire({
           icon: "error",
           title: "Login Failed !",
@@ -213,13 +238,16 @@ export const useAccomodationStore = defineStore("accomodation", {
       }
     },
     async loginWithGoogle(token) {
+      this.isLoading = true;
       try {
         const { data } = await baseUrl.post("/public/user/signin-with-google", {
           token,
         });
         localStorage.setItem("access_token", data.access_token);
+        this.isLoading = false;
         this.router.push({ path: "/" });
       } catch ({ response }) {
+        this.isLoading = false;
         Swal.fire({
           icon: "error",
           title: "Login Failed!",
@@ -228,6 +256,7 @@ export const useAccomodationStore = defineStore("accomodation", {
       }
     },
     async register() {
+      this.isLoading = true;
       try {
         const { data } = await baseUrl.post("/public/user/register", {
           firstName: this.dataRegister.firstName,
@@ -237,6 +266,7 @@ export const useAccomodationStore = defineStore("accomodation", {
           phoneNumber: this.dataRegister.phoneNumber,
           address: this.dataRegister.address,
         });
+        this.isLoading = false;
         Swal.fire({
           icon: "success",
           text: data.message,
@@ -245,12 +275,7 @@ export const useAccomodationStore = defineStore("accomodation", {
           this.router.push({ name: "login" });
         });
       } catch ({ response }) {
-        // const m = response.data.message
-        //   .map((e) => {
-        //     return e + "<br>";
-        //   })
-        //   .join("");
-
+        this.isLoading = false;
         Swal.fire({
           icon: "error",
           title: "Register Failed !",
@@ -259,6 +284,7 @@ export const useAccomodationStore = defineStore("accomodation", {
       }
     },
     async createSnap(accomodation) {
+      this.isLoading = true;
       try {
         const { id, name, Type, price } = accomodation;
 
@@ -279,12 +305,14 @@ export const useAccomodationStore = defineStore("accomodation", {
             },
           }
         );
+        this.isLoading = false;
         snap.pay(data.token);
       } catch (response) {
         console.log(response);
       }
     },
     async fetchTransactions() {
+      this.isLoading = true;
       try {
         const { data } = await baseUrl.get("/public/wishlist/transactions", {
           headers: {
@@ -292,11 +320,14 @@ export const useAccomodationStore = defineStore("accomodation", {
           }
         });
         this.transactions = data;
+        this.isLoading = false;
       } catch ({ response }) {
+        this.isLoading = false;
         console.log(response);
       }
     },
     async updateStatusTransaction(orderId, id) {
+      this.isLoading = true;
       try {
         const { data } = await baseUrl.post('/public/wishlist/payment-status',{
           orderId, id
@@ -305,6 +336,7 @@ export const useAccomodationStore = defineStore("accomodation", {
             access_token: localStorage.getItem('access_token')
           }
         })
+        this.isLoading = false;
         if (data.status === 'success') {
           Swal.fire({
             icon: "success",
@@ -320,6 +352,7 @@ export const useAccomodationStore = defineStore("accomodation", {
           });
         }
       } catch (err) {
+        this.isLoading = false;
         console.log(err);
       }
     }

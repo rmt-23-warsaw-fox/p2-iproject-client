@@ -2,6 +2,7 @@
 import SearchComp from "../components/SearchComp.vue";
 import CardFavoriteComp from "../components/CardFavoriteComp.vue";
 import FeedbackComp from "../components/FeedbackComp.vue";
+import LoadingComp from "../components/LoadingComp.vue";
 import { useAccomodationStore } from "../stores/accomodation";
 import { mapActions, mapState } from "pinia";
 
@@ -11,14 +12,16 @@ export default {
     SearchComp,
     CardFavoriteComp,
     FeedbackComp,
+    LoadingComp
   },
   computed: {
-    ...mapState(useAccomodationStore, ["accomodation", "isLogin"]),
+    ...mapState(useAccomodationStore, ["accomodation", "isLogin","isLoading"]),
   },
   methods: {
     ...mapActions(useAccomodationStore, [
       "fetchAccomodationById",
       "addAccomodationToWishlist",
+      "cekLogin"
     ]),
     addToWishList(AccomodationId, TypeId) {
       if (this.isLogin) {
@@ -30,12 +33,14 @@ export default {
   },
   created() {
     this.fetchAccomodationById(this.$route.params.id);
+    this.cekLogin()
   },
 };
 </script>
 
 <template>
   <div>
+    <LoadingComp v-if="isLoading"/>
     <div class="banner">
       <img :src="accomodation.imageUrl" alt="Banner" />
     </div>

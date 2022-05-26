@@ -1,6 +1,7 @@
 <script>
 import CardTransactionComp from "../components/CardTransactionComp.vue";
 import BannerComp from "../components/BannerComp.vue";
+import LoadingComp from "../components/LoadingComp.vue";
 import { useAccomodationStore } from '../stores/accomodation'
 import { mapState, mapActions } from 'pinia';
 export default {
@@ -8,20 +9,23 @@ export default {
   components: {
     CardTransactionComp,
     BannerComp,
+    LoadingComp
   },
   computed: {
-      ...mapState(useAccomodationStore, ['transactions'])
+      ...mapState(useAccomodationStore, ['transactions', 'isLoading'])
   },
   methods: {
-      ...mapActions(useAccomodationStore, ['fetchTransactions'])
+      ...mapActions(useAccomodationStore, ['fetchTransactions', 'cekLogin'])
   },
   created() {
       this.fetchTransactions();
+      this.cekLogin()
   }
 };
 </script>
 <template>
   <div class="main">
+    <LoadingComp v-if="isLoading"/>
       <BannerComp>
           <h1 class="text-light">Your History Transactions</h1>
       </BannerComp>

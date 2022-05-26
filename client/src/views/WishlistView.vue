@@ -4,6 +4,7 @@ import SearchComp from "../components/SearchComp.vue";
 import CardFavoriteComp from "../components/CardFavoriteComp.vue";
 import { useAccomodationStore } from "../stores/accomodation";
 import { mapState, mapActions } from "pinia";
+import LoadingComp from "../components/LoadingComp.vue";
 
 export default {
   name: "WishlistView",
@@ -11,24 +12,27 @@ export default {
     BannerComp,
     SearchComp,
     CardFavoriteComp,
+    LoadingComp
   },
   computed: {
-    ...mapState(useAccomodationStore, ['wishlists']),
+    ...mapState(useAccomodationStore, ['wishlists', 'isLoading']),
     getLengthWishlist(){
       return this.wishlists.length;
     }
   },
   methods: {
-    ...mapActions(useAccomodationStore, ['fetchAllWishlist','deleteWishlist'])
+    ...mapActions(useAccomodationStore, ['fetchAllWishlist','deleteWishlist', 'cekLogin'])
   },
   created() {
     this.fetchAllWishlist();
+    this.cekLogin()
   }
 };
 </script>
 
 <template>
   <div class="main-container">
+    <LoadingComp v-if="isLoading"/>
     <BannerComp>
       <h1 class="text-light">My Wishlist</h1>
     </BannerComp>

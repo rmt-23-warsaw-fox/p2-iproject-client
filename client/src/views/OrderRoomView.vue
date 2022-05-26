@@ -1,9 +1,12 @@
 <script>
 import { useAccomodationStore } from "../stores/accomodation";
 import { mapWritableState, mapActions, mapState } from "pinia";
-import axios from "axios";
+import LoadingComp from "../components/LoadingComp.vue";
 export default {
   name: "OrderRoomView",
+  components: {
+    LoadingComp,
+  },
   computed: {
     ...mapWritableState(useAccomodationStore, [
       "dataLogin",
@@ -14,6 +17,7 @@ export default {
       "accomodation",
       "getTotalNight",
       "getTotalPrice",
+      "isLoading",
     ]),
   },
   watch: {
@@ -24,8 +28,8 @@ export default {
           text: "Please pick date correctly !!!",
         });
         this.toDate = new Date(Date.now() + 3600 * 1000 * 24)
-        .toISOString()
-        .split("T")[0];
+          .toISOString()
+          .split("T")[0];
         this.fromDate = new Date().toISOString().split("T")[0];
       }
     },
@@ -36,9 +40,8 @@ export default {
       "createSnap",
     ]),
     async payment(accomodation) {
-
       this.createSnap(accomodation);
-    //   window.snap.pay(data.token)
+      //   window.snap.pay(data.token)
     },
   },
   created() {
@@ -48,19 +51,21 @@ export default {
 </script>
 
 <template>
-  <div class="container-payment">
-    <div class="content-payment">
-      <h1 class="text-center">Payment</h1>
-      <hr />
-      <h3>{{ accomodation.name }}</h3>
-      <div class="d-flex justify-content-between">
-        <span class="text-secondary"
-          >Room Capacity: {{ accomodation.roomCapacity }} Orang</span
-        >
-        <!-- <span class="type bg-warning">Apartement</span> -->
-      </div>
+  <div>
+    <LoadingComp v-if="isLoading"/>
+    <div class="container-payment">
+      <div class="content-payment">
+        <h1 class="text-center">Payment</h1>
+        <hr />
+        <h3>{{ accomodation.name }}</h3>
+        <div class="d-flex justify-content-between">
+          <span class="text-secondary"
+            >Room Capacity: {{ accomodation.roomCapacity }} Orang</span
+          >
+          <!-- <span class="type bg-warning">Apartement</span> -->
+        </div>
 
-      <div class="w-100 mt-3">
+        <!-- <div class="w-100 mt-3">
         <input
           type="email"
           class="form-control"
@@ -68,48 +73,49 @@ export default {
           placeholder="Please Input Your Email Address"
           v-model="dataLogin.email"
         />
-      </div>
+      </div> -->
 
-      <div class="form-date mt-4">
-        <div class="date-from">
-          <label for="location" class="form-label">From Date</label>
-          <input
-            type="date"
-            class="form-control"
-            id="from-date"
-            placeholder="From Date"
-            v-model="fromDate"
-          />
+        <div class="form-date mt-4">
+          <div class="date-from">
+            <label for="location" class="form-label">From Date</label>
+            <input
+              type="date"
+              class="form-control"
+              id="from-date"
+              placeholder="From Date"
+              v-model="fromDate"
+            />
+          </div>
+          <div class="vr mx-3"></div>
+          <div class="date-to">
+            <label for="location" class="form-label">To Date</label>
+            <input
+              type="date"
+              class="form-control"
+              id="to-date"
+              placeholder="To Date"
+              v-model="toDate"
+            />
+          </div>
         </div>
-        <div class="vr mx-3"></div>
-        <div class="date-to">
-          <label for="location" class="form-label">To Date</label>
-          <input
-            type="date"
-            class="form-control"
-            id="to-date"
-            placeholder="To Date"
-            v-model="toDate"
-          />
-        </div>
-      </div>
 
-      <div class="d-flex mt-3">
-        <div class="me-2">
-          <span class="total-night">For {{ getTotalNight }} Night</span>
+        <div class="d-flex mt-3">
+          <div class="me-2">
+            <span class="total-night">For {{ getTotalNight }} Night</span>
+          </div>
+          <div>
+            <span> @IDR {{ accomodation.price }} / Night</span>
+          </div>
         </div>
-        <div>
-          <span> @IDR {{ accomodation.price }} / Night</span>
-        </div>
-      </div>
-      <p class="total-price bg-warning mt-4">
-        Total Price: IDR {{ getTotalPrice }}
-      </p>
+        <p class="total-price bg-warning mt-4">
+          Total Price: IDR {{ getTotalPrice }}
+        </p>
 
-      <div class="d-flex justify-content-end mt-4">
-        <button class="btn btn-primary" @click="payment(accomodation)">
-          Make Payment
-        </button>
+        <div class="d-flex justify-content-end mt-4">
+          <button class="btn btn-primary" @click="payment(accomodation)">
+            Make Payment
+          </button>
+        </div>
       </div>
     </div>
   </div>
