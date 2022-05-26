@@ -9,7 +9,7 @@ import {
 
 const database = getDatabase(app);
 const messageRef = ref(database,'messages')
-const messageRefQ = ref(database,'messages',orderByChild('createdAt'))
+const messageRefQ = ref(database,'messages',limitToLast(30))
 
 function postMessage(puuid,user,content) {
   const newMessage = {

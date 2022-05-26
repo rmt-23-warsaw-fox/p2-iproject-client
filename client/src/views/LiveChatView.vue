@@ -2,7 +2,7 @@
 import { useUserStore } from '../stores/user'
 import { mapState,mapActions } from 'pinia'
 import {getMessages,postMessage} from '../methods'
-
+import Swal from 'sweetalert'
 export default {
   name : 'LiveChatView',
   computed : {  
@@ -39,7 +39,14 @@ export default {
       const user = this.myProfile.name+'#'+this.myProfile.tag
       const content = this.inputMsg
 
-      postMessage(puuid,user,content)
+      if(this.inputMsg.length>0){
+        postMessage(puuid,user,content)
+      } else {
+        Swal({
+          text : 'cannot send empty message',
+          icon : 'error'
+        })
+      }
 
       this.inputMsg=''
     },
