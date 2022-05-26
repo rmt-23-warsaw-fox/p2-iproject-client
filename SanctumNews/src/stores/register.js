@@ -15,6 +15,7 @@ export const useDataRegister = defineStore('Register', {
     actions: {
         async Register (){
             try {
+
                 const data = await axios({
                     method: 'POST',
                     url: base_URL + 'register',
@@ -24,7 +25,7 @@ export const useDataRegister = defineStore('Register', {
                         password: this.password
                     }  
                 })
-            
+
                 this.router.push('/login')
                 Swal.fire(
                     'Silakan Login',
