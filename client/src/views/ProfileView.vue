@@ -38,7 +38,7 @@ export default {
       see your last match in every mode in valorant game. <br>You can choose spesific map as you wish 
     </div>
     <div class=" bg-yellow-300">
-      see valorant agents
+      Looking for mabar mate ? let's find them on our livechat 
     </div>
   </div>
   </div>

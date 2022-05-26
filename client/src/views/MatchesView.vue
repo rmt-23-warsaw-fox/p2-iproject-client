@@ -94,7 +94,9 @@ export default {
     <div class="flex w-full mb-20 ">
       <div class="w-1/2">
         <ul
-          class="w-full text-sm font-bold text-gray-900 bg-blue-300"
+          class="w-full text-sm font-bold text-gray-900 bg-blue-300
+          border-l-2 border-b-2 border-neutral-900
+          "
         >
           <li
             class="w-full flex items-center gap-4 px-4 py-2 border-b border-gray-200 rounded-t-lg dark:border-gray-600"
@@ -113,7 +115,9 @@ export default {
       </div>
       <div class="w-1/2">
         <ul
-          class="w-full text-sm font-bold text-gray-900  border bg-red-300"
+          class="w-full text-sm font-bold text-gray-900   bg-red-300 
+          border-r-2 border-b-2 border-neutral-900
+          "
         >
           <li
             class="w-full flex items-center justify-end gap-4 px-4 py-2 border-b  rounded-t-lg dark:border-gray-600"
