@@ -19,6 +19,7 @@ export const usePoofStore = defineStore({
     signedin: false,
     teams: null,
     team: null,
+    playerDetail: null,
   }),
   getters: {
     doubleCount: (state) => state.counter * 2,
@@ -115,9 +116,15 @@ export const usePoofStore = defineStore({
 
     async getProProfile(id) {
       try {
-        console.log(id)
-        // this.move("/profile")
-      } catch (err) {}
+        const { data } = await axios({
+          method: "get",
+          url: `https://api.opendota.com/api/players/${id}`,
+        })
+        this.playerDetail = data
+        this.move(`/profile/${id}`)
+      } catch (err) {
+        console.log(err)
+      }
     },
     //! END OF LINE
   },

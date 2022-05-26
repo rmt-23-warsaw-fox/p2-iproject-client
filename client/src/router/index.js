@@ -35,7 +35,7 @@ const router = createRouter({
       component: teams,
     },
     {
-      path: "/profile",
+      path: "/profile/:id",
       name: "profile",
       component: profile,
     },

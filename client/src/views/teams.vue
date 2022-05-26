@@ -1,5 +1,5 @@
 <script>
-import { mapActions, mapState, mapWritableState } from "pinia"
+import { mapActions, mapState } from "pinia"
 import { usePoofStore } from "../stores/counter"
 
 export default {
