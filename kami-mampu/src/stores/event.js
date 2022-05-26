@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 
-let baseUrl = "http://localhost:3000/events";
+let baseUrl = "https://kamimampu.herokuapp.com/events";
 export const useEventStore = defineStore({
   id: "event",
   state: () => ({
