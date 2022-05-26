@@ -94,8 +94,4 @@ export default {
       </div>
     </div>
   </div>
-  <pre class="text-white">
-  {{ heroes }}
-</pre
-  >
 </template>

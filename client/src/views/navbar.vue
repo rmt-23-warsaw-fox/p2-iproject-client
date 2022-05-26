@@ -8,7 +8,7 @@ export default {
     ...mapWritableState(usePoofStore, ["username"]),
   },
   methods: {
-    ...mapActions(usePoofStore, ["home", "getTeams", "getProfile", "signout"]),
+    ...mapActions(usePoofStore, ["home", "getTeams", "getProfile", "signout", "getUser"]),
   },
   created() {
     if (localStorage.getItem("username")) {
@@ -23,7 +23,7 @@ export default {
     class="flex items-center justify-between flex-wrap bg-gradient-to-b from-zinc-700 to-transparent p-6"
   >
     <div class="flex items-center flex-shrink-0 text-white mr-6">
-      <button @click="getProfile()" class="cursor-default font-semibold text-xl tracking-tight">
+      <button @click="getUser()" class="cursor-default font-semibold text-xl tracking-tight">
         {{ username }}
       </button>
     </div>
