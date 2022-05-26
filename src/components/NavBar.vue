@@ -1,15 +1,35 @@
 <script>
 import { RouterLink } from "vue-router";
-import { mapActions, mapState } from 'pinia'
-import {mainStore} from '../stores/mainStore.js';
+import { mapActions, mapState } from "pinia";
+import { mainStore } from "../stores/mainStore.js";
 export default {
   name: "NavBar",
   methods: {
-      ...mapActions(mainStore, ["logOut"]),
+    ...mapActions(mainStore, ["logOut"]),
+    imageSource() {
+      if (this.profilePicture === null) {
+        return null;
+      } else {
+        if (this.profilePicture.imageType === "url") {
+          return this.profilePicture.imageData;
+        } else {
+          return `data:${
+            this.profilePicture.imageType
+          };base64,${this.profilePicture.imageData.data.toString("base64")}`;
+        }
+      }
+    },
   },
   computed: {
-      ...mapState(mainStore,["isLoggedIn"]),
-  }
+    ...mapState(mainStore, ["isLoggedIn"]),
+  },
+  data() {
+    return {
+      profilePicture: localStorage.getItem("User_Profile")
+        ? JSON.parse(localStorage.getItem("User_Profile")).Profile_Picture
+        : null,
+    };
+  },
 };
 </script>
 <template>
@@ -21,16 +41,20 @@ export default {
     </div>
     <div class="flex-none">
       <ul class="menu menu-horizontal p-0">
-        <div v-if = "!isLoggedIn" class="flex">
+        <div v-if="!isLoggedIn" class="flex">
           <li><RouterLink to="/login">Sign In</RouterLink></li>
           <li><RouterLink to="/register">Create an account</RouterLink></li>
         </div>
-        <div v-if = "isLoggedIn" class="flex">
-          <li><RouterLink to="/profile" class = "avatar">
-              <div class = "w-10 rounded-full"><img src="https://api.lorem.space/image/face?hash=64318" alt="profile picture"></div>
+        <div v-if="isLoggedIn" class="flex">
+          <li>
+            <RouterLink to="/profile" class="avatar">
+              <div class="w-10 rounded-full">
+                <img :src="imageSource()" alt="profile picture" />
+              </div>
               <span>Profile</span>
-              </RouterLink></li>
-          <li><a @click.prevent = "logOut()">Logout</a></li>
+            </RouterLink>
+          </li>
+          <li><a @click.prevent="logOut()">Logout</a></li>
         </div>
       </ul>
     </div>

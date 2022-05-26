@@ -1,6 +1,6 @@
 <script>
 import { mainStore } from "../stores/mainStore.js";
-import { mapActions } from "pinia";
+import { mapActions,mapState } from "pinia";
 export default {
   name: "AddForm",
   data() {
@@ -8,11 +8,11 @@ export default {
       selectedPicture: undefined,
       selectedSong: undefined,
       title: "",
-      genreId: ""
+      genreId: "",
     };
   },
   methods: {
-    ...mapActions(mainStore, ["submitToFirebase"]),
+    ...mapActions(mainStore, ["submitToFirebase", "getGenre"]),
     selectFile() {
       this.selectedSong = this.$refs.music.files;
       this.selectedPicture = this.$refs.picture.files;
@@ -20,6 +20,12 @@ export default {
       // console.log(this.selectedPicture);
     },
   },
+  computed: {
+    ...mapState(mainStore, ["genres"]),
+  },
+  async created(){
+    await this.getGenre();
+  }
 };
 </script>
 <template>
@@ -48,11 +54,12 @@ export default {
                 <span class="label-text">Genre</span>
               </label>
               <select
-                type="text"
                 placeholder="Title"
                 class="input input-bordered"
                 v-model = "genreId"
-              />
+              >
+              <option :value="genre.id" v-for="genre in genres">{{genre.name}}</option>
+              </select>
             </div>
             <div class="form-control">
               <label class="label">

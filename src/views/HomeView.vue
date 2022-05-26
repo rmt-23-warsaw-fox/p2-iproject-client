@@ -2,14 +2,29 @@
 import { RouterLink } from "vue-router";
 import NavBar from "../components/NavBar.vue";
 import Footer from "../components/footer.vue";
+import SongCard from "../components/songCard.vue";
+import { mainStore } from "../stores/mainStore.js";
+import { mapActions, mapState } from "pinia";
 export default {
   name: "HomeView",
   data() {
-    return {};
+    return {
+      search: ""
+    };
   },
   components: {
     NavBar,
-    Footer
+    Footer,
+    SongCard
+},
+  methods: {
+    ...mapActions(mainStore, ["getMusic"])
+  },
+  async created(){
+    await this.getMusic();
+  },
+  computed: {
+    ...mapState(mainStore, ["music"])
   }
 };
 </script>
@@ -28,15 +43,16 @@ export default {
         </div>
       </div>
       <div
-        class="h-[720px] w-[100%] bg-white flex flex-col items-center p-8"
+        class="h-[720px] w-[100%] bg-white flex flex-col items-center p-8 overflow-auto"
       >
         <div class="flex border-4 my-5">
           <input
             type="text"
             placeholder="Search for tracks"
-            class="input bg-[#f2f2f2] w-[480px]"
+            class="input bg-[#f2f2f2] w-[480px] rounded-none"
+            v-model="search"
           />
-          <button class="bg-[#f2f2f2] px-5">
+          <button class="bg-[#f2f2f2] px-5" @click.prevent="getMusic(search)">
             <svg
               stroke="currentColor"
               fill="currentColor"
@@ -54,111 +70,7 @@ export default {
         </div>
         <h1 class="font-semibold text-[3rem]">Our Latest Releases</h1>
         <div class="grid grid-cols-4 gap-8">
-          <div class="card card-side bg-base-100 shadow-xl">
-            <figure>
-              <img
-                src="../assets/rave-party.jpg"
-                alt="Movie"
-              />
-            </figure>
-            <div class="card-body">
-              <h2 class="card-title">Song</h2>
-              <div class="card-actions justify-end">
-                <button class="btn btn-primary">Listen</button>
-              </div>
-            </div>
-          </div>
-          <div class="card card-side bg-base-100 shadow-xl">
-            <figure>
-              <img
-                src="../assets/rave-party.jpg"
-              />
-            </figure>
-            <div class="card-body">
-              <h2 class="card-title">Song</h2>
-              <div class="card-actions justify-end">
-                <button class="btn btn-primary">Listen</button>
-              </div>
-            </div>
-          </div>
-          <div class="card card-side bg-base-100 shadow-xl">
-            <figure>
-              <img
-                src="../assets/rave-party.jpg"
-              />
-            </figure>
-            <div class="card-body">
-              <h2 class="card-title">Song</h2>
-              <div class="card-actions justify-end">
-                <button class="btn btn-primary">Listen</button>
-              </div>
-            </div>
-          </div>
-          <div class="card card-side bg-base-100 shadow-xl">
-            <figure>
-              <img
-                src="../assets/rave-party.jpg"
-              />
-            </figure>
-            <div class="card-body">
-              <h2 class="card-title">Song</h2>
-              <div class="card-actions justify-end">
-                <button class="btn btn-primary">Listen</button>
-              </div>
-            </div>
-          </div>
-          <div class="card card-side bg-base-100 shadow-xl">
-            <figure>
-              <img
-                src="../assets/rave-party.jpg"
-              />
-            </figure>
-            <div class="card-body">
-              <h2 class="card-title">Song</h2>
-              <div class="card-actions justify-end">
-                <button class="btn btn-primary">Listen</button>
-              </div>
-            </div>
-          </div>
-          <div class="card card-side bg-base-100 shadow-xl">
-            <figure>
-              <img
-                src="../assets/rave-party.jpg"
-              />
-            </figure>
-            <div class="card-body">
-              <h2 class="card-title">Song</h2>
-              <div class="card-actions justify-end">
-                <button class="btn btn-primary">Listen</button>
-              </div>
-            </div>
-          </div>
-          <div class="card card-side bg-base-100 shadow-xl">
-            <figure>
-              <img
-                src="../assets/rave-party.jpg"
-              />
-            </figure>
-            <div class="card-body">
-              <h2 class="card-title">Song</h2>
-              <div class="card-actions justify-end">
-                <button class="btn btn-primary">Listen</button>
-              </div>
-            </div>
-          </div>
-          <div class="card card-side bg-base-100 shadow-xl">
-            <figure>
-              <img
-                src="../assets/rave-party.jpg"
-              />
-            </figure>
-            <div class="card-body">
-              <h2 class="card-title">Song</h2>
-              <div class="card-actions justify-end">
-                <button class="btn btn-primary">Listen</button>
-              </div>
-            </div>
-          </div>
+          <SongCard v-for = "el in music" :music = "el" :key="el.id"/>
         </div>
       </div>
       <div class="w-[100%] h-[380px] bg-[#372729] flex">

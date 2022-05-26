@@ -18,7 +18,6 @@ export default {
     ...mapActions(mainStore, ["register"]),
     selectFile() {
       this.formObject.profilePic = this.$refs.profilePic.files[0];
-      console.log(this.formObject.profilePic);
     },
   },
 };
@@ -32,7 +31,7 @@ export default {
     >
       <div class="bg-white px-6 py-8 rounded-xl shadow-xl text-black w-full">
         <h1 class="mb-8 text-3xl text-center">Sign up</h1>
-        <form @submit.prevent = "register(formObject)">
+        <form @submit.prevent="register(formObject)" enctype="multipart/form-data">
           <div class="form-control">
             <label class="label">
               <span class="label-text">Email</span>

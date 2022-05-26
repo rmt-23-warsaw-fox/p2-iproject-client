@@ -9,19 +9,22 @@ export default {
     AddForm,
     NavBar,
     TableComponent,
-    Footer
+    Footer,
   },
   methods: {},
-  data(){
-    return{
+  data() {
+    return {
       activeSection: 1,
       isActive1: true,
       isActive2: false,
-    }
+      User_Profile: localStorage.getItem("User_Profile")
+        ? JSON.parse(localStorage.getItem("User_Profile"))
+        : null,
+    };
   },
-  created(){
+  created() {
     this.activeSection = 1;
-  }
+  },
 };
 </script>
 <template>
@@ -42,20 +45,38 @@ export default {
             />
           </figure>
           <div class="card-body items-center text-center">
-            <h2 class="card-title">User</h2>
-            <p>email@mail.com</p>
+            <h2 class="card-title">{{User_Profile.displayName}}</h2>
+            <p>{{User_Profile.email}}</p>
           </div>
         </div>
       </div>
       <div class="bg-white flex flex-col justify-center">
         <div class="tabs">
-          <a class="tab tab-lifted" @click.prevent="activeSection = 1; isActive1 = true; isActive2 = false;" :class="{'tab-active':isActive1}">Your Songs</a>
-          <a class="tab tab-lifted" @click.prevent="activeSection = 2; isActive2 = true; isActive1 = false;" :class="{'tab-active':isActive2}">Add Song</a>
+          <a
+            class="tab tab-lifted"
+            @click.prevent="
+              activeSection = 1;
+              isActive1 = true;
+              isActive2 = false;
+            "
+            :class="{ 'tab-active': isActive1 }"
+            >Your Songs</a
+          >
+          <a
+            class="tab tab-lifted"
+            @click.prevent="
+              activeSection = 2;
+              isActive2 = true;
+              isActive1 = false;
+            "
+            :class="{ 'tab-active': isActive2 }"
+            >Add Song</a
+          >
         </div>
-        <TableComponent v-if= "activeSection === 1"/>
-        <AddForm v-if= "activeSection === 2"/>
+        <TableComponent v-if="activeSection === 1" />
+        <AddForm v-if="activeSection === 2" />
       </div>
-    <Footer/>
+      <Footer />
     </div>
   </div>
 </template>

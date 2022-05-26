@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import Swal from "sweetalert2";
 import {
   getDownloadURL,
   getStorage,
@@ -11,6 +12,10 @@ import { app } from "../base";
 export const mainStore = defineStore("mainStore", {
   state: () => ({
     isLoggedIn: false,
+    genres: [],
+    music: [],
+    UserSongs: [],
+    currentSong: {}
   }),
   actions: {
     async register(formObject) {
@@ -22,7 +27,7 @@ export const mainStore = defineStore("mainStore", {
             displayName,
             email,
             password,
-            profilePic,
+            Profile_Picture: profilePic,
           },
           {
             headers: {
@@ -32,12 +37,21 @@ export const mainStore = defineStore("mainStore", {
         );
         console.log("Register Successful");
         localStorage.setItem("access_token", response.data.access_token);
+        localStorage.setItem(
+          "User_Profile",
+          JSON.stringify(response.data.User_Profile)
+        );
         this.isLoggedIn = true;
         this.router.push({
           path: "/",
-        })
+        });
       } catch (err) {
         console.log(err);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Invalid Inputs",
+        });
       }
     },
 
@@ -50,22 +64,31 @@ export const mainStore = defineStore("mainStore", {
         });
         // console.log(response);
         localStorage.setItem("access_token", response.data.access_token);
+        localStorage.setItem(
+          "User_Profile",
+          JSON.stringify(response.data.User_Profile)
+        );
         console.log("Welcome!");
         this.isLoggedIn = true;
         this.router.push({
-          path: '/'
-        })
+          path: "/",
+        });
       } catch (err) {
         console.log(err);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Invalid Username/Password",
+        });
       }
     },
     async logOut() {
       localStorage.clear();
       this.router.push({
-        path: '/login'
-      })
+        path: "/login",
+      });
     },
-    async submitToFirebase(image, music, title) {
+    async submitToFirebase(image, music, title, genreId) {
       try {
         var imageUrl;
         var musicUrl;
@@ -84,6 +107,11 @@ export const mainStore = defineStore("mainStore", {
           },
           (err) => {
             console.log(err);
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Upload Failed",
+            });
           },
           async () => {
             try {
@@ -99,29 +127,42 @@ export const mainStore = defineStore("mainStore", {
                 },
                 (err) => {
                   console.log(err);
+                  Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Upload Failed",
+                  });
                 },
                 async () => {
                   try {
                     const url = await getDownloadURL(uploadTask2.snapshot.ref);
                     musicUrl = url;
-                    console.log(localStorage.getItem('access_token'));
-                    const response = await mainAxios.post("/music", {
-                      imageUrl,
-                      musicUrl,
-                      title,
-                      genreId: "1",
-                    },{
-                        // headers: {
-                        //     access_token : localStorage.getItem("access_token")
-                        // }
+                    const response = await mainAxios.post(
+                      "/music",
+                      {
+                        imageUrl,
+                        musicUrl,
+                        title,
+                        genreId,
+                      },
+                      {
                         headers: {
-                          access_token : localStorage.getItem("access_token")
-                        }
+                          access_token: localStorage.getItem("access_token"),
+                        },
+                      }
+                    );
+                    console.log("success");
+                    Swal.fire({
+                      icon: "success",
+                      title: "Upload Success",
                     });
-                    console.log(response);
-                    //   console.log(url);
                   } catch (err) {
                     console.log(err);
+                    Swal.fire({
+                      icon: "error",
+                      title: "Oops...",
+                      text: "Upload Failed",
+                    });
                   }
                 }
               );
@@ -134,5 +175,46 @@ export const mainStore = defineStore("mainStore", {
         console.log(err);
       }
     },
+    async getGenre() {
+      try {
+        const response = await mainAxios.get("/genres");
+        this.genres = response.data.data;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async getMusic(search){
+      try {
+        const response = await mainAxios.get("/music", {
+          params: {
+            search : search
+          }
+        });
+        this.music = response.data.data;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async getUserSongs(){
+      try {
+        const response = await mainAxios.get("/music/personal", {
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          }
+        });
+        this.UserSongs = response.data.data;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async getSongDetails(id) {
+      try {
+        const response = await mainAxios.get(`music/${id}`);
+        this.currentSong = response.data.data;
+        
+      } catch (err) {
+        console.log(err);
+      }
+    }
   },
 });
