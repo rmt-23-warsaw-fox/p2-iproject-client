@@ -4,6 +4,7 @@ import LoginPage from "./views/LoginPage.vue";
 import Footer from "./components/Footer.vue";
 import HomeView from "./views/HomeView.vue";
 import Destination from "./views/destination.vue";
+import RegisterPage from "./views/RegisterPage.vue";
 
 export default {
   name: "app",
@@ -12,7 +13,8 @@ export default {
     LoginPage,
     Footer,
     HomeView,
-    Destination
+    Destination,
+    RegisterPage
 },
 };
 </script>

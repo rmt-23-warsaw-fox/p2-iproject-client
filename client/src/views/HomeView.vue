@@ -1,6 +1,27 @@
 <script>
+import popularDestinationCardVue from "../components/popularDestinationCard.vue";
+import { mapActions, mapWritableState } from "pinia";
+import { useInventoryStore } from "../stores/inventory";
+import DestinationCard from "../components/destinationCard.vue";
+
 export default {
   name: "homepage",
+  components: {
+    popularDestinationCardVue,
+    DestinationCard,
+},
+
+  methods: {
+    ...mapActions(useInventoryStore, ["getAllDestinations"]),
+  },
+
+  computed: {
+    ...mapWritableState(useInventoryStore, ["destinations"]),
+  },
+
+  created() {
+    this.getAllDestinations();
+  },
 };
 </script>
 
@@ -134,9 +155,7 @@ export default {
                       </div>
                     </div>
                     <div class="col-12 col-xl-10 col-lg-12 d-grid mt-6">
-                      <button class="btn btn-secondary" type="submit">
-                        Search
-                      </button>
+                      <button class="btn btn-secondary" type="submit">Search</button>
                     </div>
                   </form>
                 </div>
@@ -148,33 +167,29 @@ export default {
     </div>
   </section>
 
-  <!-- <section class="py-0 overflow-hidden">
+  <section id="testimonial">
+    <div class="container">
+      <div class="row h-100">
+        <div class="col-lg-7 mx-auto text-center mb-6">
+          <h5 class="fw-bold fs-3 fs-lg-5 lh-sm mb-3">TRANDING DESTINATIONS</h5>
+        </div>
+        <div class="col-12">
+          <div class="carousel slide" id="carouselTestimonials" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active" data-bs-interval="10000">
+                <div class="row h-100 align-items-center g-2">
 
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-lg-6 px-0"><img class="img-fluid order-md-0 mb-4 h-100 fit-cover" src="../assets/img/gallery/hero-section-2.png" alt="..." /></div>
-            <div class="col-lg-6 px-0 bg-primary-gradient bg-offcanvas-right">
-              <div class="mx-6 mx-xl-8 my-8">
-                <div class="align-items-center d-block d-flex mb-5"><img class="img-fluid me-3 me-md-2 me-lg-4" src="../assets/img/icons/locations.png" alt="..." />
-                  <div class="flex-1 align-items-center pt-2">
-                    <h5 class="fw-bold text-light">Visit the greatest places</h5>
-                  </div>
-                </div>
-                <div class="align-items-center d-block d-flex mb-5"><img class="img-fluid me-3 me-md-2 me-lg-4" src="../assets/img/icons/schedule.png" alt="..." />
-                  <div class="flex-1 align-items-center pt-2">
-                    <h5 class="fw-bold text-light">Make your own plans.</h5>
-                  </div>
-                </div>
-                <div class="align-items-center d-block d-flex mb-5"><img class="img-fluid me-3 me-md-2 me-lg-4" src="../assets/img/icons/save.png" alt="..." />
-                  <div class="flex-1 align-items-center pt-2">
-                    <h5 class="fw-bold text-light">Save 50% on your next trip</h5>
-                  </div>
+                    <!-- card -->
+                  <DestinationCard v-for="place in destinations.allTravelsData" :key="place.id" :place="place"/>                    
+                    <!-- end of card -->
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
 
-      </section> -->
   
 </template>

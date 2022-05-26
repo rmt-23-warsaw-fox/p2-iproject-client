@@ -81,7 +81,7 @@ export default {
             </p>
             <p class="text-light">
               <i class="fa fa-envelope me-3"></i
-              ><span class="text-light">go-traveling@gmail.com</span>
+              ><span class="text-light">cs@gotravel.com</span>
             </p>
             <p class="text-light">
               <i class="fa fa-map-marker me-3"></i

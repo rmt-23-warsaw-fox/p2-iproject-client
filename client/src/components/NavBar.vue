@@ -1,4 +1,7 @@
 <script>
+import { mapWritableState } from "pinia";
+import { useInventoryStore } from "../stores/inventory";
+
 export default {
   name: "NavBar",
   methods: {
@@ -6,6 +9,10 @@ export default {
       localStorage.clear();
       this.$router.push("/login");
     },
+  },
+
+  computed: {
+    ...mapWritableState(useInventoryStore, ["isLogin"]),
   },
 };
 </script>
@@ -17,15 +24,16 @@ export default {
     data-navbar-on-scroll="data-navbar-on-scroll"
   >
     <div class="container">
-      <a class="navbar-brand" href="index.html">
+      <router-link class="navbar-brand" to="/">
         <!-- logo go travel here -->
         <img
           class="d-inline-block"
           src="../assets/img/gallery/logo.png"
           width="50"
           alt="logo"
-        /><span class="fw-bold text-primary ms-2">Go Traveling</span></a
-      >
+        />
+        <span class="fw-bold text-primary ms-2">Go Traveling</span>
+      </router-link>
       <button
         class="navbar-toggler collapsed"
         type="button"
@@ -72,12 +80,12 @@ export default {
             Support
           </button>
           <router-link to="/login">
-            <button class="btn btn-voyage-outline order-0" type="submit">
+            <button class="btn btn-voyage-outline order-0" type="submit" v-if="!isLogin">
               <span class="text-primary">Log in</span>
             </button>
           </router-link>
 
-          <button class="btn btn-voyage-outline order-0" type="submit">
+          <button class="btn btn-voyage-outline order-0" type="submit" v-if="isLogin">
             <span class="text-primary" @click.prevent="logout">Log Out</span>
           </button>
         </form>
