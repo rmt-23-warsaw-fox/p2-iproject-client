@@ -11,7 +11,11 @@ export const useDataNews = defineStore('News', {
     searchWeather: "jakarta",
     category: '',
     dataLink: '',
-    dataURL: ''
+    dataURL: '',
+    titlefav: '',
+    descriptionfav: '',
+    thumbnailfav: '',
+    dataFavorite: []
   }),
   getters: {
 
@@ -110,7 +114,10 @@ export const useDataNews = defineStore('News', {
             access_token: localStorage.getItem('access_token')
           },
           data: {
-            url: localStorage.getItem('url')
+            url: localStorage.getItem('url'),
+            title: this.titlefav,
+            description: this.descriptionfav,
+            thumbnail: this.thumbnailfav
           }
         })
         Swal.fire(
@@ -118,12 +125,58 @@ export const useDataNews = defineStore('News', {
           'success'
         )
       } catch (error) {
-        console.log(error);
         Swal.fire(
           'Ohh Noo',
-          `Something Wrong`,
+          `${error.response.data.message}`,
           'error'
         )
+      }
+    },
+
+    async showFavorite() {
+      try {
+        const data = await axios({
+          method: 'get',
+          url: base_URL + "favoritesList/List",
+          headers: {
+            access_token: localStorage.getItem('access_token')
+          }
+        })
+        this.dataFavorite = data.data
+      } catch (error) {
+        Swal.fire(
+          'Silakan Pilih Favoritemu',
+          `${error.response.data.message}`,
+          'error'
+        )
+      }
+    },
+
+    async Delete(params) {
+      try {
+        const data = await axios({
+          method: 'delete',
+          url: base_URL + 'delete',
+          headers: {
+            access_token: localStorage.getItem('access_token')
+          },
+          data: {
+            url: params
+          }
+        })
+        Swal.fire(
+          'Okee',
+          `${data.data.message}`,
+          'success'
+        )
+        this.showFavorite()
+      } catch (error) {
+        if(error){
+          Swal.fire(
+            'Something Wrong',
+            'error'
+          )
+        }
       }
     }
   }

@@ -31,7 +31,7 @@ export default {
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
         <div class="container px-5">
             <img class="icon" src="../assets/ini.png" alt="">
-            <a class="navbar-brand" href="">SactumNews</a>
+            <RouterLink to="/" class="navbar-brand" href="">SactumNews</RouterLink>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
@@ -49,7 +49,7 @@ export default {
                 </ul>
 
                 <div id="logout">
-                    <button v-if="this.token" type="button" id="" style="margin-right:10px;" class="btn btn-primary">Favorite</button>
+                    <button v-if="this.token" @click="this.$router.push('/favorite')" aria-current="" type="button" id="" style="margin-right:10px;" class="btn btn-primary">Favorite</button>
                     <button v-if="this.token" @click="Logout" type="button" id="" class="btn btn-danger">LogOut</button>
                     <button v-if="!this.token" @click="this.$router.push('/login')" type="button" id="" style="margin-right:10px;" class="btn btn-primary">SIGN IN</button>
                     <button v-if="!this.token" @click="this.$router.push('/register')" type="button" id="" class="btn btn-danger">SIGN UP</button>

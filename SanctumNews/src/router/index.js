@@ -3,6 +3,7 @@ import homepage from '../views/homepage.vue'
 import login from '../views/loginpage.vue'
 import register from '../views/registerpage.vue'
 import detailpage from '../views/detailpage.vue'
+import favorites from '../views/favoritepage.vue'
 
 const routes = [
   {
@@ -25,6 +26,11 @@ const routes = [
     name: 'detail',
     component: detailpage
   },
+  {
+    path: '/favorite',
+    name: 'favorite',
+    component: favorites
+  },
 ]
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,6 +38,11 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from) => {
-  
+    if(localStorage.getItem("access_token")&& to.name=='login'){
+      return {name : 'home'}
+    }
+    if(!localStorage.getItem("access_token")&& to.name=='favorite'){
+      return {name : 'home'}
+    }
 })
 export default router
