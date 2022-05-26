@@ -14,7 +14,10 @@ export const useAllInOne = defineStore('allInOne', {
       movieDetail: [],
       searchList: [],
       recommendedList: [],
+      animeList: [],
+      animeDetail: [],
       movieId: '',
+      animeId: '',
       query: '',
       page: 1,
       isLogin: false,
@@ -46,7 +49,6 @@ export const useAllInOne = defineStore('allInOne', {
 
         this.movieId = id;
         this.movieDetail = data;
-        console.log(data);
         this.router.push(`/detail/${data.id}`);
       } catch (err) {
         console.log(err.response);
@@ -116,11 +118,37 @@ export const useAllInOne = defineStore('allInOne', {
         })
       }
     },
+    async fetchAnime() {
+      try {
+        let { data } = await axios.get(`${this.baseUrlMovie}/anime/recommendation`)
+        
+        this.animeList = data.data
+      } catch (err) {
+        console.log(err.response);
+      }
+    },
+    async fetchAnimeDetail(id) {
+      try {
+        let { data } = await axios.get(`${this.baseUrlMovie}/anime/detail/${id}`)
+
+        console.log(data.data);
+        this.animeId = id
+        this.animeDetail = data.data
+        this.router.push(`/anime/detail/${data.data.mal_id}`)
+      } catch (err) {
+        console.log(err.response);
+      }
+    },
     formatDate(input) {
       const options = { year: 'numeric', month: 'long', day: 'numeric' };
       const date = new Date(input).toLocaleDateString('en-EN', options);
 
       return date;
     },
+    logout() {
+      localStorage.clear()
+      this.isLogin = false
+      this.router.push('/')
+    }
   },
 });

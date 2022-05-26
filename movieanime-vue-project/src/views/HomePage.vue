@@ -1,5 +1,5 @@
 <script>
-import { mapActions, mapState, mapWritableState } from 'pinia';
+import { mapActions, mapState } from 'pinia';
 import { useAllInOne } from '@/stores/index';
 
 export default {
@@ -21,7 +21,7 @@ export default {
 </script>
 
 <template>
-  <div class="container" style="margin-top: 90px; justify-content: center">
+  <div style="margin-top: 90px; width: 90%; text-align: center; margin-left: 13vh">
   <h3 style="margin-top: 40px">What's Popular</h3>
   <p>This list always updated daily!</p>
     <div class="row">

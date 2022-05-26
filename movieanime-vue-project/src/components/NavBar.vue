@@ -1,9 +1,10 @@
 <script>
-import { mapActions, mapWritableState } from 'pinia';
+import { mapActions, mapState, mapWritableState } from 'pinia';
 import { useAllInOne } from '../stores';
 
 export default {
   computed: {
+    ...mapState(useAllInOne, ['isLogin']),
     ...mapWritableState(useAllInOne, ['query']),
   },
   methods: {
@@ -35,7 +36,7 @@ export default {
             <a class="nav-link mx-2 text-uppercase" @click.prevent="$router.push('/')" href="movies">Movies</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link mx-2 text-uppercase" href="anime">Anime</a>
+            <a class="nav-link mx-2 text-uppercase" @click.prevent="$router.push('/anime') " href="anime">Anime</a>
           </li>
         </ul>
         <div class="ms-auto d-none d-lg-block">
@@ -52,10 +53,10 @@ export default {
         </div>
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a class="nav-link mx-2 text-uppercase" href="favorite" v-if="isLogin"><fa icon="heart" /> Favorite</a>
+            <a class="nav-link mx-2 text-uppercase" href="favorite" @click.prevent="$router.push('/favorite')" v-if="isLogin"><fa icon="heart" /> Favorite</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link mx-2 text-uppercase" href="profile"  v-if="isLogin"><fa icon="circle-user" /> Account</a>
+            <a class="nav-link mx-2 text-uppercase" href="profile" v-if="isLogin"><fa icon="circle-user" /> Account</a>
           </li>
           <li class="nav-item">
             <a class="nav-link mx-2 text-uppercase" href="logout" v-if="isLogin">Logout</a>
