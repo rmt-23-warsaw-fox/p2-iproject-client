@@ -1,6 +1,7 @@
 <script>
 import NavBar from "../components/NavBar.vue";
 import Footer from "../components/footer.vue";
+import CommentComponent from "../components/comment.vue";
 import { mapActions, mapState } from "pinia";
 import { mainStore } from "../stores/mainStore.js";
 
@@ -9,17 +10,24 @@ export default {
   components: {
     NavBar,
     Footer,
+    CommentComponent
   },
   methods: {
-    ...mapActions(mainStore, ["getSongDetails"]),
+    ...mapActions(mainStore, ["getSongDetails", "submitComment", "getComments"]),
   },
   async created() {
-    console.log(this.$route.params.id);
+    // console.log(this.$route.params.id);
     await this.getSongDetails(this.$route.params.id);
+    await this.getComments(this.$route.params.id);
   },
   computed: {
-    ...mapState(mainStore, ["currentSong"]),
+    ...mapState(mainStore, ["currentSong", "comments"]),
   },
+  data(){
+    return {
+      comment: "",
+    }
+  }
 };
 </script>
 <template>
@@ -30,15 +38,36 @@ export default {
       <NavBar />
       <div class="bg-white h-[480px] w-[100%] flex">
         <img
-          :src="currentSong.currentSong.imageUrl"
+          :src="
+            currentSong.currentSong
+              ? currentSong.currentSong.imageUrl
+              : undefined
+          "
           alt="Song Cover"
           class="w-[50%] h-[100%] song-cover"
         />
         <div class="w-[50%] h-[100%] flex flex-col items-center p-8">
-          <p class="text-[4rem] font-bold">{{currentSong.currentSong.title}}</p>
+          <p class="text-[4rem] font-bold">
+            {{
+              currentSong.currentSong
+                ? currentSong.currentSong.CreatorName
+                : undefined
+            }}
+          </p>
+          <p class="text-[4rem] font-semibold">
+            {{
+              currentSong.currentSong
+                ? currentSong.currentSong.title
+                : undefined
+            }}
+          </p>
           <audio controls loop autoplay class="bg-gray-700 py-3 px-5 w-[360px]">
             <source
-              :src="currentSong.currentSong.musicUrl"
+              :src="
+                currentSong.currentSong
+                  ? currentSong.currentSong.musicUrl
+                  : undefined
+              "
               type="audio/ogg"
             />
             Your browser dose not Support the audio Tag
@@ -71,9 +100,27 @@ export default {
           </div>
         </div>
       </div>
-      <div class="w-[100%] flex">
-        <div class="w-[50%] h-[100%]"></div>
-        <div class="w-[50%] h-[100%]"></div>
+      <div class="w-[100%] flex h-[356px]">
+        <div class="w-[100%] h-[100%] flex flex-col">
+          <!-- Comments -->
+          <div class="h-[80%] overflow-auto w-[100%] flex flex-col">
+            <div class = "w-[100%] h-max bg-black/80 p-3 px-5">
+              <p class = "text-white font-bold">Comment Section</p>
+            </div>
+            <CommentComponent v-for = "comment in comments" :comment = "comment"/>
+          </div>
+          <!-- Input comments -->
+          <div class="h-[20%] overflow-auto">
+            <div>
+              <input
+                type="text"
+                placeholder="Type here"
+                class="input input-bordered input-lg w-[90%] h-[63px]"
+                v-model = "comment"
+              /><input type="button" value="Input" class="btn-lg btn w-[10%]" @click.prevent="submitComment($route.params.id,comment); comment = ''"/>
+            </div>
+          </div>
+        </div>
       </div>
       <Footer />
     </div>

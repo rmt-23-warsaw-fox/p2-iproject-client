@@ -15,7 +15,8 @@ export const mainStore = defineStore("mainStore", {
     genres: [],
     music: [],
     UserSongs: [],
-    currentSong: {}
+    currentSong: {},
+    comments: [],
   }),
   actions: {
     async register(formObject) {
@@ -183,24 +184,24 @@ export const mainStore = defineStore("mainStore", {
         console.log(err);
       }
     },
-    async getMusic(search){
+    async getMusic(search) {
       try {
         const response = await mainAxios.get("/music", {
           params: {
-            search : search
-          }
+            search: search,
+          },
         });
         this.music = response.data.data;
       } catch (err) {
         console.log(err);
       }
     },
-    async getUserSongs(){
+    async getUserSongs() {
       try {
         const response = await mainAxios.get("/music/personal", {
           headers: {
             access_token: localStorage.getItem("access_token"),
-          }
+          },
         });
         this.UserSongs = response.data.data;
       } catch (err) {
@@ -211,10 +212,43 @@ export const mainStore = defineStore("mainStore", {
       try {
         const response = await mainAxios.get(`music/${id}`);
         this.currentSong = response.data.data;
-        
       } catch (err) {
         console.log(err);
       }
-    }
+    },
+    async submitComment(musicId, comment) {
+      try {
+        if (!localStorage.getItem("access_token")) {
+          return this.router.push({ path: "/login" });
+        }
+        if (!comment) {
+          return null;
+        }
+        const response = await mainAxios.post(
+          `/music/comments/${musicId}`,
+          { comment },
+          {
+            headers: {
+              access_token: localStorage.getItem("access_token"),
+            },
+          }
+        );
+        await this.getComments(musicId);
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async getComments(id) {
+      try {
+        const response = await mainAxios.get(`/music/comments/${id}`, {
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        });
+        this.comments = response.data.data;
+      } catch (err) {
+        console.log(err);
+      }
+    },
   },
 });

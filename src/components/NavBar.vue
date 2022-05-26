@@ -30,6 +30,12 @@ export default {
         : null,
     };
   },
+  created() {
+    const x = JSON.parse(localStorage.getItem("User_Profile")).Profile_Picture
+    console.log(x);
+    console.log(x.imageData.data.join(''));
+    console.log(atob(x.imageData.data.join('')));
+  },
 };
 </script>
 <template>
