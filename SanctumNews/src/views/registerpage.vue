@@ -1,6 +1,7 @@
 <script>
 import { mapWritableState, mapActions } from 'pinia'
 import { useDataRegister } from '../stores/register'
+import Navbar from '../components/Navbar.vue'
 export default {
     data(){
         return{
@@ -21,6 +22,9 @@ export default {
             this.Register()
         }
     },
+    components :{
+        Navbar
+    },
     computed:{
         ...mapWritableState(useDataRegister, ['username', 'password', 'email'])
     },
@@ -29,8 +33,8 @@ export default {
 </script>
 
 <template>
-
-<section class="vh-50 gradient-custom">
+<Navbar />
+<section id="register" class="vh-50 gradient-custom">
         <div class="container py-0 h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-12 col-md-8 col-lg-6 col-xl-5">
@@ -82,5 +86,7 @@ export default {
 </template>
 
 <style>
-
+#register{
+    margin-top: 80px;
+}
 </style>

@@ -1,6 +1,7 @@
 <script>
 import { mapActions, mapWritableState } from 'pinia'
 import { useDataLogin } from '../stores/login'
+import Navbar from '../components/Navbar.vue';
 import { inject, toRefs } from "vue";
 export default {
   setup(props) {
@@ -16,6 +17,9 @@ export default {
       dataemail: '',
       datapassword: '',
     }
+  },
+  components:{
+      Navbar
   },
   computed: {
     ...mapWritableState(useDataLogin, ['email', 'password', "TokenGoogle"])
@@ -41,8 +45,9 @@ export default {
 </script>
 
 <template>
-  <div class="login-form container w-50 shadow mt-4 p-4 rounded">
-    <form>
+  <Navbar />
+  <div  class="login-form container w-50 shadow mt-4 p-4 rounded">
+    <form id="login">
       <center>
         <h1>WELCOME TO THE UNIVERSE SACTUMNEWS</h1><br><br>
         <img class="w-73" src="../assets/ini.png" alt="" />
@@ -66,4 +71,7 @@ export default {
 </template>
 
 <style>
+#login{
+  margin-top: 60px;
+}
 </style>
