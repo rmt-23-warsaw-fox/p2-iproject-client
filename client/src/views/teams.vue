@@ -7,7 +7,7 @@ export default {
     ...mapState(usePoofStore, ["teams"]),
   },
   methods: {
-    ...mapActions(usePoofStore, ["getTeams"]),
+    ...mapActions(usePoofStore, ["getTeams", "getTeamDetail"]),
     convert(value) {
       const msec = value * 1000
       const now = new Date(msec)
@@ -25,7 +25,6 @@ export default {
         "November",
         "December",
       ]
-      console.log(now)
       const day = now.getDate()
       const month = months[now.getMonth()]
       const year = now.getFullYear()
@@ -70,7 +69,11 @@ export default {
                 <td class="px-6">
                   <div class="flex flex-row items-center">
                     <img :src="team.logo_url" style="width: 60px; height: 60px" />
-                    <a class="pl-2 text-sm text-sky-500 cursor-pointer">{{ team.name }}</a>
+                    <a
+                      @click.prevent="getTeamDetail(team.team_id)"
+                      class="pl-2 text-sm text-sky-500 cursor-pointer"
+                      >{{ team.name }}</a
+                    >
                     <a v-if="!team.name" class="pl-2 text-sm text-rose-500 cursor-default"
                       >Team Disbanded</a
                     >
@@ -109,7 +112,11 @@ export default {
             </tbody>
           </table>
           <div class="flex justify-end mt-4">
-            <button @click="getTeams(this.$route.params.page - 1)" class="text-sky-600 mx-6">
+            <button
+              v-if="this.$route.params.page != 1"
+              @click="getTeams(this.$route.params.page - 1)"
+              class="text-sky-600 mx-6"
+            >
               prev
             </button>
             <button @click="getTeams(+this.$route.params.page + 1)" class="text-sky-600">
