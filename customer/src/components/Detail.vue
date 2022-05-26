@@ -20,7 +20,7 @@ export default {
     RouterLink,
   },
   created() {
-    // console.log(this.$route.params, "__THIS IS PARAMS___");
+    // console.log(this.$route.params.id, "__THIS IS PARAMS___");
     this.detail(this.$route.params.id);
     // console.log(this.oneMovie, "HEYO");
   },
@@ -33,8 +33,8 @@ export default {
       <div class="row">
         <div class="col-sm-4">
           <img
-            :src="oneMovie.image_url"
-            alt="Image"
+            :src="oneMovie.backdrop_path"
+            :alt="oneMovie.title"
             srcset=""
             style="size: 50px; max-width: 100%"
           />
@@ -43,13 +43,13 @@ export default {
         <div class="col">
           <div class="row">
             <h1>
-              {{ oneMovie.name }}
+              {{ oneMovie.title }}
               <!-- NAME -->
             </h1>
           </div>
           <div class="row">
             <p>
-              {{ oneMovie.synopsis }}
+              {{ oneMovie.overview }}
               <!-- SYNOPSIS -->
             </p>
           </div>
@@ -66,11 +66,9 @@ export default {
           <!-- <div>
               <img :src="qrCode" alt="qrCode" />
             </div> -->
-          <!-- <RouterLink
-            :to="{ name: 'booking', params: { MovieId: oneMovie.id } }"
-          >
+          <RouterLink :to="{ path: `/ticket/${oneMovie.id}` }">
             <button class="btn btn-primary">Booking</button>
-          </RouterLink> -->
+          </RouterLink>
         </div>
       </div>
     </div>

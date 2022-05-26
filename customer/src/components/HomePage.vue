@@ -28,17 +28,17 @@ export default {
       v-for="movie in allMovies"
     >
       <RouterLink :to="{ name: 'detail', params: { id: movie.id } }">
-        IMG
-        <!-- <img
-                class="card-img-top"
-                :src="food.imgUrl"
-                :alt="food.name"
-                style="width: 100%"
-              /> -->
+        <!-- IMG -->
+        <img
+          class="card-img-top"
+          :src="movie.backdrop_path"
+          :alt="movie.title"
+          style="width: 100%"
+        />
       </RouterLink>
       <div class="card-body">
-        <h5 class="card-title">{{ movie.name }}</h5>
-        <p class="card-text">{{ movie.synopsis }}</p>
+        <h5 class="card-title">{{ movie.title }}</h5>
+        <p class="card-text">{{ movie.overview }}</p>
         <RouterLink :to="{ name: 'booking', params: { MovieId: movie.id } }">
           <button class="btn btn-primary" v-on:click="">Booking</button>
         </RouterLink>
