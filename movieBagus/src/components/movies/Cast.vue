@@ -9,6 +9,7 @@ export default {
   },
   methods: {
     castProfileImage(cast) {
+      // console.log(cast.id, "=========");
       if (cast.profile_path) {
         return "https://image.tmdb.org/t/p/w300/" + cast.profile_path;
       } else {
@@ -26,11 +27,13 @@ export default {
     <!-- CAST PHOTO -->
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       <div class="mr-2" :key="index" v-for="(cast, index) in casts">
+        <router-link :to="`/actor/${cast.id}`">
         <img
           :src="castProfileImage(cast)"
           alt=""
           class="hover:opacity-75 tansition easy-in-out duration-150"
         />
+        </router-link>
         <!-- CAST NAME -->
         <span class="text-gray-300">{{ cast.name }}</span>
       </div>
