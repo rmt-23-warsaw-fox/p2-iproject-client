@@ -14,45 +14,24 @@ export default {
     ...mapWritableState(useCounterStore, ["access_token1"]),
   },
   methods: {
-    ...mapActions(useCounterStore, ["loginGoogle", "loginP"]),
-    loginSubmit(payload) {
+    ...mapActions(useCounterStore, ["loginGoogle", "loginD"]),
+    async loginSubmitD(payload) {
       console.log("loginSubmit");
       console.log(payload, "<<<< payload");
-      this.loginP(payload);
-      this.$router.push("/diagnose");
-    },
-    async googleOAuth() {
-      console.log("google oauth yow");
-      try {
-        const googleUser = await this.$gAuth.signIn();
-        if (!googleUser) {
-          return null;
-        }
-        const token = googleUser.getAuthResponse().id_token;
-
-        this.loginGoogle(token);
-        this.$router.push("/");
-      } catch (error) {
-        //on fail do something
-        console.error(error);
-        return null;
+      const success = await this.loginD(payload);
+      console.log("success", success);
+      if (success) {
+        await this.$router.push("/doctor/approve");
       }
-    },
-    register() {
-      this.$router.push("/register");
-    },
-    loginDoctor() {
-      this.$router.push("/doctor/login");
     },
   },
 };
 </script>
 <template>
   <div class="login" style="width: 80%; margin: auto">
-    <form class="form-input" @submit.prevent="loginSubmit(input)">
+    <form class="form-input" @submit.prevent="loginSubmitD(input)">
       <div class="form-group">
-        <h4>Patient Login Page</h4>
-        <br />
+        <h4>Doctor Login Page</h4>
         <label for="exampleInputEmail1">E-Mail</label>
         <input
           type="email"
@@ -78,18 +57,6 @@ export default {
       </div>
       <br />
       <button type="submit" class="btn btn btn-outline-info">Submit</button>
-      <button class="btn1 btn btn-outline-info" @click="register()">
-        Register
-      </button>
-      <button class="btn1 btn btn-outline-info" @click="googleOAuth()">
-        Login With Google
-      </button>
-      <br />
-      <br />
-      <p>Are you a doctor?</p>
-      <button class="btn btn-outline-info" @click="loginDoctor()">
-        Login As A Doctor
-      </button>
     </form>
   </div>
 </template>

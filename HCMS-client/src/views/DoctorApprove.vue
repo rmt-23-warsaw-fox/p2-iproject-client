@@ -1,16 +1,16 @@
 <script>
 import { mapActions, mapState, mapWritableState } from "pinia";
 import { useCounterStore } from "../stores/counter";
-import DynamicCard from "@/components/DynamicCard.vue";
+import DynamicRow from "../components/DynamicRow.vue";
 
 export default {
   data() {
     return {
-      flag: 1,
+      flag: 3,
     };
   },
   methods: {
-    ...mapActions(useCounterStore, ["getDoctors", "assignToken"]),
+    ...mapActions(useCounterStore, ["getPatients", "assignToken"]),
     src() {
       this.getDoctors(this.input);
     },
@@ -28,16 +28,17 @@ export default {
     },
   },
   computed: {
-    ...mapState(useCounterStore, ["readDoctors"]),
+    ...mapState(useCounterStore, ["readPatients"]),
     ...mapWritableState(useCounterStore, ["page", "input"]),
   },
-  components: {
-    DynamicCard,
-  },
   created() {
+    if (!localStorage.getItem("access_token")) {
+      this.$router.push("/doctor/login");
+    }
     this.assignToken();
-    this.getDoctors(this.input);
+    this.getPatients(this.input);
   },
+  components: { DynamicRow },
 };
 </script>
 
@@ -47,7 +48,7 @@ export default {
       <div class="row">
         <div class="col-lg-12">
           <div class="title-box">
-            <h2>Appoint Us</h2>
+            <h2>Your Appointments</h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
           </div>
         </div>
@@ -100,13 +101,28 @@ export default {
         </ul>
       </nav>
       <div class="dynamic-card" style="margin-bottom: 50px">
-        <DynamicCard
-          v-for="(element, index) in readDoctors.data"
-          :key="index"
-          :element="element"
-          :flag="flag"
-          class="dynamic-component"
-        />
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Email</th>
+              <th scope="col">Status</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <DynamicRow
+              v-for="(element, index) in readPatients"
+              :key="index"
+              :element="element.Patient"
+              :flag="flag"
+              :status="element.status"
+              :idAppoint="element.id"
+              class="dynamic-component"
+            />
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

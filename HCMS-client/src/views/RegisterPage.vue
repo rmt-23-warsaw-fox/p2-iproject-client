@@ -28,7 +28,7 @@ export default {
 <template>
   <form class="form-input" @submit.prevent="registerSubmit(input)">
     <div class="form-group">
-      <label for="username">Username</label>
+      <label for="username">Name</label>
       <input
         type="text"
         class="form-control"
