@@ -55,7 +55,6 @@ export default {
           <div class="mb-3">
             <label class="form-label font-500">Gender</label>
             <select v-model="genre" class="form-select" aria-label="Default select example">
-              <option value="">Open this select menu</option>
               <option value="male">Male</option>
               <option value="female">Female</option>
             </select>
