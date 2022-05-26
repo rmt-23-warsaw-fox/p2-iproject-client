@@ -27,6 +27,7 @@ export const useDataComment = defineStore('Comment', {
                 })
                 this.dataComment = data.data
             } catch (error) {
+                console.log(error);
                 if(error.response.data.message=="Invalid Token"){
 
                 }else{

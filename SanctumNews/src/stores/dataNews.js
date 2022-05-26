@@ -144,11 +144,14 @@ export const useDataNews = defineStore('News', {
         })
         this.dataFavorite = data.data
       } catch (error) {
-        Swal.fire(
-          'Silakan Pilih Favoritemu',
-          `${error.response.data.message}`,
-          'error'
-        )
+        if(error){
+          Swal.fire(
+            'Silakan Pilih Favoritemu',
+            `${error.response.data.message}`,
+            'error'
+          )
+          this.router.push('/')
+        }
       }
     },
 
@@ -167,9 +170,9 @@ export const useDataNews = defineStore('News', {
         Swal.fire(
           'Okee',
           `${data.data.message}`,
-          'success'
-        )
-        this.showFavorite()
+          'success',
+          )
+          this.showFavorite()
       } catch (error) {
         if(error){
           Swal.fire(

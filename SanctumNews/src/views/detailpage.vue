@@ -65,20 +65,6 @@ export default {
             <button v-if="this.access" type="button" @click="clickFavorite(dataLink.thumbnail, dataLink.description, dataLink.title)"
                 class="btn btn-success">ADD TO FAVORITE</button><br><br>
 
-            <div class="fb-share-button" :data-href=dataLink.link data-layout="button"
-                data-size="large">
-            <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.cnnindonesia.com%2F&amp;src=sdkpreparse"
-                    class="fb-xfbml-parse-ignore">
-                <i class="fab fa-facebook-square fa-2xl"> Share</i>
-            </a>
-                </div>
-
-
-
-
-
-
-
         </div>
         <div class="cl">&nbsp;</div>
     </div>
@@ -91,8 +77,8 @@ export default {
                     <div v-for="data in dataComment" class="bg-white p-2">
                         <div class="d-flex flex-row user-info">
 
-                            <div class="d-flex flex-column justify-content-start ml-2"><span
-                                    class="d-block font-weight-bold name">{{ data.User.username }}</span>
+                            <div class="d-flex flex-column justify-content-start ml-2">
+                               <b><span class="d-block font-weight-bold name">{{ data.User.username }}</span></b>
                                 <span class="date text-black-50">{{ formatDate(data.createdAt) }}</span>
                             </div>
                         </div>

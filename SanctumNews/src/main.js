@@ -4,10 +4,12 @@ import { createApp , markRaw} from 'vue'
 import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
+import gAuthPlugin from 'vue3-google-oauth2';
 
 
 const app = createApp(App)
 const pinia = createPinia()
+let gauthClientId = "728531124702-580i65icr0hbk2sp7u31l11o2tl3er8e.apps.googleusercontent.com";
 
 pinia.use(({ store }) => {
     store.router = markRaw(router)
@@ -15,6 +17,7 @@ pinia.use(({ store }) => {
     
 app.use(pinia)
 app.use(router)
+app.use(gAuthPlugin, { clientId: gauthClientId, scope: 'email', prompt: 'consent', fetch_basic_profile: false })
 
 app.mount('#app')
 
