@@ -23,10 +23,9 @@ export const usePoofStore = defineStore({
     heroes: null,
     heroDetail: null,
     matches: null,
+    background: localStorage.getItem("background"),
   }),
-  getters: {
-    doubleCount: (state) => state.counter * 2,
-  },
+  getters: {},
   actions: {
     move(page) {
       this.router.push(`${page}`)
@@ -39,6 +38,25 @@ export const usePoofStore = defineStore({
       // })
       this.move("/signin")
       this.signedin = false
+    },
+
+    async getBackground(words) {
+      try {
+        const { data } = await axios.request({
+          method: "POST",
+          url: "https://textvis-word-cloud-v1.p.rapidapi.com/v1/textToCloud",
+          headers: {
+            "content-type": "application/json",
+            "X-RapidAPI-Host": "textvis-word-cloud-v1.p.rapidapi.com",
+            "X-RapidAPI-Key": "33ec59de20mshb24982809031f2ep1c0cdcjsne477a9ead1ea",
+          },
+          data: `{"text":"${words}","scale":1,"width":1000,"height":800,"colors":["#375E97","#FB6542","#FFBB00","#3F681C"],"font":"Tahoma","use_stopwords":true,"language":"en","uppercase":true}`,
+        })
+        this.background = data
+        localStorage.setItem("background", data)
+      } catch (err) {
+        console.log(err)
+      }
     },
     async signin() {
       try {
@@ -90,6 +108,7 @@ export const usePoofStore = defineStore({
         })
         this.heroes = data.heroes
         this.move(`/${page}`)
+        this.getBackground()
       } catch (err) {}
     },
 
