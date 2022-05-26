@@ -23,6 +23,12 @@ export default {
     },
     goToProfile(){
       this.$router.push('/myprofile')
+    },
+    goToForum(){
+      this.$router.push('/forum')
+    },
+    goToMm(){
+      this.$router.push('/mymatches')
     }
   },
   created(){
@@ -41,8 +47,12 @@ export default {
       <button
       @click.prevent="goToChat"
       >Livechat</button>
-      <button>My Matches</button>
-      <button>Forum</button>
+      <button
+      @click.prevent="goToMm"
+      >My Matches</button>
+      <button
+      @click.prevent="goToForum"
+      >Forum</button>
       <button
       @click.prevent="goToLoginPage"
       v-if="!isLogin"

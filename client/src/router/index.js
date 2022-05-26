@@ -5,6 +5,7 @@ import LoginView from '../views/LoginView.vue'
 import ProfileView from '../views/ProfileView.vue'
 import LiveChatView from '../views/LiveChatView.vue'
 import MatchesView from '../views/MatchesView.vue'
+import ForumView from '../views/ForumView.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -37,7 +38,11 @@ const router = createRouter({
       path : '/mymatches',
       name : 'mymatches',
       component : MatchesView
-
+    },
+    {
+      path : '/forum',
+      name: 'forum',
+      component : ForumView
     }
   ]
 })
