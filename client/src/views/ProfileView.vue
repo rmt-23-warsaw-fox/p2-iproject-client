@@ -16,7 +16,10 @@ export default {
     ...mapState(useUserStore,['myProfile'])
   },
   methods: {
-    ...mapActions(useUserStore,['getProfile'])
+    ...mapActions(useUserStore,['getProfile']),
+    goToMatches(){
+      this.$router.push('/mymatches')
+    }
   },
   created(){
     this.getProfile()
@@ -27,8 +30,16 @@ export default {
 <template>
   <div class="flex flex-col gap-5 items-center mt-10">
     <ProfileCard />
-  <div class="mt-10 font-bold text-2xl">
-    See Your Last Match
+  <div class="mt-10 ">
+     <h2 class="font-bold text-2xl">See Your Last Match</h2>
+    <div class=" bg-purple-300"
+    @click.prevent="goToMatches"
+    >
+      see your last match in every mode in valorant game. <br>You can choose spesific map as you wish 
+    </div>
+    <div class=" bg-yellow-300">
+      see valorant agents
+    </div>
   </div>
   </div>
 </template>

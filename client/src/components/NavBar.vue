@@ -18,13 +18,18 @@ export default {
     },
     goToChat(){
       this.$router.push('/livechat')
+    },
+    goToProfile(){
+      this.$router.push('/myprofile')
     }
   }
 }
 </script>
 <template>
   <nav class="flex justify-between bg-purple-800 h-12 items-center text-white ">
-    <div class="ml-4 text-xl ">ValoKuy</div>
+    <div class="ml-4 text-xl "
+    @click.prevent="goToProfile"
+    >ValoKuy</div>
     <div class="flex gap-4 mr-4">
       <button
       @click.prevent="goToChat"

@@ -70,7 +70,8 @@ export const useUserStore = defineStore({
             access_token : localStorage.getItem("access_token")
           }
         })
-        this.myProfile = data
+        console.log(data)
+        this.myProfile = data 
       } catch (err) {
         console.log(err)
       }

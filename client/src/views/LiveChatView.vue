@@ -72,10 +72,10 @@ export default {
           <div class="relative flex items-center p-3 border-b border-gray-300">
             <img
               class="object-cover w-10 h-10 rounded-full"
-              :src="myProfile.card.small"
+              :src="myProfile.smallImage"
               alt="username"
             />
-            <span class="block ml-2 font-bold text-gray-600">{{myProfile.name}}</span>
+            <span class="block ml-2 font-bold text-gray-600">{{myProfile.name}} #{{myProfile.tag}}</span>
             <span
               class="absolute w-3 h-3 bg-green-600 rounded-full left-10 top-3"
             >
