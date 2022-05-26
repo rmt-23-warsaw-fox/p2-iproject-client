@@ -12,7 +12,9 @@ export default {
     ...mapState(useUserStore, ['loginStatus', 'premium']),
   },
   data() {
-    return {};
+    return {
+      premium2: localStorage.getItem('premium') == 'true' ? true : false,
+    };
   },
 
   methods: {
@@ -28,7 +30,7 @@ export default {
         <i class="bx bxs-invader"></i>
         <span class="dashboard">Tr@sher News</span>
       </a>
-      <a href="#" v-if="!premium" @click.prevent="memberPay">
+      <a href="#" v-if="!premium2" @click.prevent="memberPay">
         <span class="dashboard">Go Premium</span>
       </a>
     </div>

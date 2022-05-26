@@ -131,7 +131,7 @@ export default {
             <a
               href="#"
               class=""
-              v-for="(item, index) in 5"
+              v-for="(item, index) in 10"
               @click="fetchApiData(index)"
               :key="index"
               >{{ index + 1 }}</a
