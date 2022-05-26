@@ -96,12 +96,22 @@ export const useCounterStore = defineStore({
       this.access_token1 = response.data.access_token;
     },
 
-    async getDoctors() {
-      console.log("getDoctorsStore");
-      const condition = {
-        page: this.page,
-      };
+    async getDoctors(input) {
+      console.log("getDoctorsStore111");
+      console.log(input);
       try {
+        let condition = {
+          page: this.page,
+        };
+        if (input.speciality.length !== 0) {
+          condition.speciality = input.speciality
+        }
+
+        if (input.name.length !== 0) {
+          condition.name = input.name
+        }
+
+        console.log(condition, "<<< condition");
         const response = await axios({
           method: "GET",
           url: `${BASE_URL}/patient/read`,
@@ -114,7 +124,7 @@ export const useCounterStore = defineStore({
       } catch (err) {
         Swal.fire({
           title: "Error!",
-          text: "Sorry, there is problem",
+          text: err,
           icon: "error",
           confirmButtonText: "Ok",
         });

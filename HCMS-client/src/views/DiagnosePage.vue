@@ -200,8 +200,8 @@
                     {{ index + 1 }}. Name: {{ element.Issue.Name }} /
                     {{ element.Issue.ProfName }}
                   </h3>
-                  <h5>IcdName: {{ element.Issue.IcdName }}</h5>
-                  <h5>
+                  <h6>IcdName: {{ element.Issue.IcdName }}</h6>
+                  <h6>
                     Recommended consultation:
                     <li
                       v-for="(x, index) in element.Specialisation"
@@ -209,7 +209,7 @@
                     >
                       {{ x.Name }}
                     </li>
-                  </h5>
+                  </h6>
                 </div>
               </div>
 
