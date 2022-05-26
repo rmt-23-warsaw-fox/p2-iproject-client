@@ -2,6 +2,7 @@
 import { useUserStore } from '../stores/user'
 import { mapState,mapActions } from 'pinia'
 import {getMessages,postMessage} from '../methods'
+
 export default {
   name : 'LiveChatView',
   computed : {  
@@ -10,14 +11,22 @@ export default {
   data(){
     return {
       messages : [],
-      inputMsg : ''
+      inputMsg : '',
+      messagesLength : ''
     }
   },
   watch: {
-    inputMsg(newInputMsg,oldInputMsg){
-      if(oldInputMsg.length>0 && newInputMsg.length===0){
-        getMessages().then((messages)=>{
-          this.messages = messages
+    testcommit(){
+      console.log('test commit ke 3')
+    },
+    messages(newMessages,oldMessages){
+      getMessages().then((x)=>{
+        this.messages = x
+      })
+
+      if(newMessages.length > oldMessages.length) {
+        getMessages().then((x)=>{
+          this.messages = x
         })
       }
     }
@@ -77,8 +86,9 @@ export default {
                   class="relative max-w-xl px-4 py-2 text-gray-700 bg-gray-100 rounded shadow mb-3"
                 >
                 <span 
-                :class="myProfile.puuid===message.puuid ? 'absolute right-0 bottom-10 text-[0.6rem]' :
-                'absolute left-0 bottom-10 text-[0.6rem]'
+                :class="myProfile.puuid===message.puuid ? 'absolute right-0 bottom-10 text-[0.6rem] ' :
+                'absolute left-0 bottom-10 text-[0.6rem] '
+                
                 "
                 >
                 {{message.postedBy}}
