@@ -11,20 +11,17 @@ export default {
   },
   methods: {
     ...mapActions(useCounterStore, ["getDoctors2", "assignToken"]),
-    src() {
-      this.getDoctors(this.input);
-    },
     pagination1() {
       this.page = 1;
-      this.getDoctors(this.input);
+      this.getDoctors2(this.input);
     },
     pagination2() {
       this.page = 2;
-      this.getDoctors(this.input);
+      this.getDoctors2(this.input);
     },
     pagination3() {
       this.page = 3;
-      this.getDoctors(this.input);
+      this.getDoctors2(this.input);
     },
   },
   computed: {
@@ -52,28 +49,6 @@ export default {
           </div>
         </div>
       </div>
-      <div class="input-group rounded">
-        <input
-          v-on:keyup.enter="src()"
-          v-model="input.name"
-          type="search"
-          class="form-control rounded"
-          placeholder="Search by name"
-          aria-label="Search"
-          aria-describedby="search-addon"
-        />
-        <p style="margin: 0px 20px 0px 20px">Or</p>
-        <input
-          v-on:keyup.enter="src()"
-          v-model="input.speciality"
-          type="search"
-          class="form-control rounded"
-          placeholder="Search by speciality"
-          aria-label="Search"
-          aria-describedby="search-addon"
-        />
-      </div>
-      <br />
       <nav aria-label="Page navigation example">
         <ul class="pagination">
           <li class="page-item">

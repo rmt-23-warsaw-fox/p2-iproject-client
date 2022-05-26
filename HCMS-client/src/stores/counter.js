@@ -146,6 +146,42 @@ export const useCounterStore = defineStore({
       }
     },
 
+    async getDoctors2(input) {
+      console.log("getDoctorsStore OWN");
+      console.log(input);
+      try {
+        let condition = {
+          page: this.page,
+        };
+        if (input.speciality.length !== 0) {
+          condition.speciality = input.speciality;
+        }
+
+        if (input.name.length !== 0) {
+          condition.name = input.name;
+        }
+
+        console.log(condition, "<<< condition");
+        const response = await axios({
+          method: "GET",
+          url: `${BASE_URL}/patient/myAppointments`,
+          headers: {
+            access_token: this.access_token1,
+          },
+          params: condition,
+        });
+        console.log(response.data, " response data <<<<<<<");
+        this.readDoctors = response.data;
+      } catch (err) {
+        Swal.fire({
+          title: "Error!",
+          text: err,
+          icon: "error",
+          confirmButtonText: "Ok",
+        });
+      }
+    },
+
     async appointStore(doctor_id, patient_id) {
       console.log("appoint <<<<<");
       console.log(doctor_id, patient_id);
