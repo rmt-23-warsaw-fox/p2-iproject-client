@@ -14,7 +14,7 @@ export default {
 
 <template>
   <div
-    class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gradient-to-tl from-black to-transparent max-w-xl mx-auto p-8 md:p-12 rounded-lg shadow-lg"
+    class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gradient-to-t from-black to-transparent max-w-xl mx-auto p-8 md:p-12 rounded-lg shadow-lg"
   >
     <div>
       <h1 class="text-4xl font-bold text-zinc-200 text-center">Dota POOF</h1>
@@ -56,7 +56,7 @@ export default {
           >
         </div>
         <button
-          class="bg-gradient-to-tl from-zinc-900 to-transparent hover:bg-sky-900 text-white hover:text-zinc-200 font-bold py-2 rounded-full shadow-lg hover:shadow-xl transition duration-200"
+          class="bg-gradient-to-b from-zinc-900 to-transparent hover:bg-sky-900 text-white hover:text-zinc-200 font-bold py-2 rounded-full shadow-lg hover:shadow-xl transition duration-200"
           type="submit"
           style="width: 200px"
         >

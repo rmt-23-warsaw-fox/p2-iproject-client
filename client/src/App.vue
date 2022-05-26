@@ -1,7 +1,6 @@
 <template>
   <div class="bg-repeat min-h-screen bg-gradient-to-tl from-black to-zinc-900">
     <navbar v-if="this.signedin" />
-
     <RouterView />
   </div>
 </template>
@@ -10,7 +9,7 @@ import { RouterView } from "vue-router"
 import navbar from "@/views/navbar.vue"
 import "@/assets/base.css"
 import { usePoofStore } from "@/stores/counter"
-import { mapActions, mapWritableState } from "pinia"
+import { mapActions, mapState, mapWritableState } from "pinia"
 
 export default {
   components: { RouterView, navbar },
