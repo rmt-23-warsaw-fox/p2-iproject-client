@@ -2,8 +2,12 @@
 import { useChatFirebaseStore } from '../stores/chatFirebase.js'
 import { useUserStore } from '../stores/user.js'
 import { mapActions, mapState, mapWritableState } from 'pinia'
+import Navbar from '../components/Navbar.vue'
 
 export default {
+  components: {
+    Navbar
+  },
   data() {
     return {
       message: null,
@@ -32,13 +36,13 @@ export default {
   created() {
     this.chats = []
     this.fetchMessage(this.senderId, this.receiverId)
-    // this.receiverId = localStorage.getItem('receiverId')
     this.fetchUserById(this.$route.params.id)
   }
 }
 </script>
 
 <template>
+<Navbar></Navbar>
 <div class="bg-light">
   <div class="container container-center-x py-4 height-92-percent">
     <div class="card width-400 bg-white p-2">
@@ -46,7 +50,7 @@ export default {
         <strong>{{ foundUser.username }}</strong>
       </div>
       <div class="card-body bg-light rounded-bottom">
-        <div class="bg-white rounded-3 p-3" style="height: 400px">
+        <div class="bg-white rounded-3 p-3 scroller" style="height: 400px">
           <div class="mb-4 d-grid gap-2">
             <div v-for="chat in chats" v-bind:key="chat.id"
               v-bind:class="+foundUser.id === +chat.receiverId ? 'container-right' : 'container-left'"

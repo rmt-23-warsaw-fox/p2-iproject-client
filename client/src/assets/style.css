@@ -45,6 +45,19 @@ body{
   justify-content: end;
 }
 
+.container-flex-start{
+  display: flex;
+  flex-direction: row;
+  align-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.container-space-between{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .full-screen-height {
   min-height: 100vh;
 }
@@ -77,8 +90,12 @@ body{
   font-weight: 500;
 }
 
+.font-size-medium{
+  font-size: 20px;
+}
+
 .scroller {
-  height: 85vh;
+  height: 600px;
   overflow: auto;
   scrollbar-color: rebeccapurple green;
   scrollbar-width: thin;
@@ -89,4 +106,24 @@ body{
   overflow: auto;
   scrollbar-color: rebeccapurple green;
   scrollbar-width: thin;
+}
+
+.sidebar:hover{
+  background-color: #ba2d65;
+}
+
+#addImage:hover{
+  background-color: #ba2d65;
+  color: white;
+}
+
+#memeImg:hover {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  z-index: 1;
+}
+
+#post-like:hover{
+  color: #ba2d65;
 }

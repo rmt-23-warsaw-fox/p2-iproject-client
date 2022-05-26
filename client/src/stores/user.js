@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
+import swal from 'sweetalert';
 
 export const useUserStore = defineStore({
   id: 'user',
@@ -25,7 +26,8 @@ export const useUserStore = defineStore({
       })
         .then((response) => {
           localStorage.setItem('access_token', response.data.access_token)
-          localStorage.setItem('senderId', id)
+          localStorage.setItem('senderId', response.data.payload.id)
+          this.router.push('/')
         })
         .catch((err) => {
           console.log(err);
@@ -58,6 +60,25 @@ export const useUserStore = defineStore({
       })
       .catch((err) => {
         console.log(err.response);
+      })
+    },
+    register(username, email, password, genre, bio) {
+      axios({
+        method: 'post',
+        url: `${this.baseUrl}/register`,
+        data: {
+          username: username,
+          email: email,
+          password: password,
+          genre: genre,
+          bio: bio
+        }
+      })
+      .then((response) => {
+        this.router.push('/login')
+      })
+      .catch((err) => {
+        swal(err.response.data.message);
       })
     }
   }

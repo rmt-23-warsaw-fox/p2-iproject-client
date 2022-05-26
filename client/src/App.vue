@@ -2,18 +2,14 @@
 import { RouterLink, RouterView } from 'vue-router'
 import 'bootstrap';
 
-import Navbar from './components/Navbar.vue'
 
 export default {
-  components: {
-    Navbar
-  }
 }
 </script>
 
 <template>
 
-  <Navbar></Navbar>
+  
 
   <RouterView />
 </template>
