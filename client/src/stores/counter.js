@@ -6,6 +6,8 @@ export const useNontonStore = defineStore("nonton", {
   state: () => ({
     baseUrl: "http://localhost:3001",
     user: {},
+    dataMovies: [],
+    dataDetail: {},
     isLoggedIn: false,
   }),
   getters: {},
@@ -32,6 +34,12 @@ export const useNontonStore = defineStore("nonton", {
         });
       }
     },
+
+    logout() {
+      localStorage.clear();
+      this.isLoggedIn = false;
+    },
+
     async register() {
       try {
         const { data } = await axios({
@@ -59,6 +67,40 @@ export const useNontonStore = defineStore("nonton", {
           text: error.message,
           icon: "error",
         });
+      }
+    },
+
+    async fetchTrending(pages) {
+      try {
+        const { data } = await axios({
+          method: "get",
+          url: this.baseUrl + `/movies/movie-trending?pages=${pages}`,
+        });
+        this.dataMovies = data.results;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    async movieDetail(MovieId) {
+      try {
+        const { data } = await axios({
+          method: "get",
+          url: this.baseUrl + `/movies/movie-detail/${MovieId}`,
+        });
+        this.dataDetail = data;
+        console.log(data);
+        this.router.push(`/movie-detail/${MovieId}`);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    async postReview(MovieId) {
+      try {
+        console.log(MovieId);
+      } catch (error) {
+        console.log(error);
       }
     },
   },
