@@ -1,12 +1,10 @@
 <script>
 import { useDestinationStore } from "../stores/destination";
 import { mapActions, mapState, mapWritableState } from "pinia";
-import { useOrderStore } from "../stores/order";
 export default {
   name: "DetailView",
   computed: {
     ...mapState(useDestinationStore, ["detailDestination", "qrCode"]),
-    ...mapWritableState(useOrderStore, ["destinationId"]),
   },
   methods: {
     ...mapActions(useDestinationStore, ["fetchDetail", "getQR"]),
@@ -20,8 +18,8 @@ export default {
     },
   },
   created() {
-    this.destinationId = this.$route.params.id;
     this.fetchDetail(this.$route.params.id);
+    this.getQR(this.$route.params.id);
   },
 };
 </script>
@@ -38,7 +36,8 @@ export default {
         {{ detailDestination.description }}
       </p>
       <span class="price">{{ changeCurrencyToRupiah(detailDestination.price) }} / people</span
-      ><br />
+      ><br /> <br><br>
+      <img v-bind:src="qrCode" style="width:170px ;" alt="qrCode" />
     </div>
     <a v-on:click="changePage()" class="btn" id="add-to-favs-button">book now</a>
   </section>

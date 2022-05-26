@@ -7,6 +7,7 @@ export const useDestinationStore = defineStore({
         baseUrl: "http://localhost:3000",
         destinationData: [],
         detailDestination: [],
+        qrCode: "",
     }),
     getters: {
 
@@ -31,17 +32,17 @@ export const useDestinationStore = defineStore({
             }
         },
 
-        // async getQR(foodId) {
-        //     try {
-        //         const response = await axios({
-        //             method: "get",
-        //             url: `https://api.happi.dev/v1/qrcode?data=http://localhost:8080/food/${foodId}&width=300&dots=000000&bg=FFFFFF&apikey=a4d131IYL1nb6sS2wyNkAPUkrKyvqs52X9kwWTPitu8wXyZucMKpMbs9`
-        //         })
+        async getQR(id) {
+            try {
+                const response = await axios({
+                    method: "get",
+                    url: `https://api.happi.dev/v1/qrcode?data=http://localhost:8080/destination/${id}&width=400&dots=000000&bg=FFFFFF&apikey=a4d131IYL1nb6sS2wyNkAPUkrKyvqs52X9kwWTPitu8wXyZucMKpMbs9`
+                })
 
-        //         this.qrCode = response.data.qrcode
-        //     } catch (err) {
-        //         console.log(err)
-        //     }
-        // }
+                this.qrCode = response.data.qrcode
+            } catch (err) {
+                console.log(err)
+            }
+        }
     },
 });

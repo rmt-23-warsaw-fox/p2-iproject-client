@@ -20,11 +20,10 @@ export const useOrderStore = defineStore({
                     amountOfPeople: objOrder.amount,
                     DestinationId: id,
                 })
-                
+
                 let orderId = +response.data.orderIDBE
                 snap.pay(response.data.token, {
                     onSuccess: async (result) => {
-                        console.log(result, "RESULT");
                         await axios.patch(
                             `${baseurl}/destination/${orderId}/order`,
                             {},
@@ -32,7 +31,6 @@ export const useOrderStore = defineStore({
                         this.$router.push("/")
                     },
                     onError: async (result) => {
-                        console.log(result, "ERROR BRO");
                         this.$router.push("/")
                     },
                 });
