@@ -5,12 +5,34 @@ import { useCustomerStore } from "../stores/customer";
 export default {
   name: "EventCard",
   computed: {
-    ...mapWritableState(useEventStore, ["events"]),
+    ...mapWritableState(useEventStore, ["events", "patchEvent"]),
     ...mapWritableState(useCustomerStore, ["isLoggedIn"]),
   },
   methods: {
+    ...mapActions(useEventStore, ["fetchNews"]),
+
     dateFormat(date) {
       return new Date(date).toLocaleString();
+    },
+
+    async handButtonHandler(id) {
+      try {
+        const response = await this.patchEvent(id);
+
+        this.$toast.success("Thank you for the help!", {
+          position: "top-right",
+          duration: 3000,
+        });
+
+        this.fetchNews();
+        this.$router.push("/");
+      } catch (error) {
+        console.log(error);
+        this.$toast.error("Hands not enough", {
+          position: "top-right",
+          duration: 3000,
+        });
+      }
     },
   },
 };
@@ -46,7 +68,13 @@ export default {
             {{ event.receivedHands }}/{{ event.requiredHands }}
           </div>
         </div>
-        <button v-if="isLoggedIn === true" class="btn">Give a hand!</button>
+        <button
+          v-on:click.prevent="handButtonHandler(event.id)"
+          v-if="isLoggedIn === true"
+          class="btn"
+        >
+          Give a hand!
+        </button>
       </div>
     </div>
   </div>

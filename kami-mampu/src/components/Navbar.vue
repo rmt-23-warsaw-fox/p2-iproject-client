@@ -36,7 +36,7 @@ export default {
     signOutHandler() {
       localStorage.clear();
       this.isLoggedIn = false;
-      this.$router.push("/login");
+      this.$router.push("/");
 
       this.$toast.success("Logged out successfully", {
         position: "top-right",

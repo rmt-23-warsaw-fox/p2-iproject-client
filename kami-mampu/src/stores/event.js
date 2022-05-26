@@ -44,5 +44,14 @@ export const useEventStore = defineStore({
         });
       }
     },
+    patchEvent(EventId) {
+      return axios({
+        method: "patch",
+        url: `${baseUrl}/hands/${EventId}`,
+        headers: {
+          access_token: localStorage.access_token,
+        },
+      });
+    },
   },
 });
