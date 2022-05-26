@@ -1,24 +1,27 @@
 <script>
 import { mapActions, mapState } from "pinia";
 import { useCounterStore } from "../stores/counter";
+import NewsCard from "../components/NewsCard.vue";
 
 export default {
-  name: "Home Page",
-  methods: {
-    ...mapActions(useCounterStore, ["fetchMarkets", "logout"]),
-    fetchMarketsChild(id) {
-      this.fetchMarkets(id);
+    name: "Home Page",
+    methods: {
+        ...mapActions(useCounterStore, ["fetchMarkets", "logout", "fetchNews"]),
+        fetchMarketsChild(id) {
+            this.fetchMarkets(id);
+        },
+        detailView(id) {
+            this.$router.push(`/coins/${id}`);
+        },
     },
-    detailView(id) {
-      this.$router.push(`/coins/${id}`);
+    computed: {
+        ...mapState(useCounterStore, ["markets", "loggedIn", "news"]),
     },
-  },
-  computed: {
-    ...mapState(useCounterStore, ["markets", "loggedIn"]),
-  },
-  created() {
-    this.fetchMarkets();
-  },
+    created() {
+        this.fetchMarkets();
+        this.fetchNews()
+    },
+    components: { NewsCard }
 };
 </script>
 
@@ -33,17 +36,23 @@ export default {
       >CryptoSphere</router-link
     >
     <div>
-      <div v-if="loggedIn" class="d-flex flex-row justify-content-center align-items-center">
-        <router-link to="/watchlist" class="mb-0 mr-3 h5" style="text-decoration:none;color:gray">Watchlist</router-link>
-        <a @click.prevent="logout" class="btn btn-dark pt-1 pb-1 pl-3 pr-3">Logout</a>
+      <div
+        v-if="loggedIn"
+        class="d-flex flex-row justify-content-center align-items-center"
+      >
+        <router-link
+          to="/watchlist"
+          class="mb-0 mr-3 h5"
+          style="text-decoration: none; color: gray"
+          >Watchlist</router-link
+        >
+        <a @click.prevent="logout" class="btn btn-dark pt-1 pb-1 pl-3 pr-3"
+          >Logout</a
+        >
       </div>
-      <router-link
-        v-else
-        to="/login"
-        class="btn btn-dark pt-1 pb-1 pl-3 pr-3"
+      <router-link v-else to="/login" class="btn btn-dark pt-1 pb-1 pl-3 pr-3"
         >Login / Signup</router-link
       >
-      
     </div>
   </nav>
   <div class="">
@@ -106,7 +115,7 @@ export default {
       </tbody>
     </table>
   </div>
-  <nav>
+  <nav class="mb-5">
     <ul class="pagination justify-content-center">
       <li class="page-item" v-for="n in 10">
         <a class="page-link" href="#" @click.prevent="fetchMarketsChild(n)">{{
@@ -115,6 +124,11 @@ export default {
       </li>
     </ul>
   </nav>
+
+  <div class="container mt-3 mb-5 d-flex flex-column justify-content-center">
+    <h3>Lates Crypto News</h3>
+    <NewsCard v-for="(article, id) in news" :key="id" :articleInfo="article"/>
+  </div>
 </template>
 
 <style>

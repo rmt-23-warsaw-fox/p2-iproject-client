@@ -12,11 +12,24 @@ export const useCounterStore = defineStore({
     history: [],
     loggedIn: true,
     watchlist: [],
+    news: []
   }),
   getters: {
     doubleCount: (state) => state.counter * 2,
   },
   actions: {
+    async fetchNews() {
+      try {
+        let response = await axios({
+          method: "get",
+          url: this.url + `news`,
+        });
+        console.log(response)
+        this.news = response.data.articles;
+      } catch (error) {
+        console.log(error);
+      }
+    },
     async fetchMarkets(id) {
       try {
         let response = await axios({
