@@ -50,17 +50,20 @@ export default {
           </form>
           <div class="sideline">OR</div>
           <div>
-            <a href="/auth/facebook">
+            <!-- <a href="/auth/facebook"> -->
+            <a href="">
               <button type="submit" class="btn btn-primary w-100 font-weight-bold mt-2">
                 <i class="fa fa-facebook" aria-hidden="true"></i> Login With Facebook
               </button>
             </a>
           </div>
           <div>
-            <button type="submit" class="btn btn-primary w-100 font-weight-bold mt-2">
-              <i class="fa fa-google" aria-hidden="true"></i> 
-              Login With Google
-            </button>
+            <a href="">
+              <button type="submit" class="btn btn-primary w-100 font-weight-bold mt-2">
+                <i class="fas fa-google" aria-hidden="true"></i>
+                Login With Google
+              </button>
+            </a>
           </div>
           <div class="pt-4 text-center">Get Members Benefit. <a href="#">Sign Up</a></div>
         </div>
@@ -71,39 +74,39 @@ export default {
 
 <style>
 .wrap {
-  margin-top: 100px ;
+  margin-top: 150px;
 }
-.form-style input{  
-  border:0;  
-  height:50px;  
-  border-radius:0;  
-border-bottom:1px solid #ebebeb;       
-}  
-.form-style input:focus{  
-border-bottom:1px solid #007bff;       
-box-shadow:none;  
-outline:0;  
-background-color:#ebebeb;       
-}  
-.sideline {  
-display: flex;  
-width: 100%;  
-justify-content: center;  
-align-items: center;  
-text-align: center;  
-  color:rgb(76, 72, 72);  
-}  
-button{  
-height:50px;       
+.form-style input {
+  border: 0;
+  height: 50px;
+  border-radius: 0;
+  border-bottom: 1px solid #ebebeb;
 }
-.sideline:before,  
-.sideline:after {  
-content: '';  
-border-top: 1px solid #ebebeb;  
-margin: 0 20px 0 0;  
-flex: 1 0 20px;  
-}  
-.sideline:after {  
-margin: 0 0 0 20px;  
-} 
+.form-style input:focus {
+  border-bottom: 1px solid #007bff;
+  box-shadow: none;
+  outline: 0;
+  background-color: #ebebeb;
+}
+.sideline {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: rgb(76, 72, 72);
+}
+button {
+  height: 50px;
+}
+.sideline:before,
+.sideline:after {
+  content: "";
+  border-top: 1px solid #ebebeb;
+  margin: 0 20px 0 0;
+  flex: 1 0 20px;
+}
+.sideline:after {
+  margin: 0 0 0 20px;
+}
 </style>

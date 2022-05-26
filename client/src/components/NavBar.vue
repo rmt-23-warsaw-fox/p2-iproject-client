@@ -1,6 +1,12 @@
 <script>
 export default {
   name: "NavBar",
+  methods: {
+    logout() {
+      localStorage.clear();
+      this.$router.push("/login");
+    },
+  },
 };
 </script>
 
@@ -65,8 +71,14 @@ export default {
           <button class="btn text-800 order-1 order-lg-0 me-2" type="button">
             Support
           </button>
+          <router-link to="/login">
+            <button class="btn btn-voyage-outline order-0" type="submit">
+              <span class="text-primary">Log in</span>
+            </button>
+          </router-link>
+
           <button class="btn btn-voyage-outline order-0" type="submit">
-            <span class="text-primary">Sign in</span>
+            <span class="text-primary" @click.prevent="logout">Log Out</span>
           </button>
         </form>
       </div>
