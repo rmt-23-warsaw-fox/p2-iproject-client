@@ -20,6 +20,8 @@ export const usePoofStore = defineStore({
     teams: null,
     team: null,
     playerDetail: null,
+    heroes: null,
+    heroDetail: null,
   }),
   getters: {
     doubleCount: (state) => state.counter * 2,
@@ -51,7 +53,7 @@ export const usePoofStore = defineStore({
         this.username = data.username
         this.signinData.email = ""
         this.signinData.password = ""
-        this.move("/")
+        this.move("/1")
       } catch (err) {
         console.log(err)
       }
@@ -75,9 +77,18 @@ export const usePoofStore = defineStore({
       }
     },
 
-    async home() {
+    async home(page) {
       try {
-        this.move("/")
+        const { data } = await axios({
+          method: "get",
+          url: `${this.URL}/dota/heroes`,
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+            page: page - 1,
+          },
+        })
+        this.heroes = data.heroes
+        this.move(`/${page}`)
       } catch (err) {}
     },
 
@@ -126,6 +137,7 @@ export const usePoofStore = defineStore({
         console.log(err)
       }
     },
+
     //! END OF LINE
   },
 })
