@@ -5,6 +5,7 @@ export const usePoofStore = defineStore({
   id: "poof",
   state: () => ({
     URL: "http://localhost:3000",
+    username: null,
     signinData: {
       email: null,
       password: null,
@@ -16,6 +17,7 @@ export const usePoofStore = defineStore({
       dotaId: null,
     },
     signedin: false,
+    teams: null,
   }),
   getters: {
     doubleCount: (state) => state.counter * 2,
@@ -24,7 +26,15 @@ export const usePoofStore = defineStore({
     move(page) {
       this.router.push(`${page}`)
     },
-
+    signout() {
+      localStorage.clear()
+      Toast.fire({
+        icon: "info",
+        title: "You've Signed Out",
+      })
+      this.move("/signin")
+      this.signedin = false
+    },
     async signin() {
       try {
         const { data } = await axios({
@@ -33,7 +43,10 @@ export const usePoofStore = defineStore({
           data: { ...this.signinData },
         })
         localStorage.setItem("access_token", data.access_token)
+        localStorage.setItem("username", data.username)
+        this.username = data.username
         this.signedin = true
+        this.username = data.username
         this.signinData.email = ""
         this.signinData.password = ""
         this.move("/")
@@ -54,9 +67,40 @@ export const usePoofStore = defineStore({
         this.signupData.password = ""
         this.signupData.dotaId = ""
         this.move("/signin")
+        this.signedin = true
       } catch (err) {
         console.log(err.response.data.error.message)
       }
+    },
+
+    async home() {
+      try {
+        this.move("/")
+      } catch (err) {}
+    },
+
+    async getTeams(page) {
+      try {
+        page--
+        const { data } = await axios({
+          method: "get",
+          url: `${this.URL}/dota/teams`,
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+            page: page,
+          },
+        })
+        this.teams = data.teams
+        this.move(`/teams/${page}`)
+      } catch (err) {
+        console.log(err)
+      }
+    },
+
+    async getProfile() {
+      try {
+        this.move("/profile")
+      } catch (err) {}
     },
     //! END OF LINE
   },
