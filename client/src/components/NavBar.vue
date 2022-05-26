@@ -1,4 +1,6 @@
 <script>
+import { useUserStore } from '../stores/user'
+import { mapWritableState } from 'pinia'
 export default {
   data(){
     return {
@@ -6,7 +8,7 @@ export default {
     }
   },
   computed : {
-
+    ...mapWritableState(useUserStore,['isLogin'])
   },
   methods : {
     goToLoginPage(){
@@ -18,21 +20,32 @@ export default {
     },
     goToChat(){
       this.$router.push('/livechat')
+    },
+    goToProfile(){
+      this.$router.push('/myprofile')
+    }
+  },
+  created(){
+    if(localStorage.getItem("access_token")){
+      this.isLogin = true
     }
   }
 }
 </script>
 <template>
   <nav class="flex justify-between bg-purple-800 h-12 items-center text-white ">
-    <div class="ml-4 text-xl ">ValoKuy</div>
+    <div class="ml-4 text-xl "
+    @click.prevent="goToProfile"
+    >ValoKuy</div>
     <div class="flex gap-4 mr-4">
       <button
       @click.prevent="goToChat"
       >Livechat</button>
       <button>My Matches</button>
-      <button>Agents</button>
+      <button>Forum</button>
       <button
       @click.prevent="goToLoginPage"
+      v-if="!isLogin"
       >Sign In</button>
       <button
       @click.prevent="logout"
