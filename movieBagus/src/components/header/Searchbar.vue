@@ -69,7 +69,7 @@ export default {
       ref="searchBox"
       type="text"
       class="rounded-full bg-gray-600 px-7 w-50 h-10 mr-3 focus:outline-none focus:outline-shawod"
-      placeholder="Search.."
+      placeholder="Search Movie...."
       @input="debounceSearch"
       v-model="searchTerm"
       @focus="handleFocus"

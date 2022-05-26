@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia'
 import axios from "axios";
 
-const baseUrl = "http://localhost:3000";
+// const baseUrl = "http://localhost:3000";
+const baseUrl = "https://moviebagus32.herokuapp.com";
 
 export const allInOneStore = defineStore("stores", {
     state: () => ({
