@@ -16,7 +16,6 @@ export default {
   methods: {
     ...mapActions(useRadioStore, ["move"]),
     playPause() {
-
       document.querySelector(".audio-wire-1").style.animationPlayState ===
       "running"
         ? (document.querySelector(".audio-wire-1").style.animationPlayState =
@@ -85,22 +84,17 @@ export default {
 </script>
 
 <template>
-  <!-- <pre>{{ oneData }}</pre>
-  <pre>{{ this.$route.name }} </pre> -->
-
-  
-  
-    <div id="audio-visual" class="d-flex  ">
-      <div class="audio-wire audio-wire-1"></div>
-      <div class="audio-wire audio-wire-2"></div>
-      <div class="audio-wire audio-wire-3"></div>
-      <div class="audio-wire audio-wire-4"></div>
-      <div class="audio-wire audio-wire-5"></div>
-      <div class="audio-wire audio-wire-6"></div>
-      <div class="audio-wire audio-wire-7"></div>
-      <div class="audio-wire audio-wire-8"></div>
-      <div class="audio-wire audio-wire-9"></div>
-    </div>
+  <div id="audio-visual" class="d-flex">
+    <div class="audio-wire audio-wire-1"></div>
+    <div class="audio-wire audio-wire-2"></div>
+    <div class="audio-wire audio-wire-3"></div>
+    <div class="audio-wire audio-wire-4"></div>
+    <div class="audio-wire audio-wire-5"></div>
+    <div class="audio-wire audio-wire-6"></div>
+    <div class="audio-wire audio-wire-7"></div>
+    <div class="audio-wire audio-wire-8"></div>
+    <div class="audio-wire audio-wire-9"></div>
+  </div>
 
   <AudioPlayer
     :option="{
@@ -111,27 +105,83 @@ export default {
     @click="playPause()"
     id="music"
   />
-  <div class="container">
+  <div class="">
     <div class="center">
-    <button
-      class="btn btn-primary"
-      v-if="this.$route.name === 'detailMusic'"
-      @click.prevent="move('music')"
-    >
-      <fa icon="arrow-left"/>Back
-    </button>
-      <button 
-      class="btn btn-primary"
-      v-if="this.$route.name === 'player'" @click.prevent="move('radios')">
-        <fa icon="arrow-left"/>Back
+      <button
+        class="btn btn-primary"
+        v-if="this.$route.name === 'detailMusic'"
+        @click.prevent="move('music')"
+      >
+        <fa icon="arrow-left" />Back
+      </button>
+      <button
+        class="btn btn-primary"
+        v-if="this.$route.name === 'player'"
+        @click.prevent="move('radios')"
+      >
+        <fa icon="arrow-left" />Back
       </button>
     </div>
   </div>
-
+  <div v-if="this.$route.name === 'detailMusic'">
+    <h1 class="display-4">Detail Music</h1>
+    <div class="center">
+      <div class="row center">
+        <div class="mb-5">
+          <div class="bg-white rounded shadow-sm py-5 px-4 detail">
+            <img :src="oneData.icon" class="img-detail" />
+            <h5 class="mb-0">Artist Name: {{ oneData.name }}</h5>
+            <span class="small text-uppercase tags"
+              >Album: {{ oneData.album }}</span
+            >
+            <ul class="social mb-0 list-inline mt-3">
+              <li class="list-inline-item">Release Date: {{ oneData.realeaseDate }}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div v-if="this.$route.name === 'player'">
+    <h1 class="display-4">Detail Song</h1>
+    <div class="center">
+      <div class="row center">
+        <div class="mb-5">
+          <div class="bg-white rounded shadow-sm py-5 px-4 detail">
+            <img :src="oneData.icon" class="img-detail" />
+            <h5 class="mb-0">Radio Name: {{ oneData.name }}</h5>
+            <span class="small text-uppercase tags"
+              >Tags: {{ oneData.tags }}</span
+            >
+            <ul class="social mb-0 list-inline mt-3">
+              <li class="list-inline-item">Votes: {{ oneData.votes }} --</li>
+              <li class="list-inline-item">State: {{ oneData.state }}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <style>
+.tags {
+  color: rgb(57, 57, 57);
+}
+.detail {
+  background: #e8cbc0;
+  background: -webkit-linear-gradient(to right, #e8cbc0, #636fa4);
+  background: linear-gradient(to right, #e8cbc0, #636fa4);
+  color: black;
+}
 
+.img-detail {
+  object-fit: cover;
+  width: 200px;
+  height: 200px;
+  margin-left: 85px;
+  margin-right: 85px;
+}
 .center {
   display: flex;
   justify-content: center;
@@ -156,6 +206,12 @@ export default {
   font-size: 40px;
   font-weight: bolder;
 }
+
+.container button {
+  font-weight: bolder;
+  margin-bottom: 0;
+}
+
 .container p {
   font-size: 12px;
   color: rgb(134, 134, 134);
