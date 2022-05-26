@@ -35,7 +35,7 @@
 
       <!-- Participant List -->
       <q-item class="q-py-md" v-for="(participant, index) in participants">
-        <q-item-section avatar top>
+        <q-item-section avatar :top="currentUser.role === 'participant' " >
           <q-avatar>
             <img :src="participant.imgUrl">
           </q-avatar>
@@ -52,7 +52,9 @@
           </q-item-label>
         </q-item-section>
 
-        <q-item-section side clickable @click.prevent="deleteParticipant(participant.id)" >
+        <q-item-section side>
+          <!-- clickable @click.prevent="deleteParticipant(participant.id)" -->
+          <q-btn round color="primary" icon="navigation" v-if="currentUser.role === 'organizer'" @click.prevent="localDeleteParticipant(participant.id)" />
           <span class="text-h4">#{{ index || " Now" }}</span>
         </q-item-section>
       </q-item>
@@ -65,26 +67,41 @@
 <script>
 // import { defineComponent } from 'vue'
 import db from '../boot/firebase'
+import { useCounterStore } from 'src/stores/info'
+import { mapActions } from 'pinia'
 
 export default ({
 // export default defineComponent({
   name: 'HomePage',
   data(){
     return {
-      isOrganizer:false,
       participants:[],
       currentUser: {
-        id:"5lc3sMz0AhhB81xVfEUR",
-        name: "Claire Dunphy",
-        imgUrl: "https://robohash.org/putri",
-        message: "",
-        date: 1653441322577,
-        organizerId:1
+        // id:"5lc3sMz0AhhB81xVfEUR",
+        // name: "Claire Dunphy",
+        // imgUrl: "https://robohash.org/putri",
+        // message: "",
+        // date: 1653441322577,
+        // organizerId:1
       }
     }
   },
   methods:{
+    ...mapActions(useCounterStore, ['deleteParticipant']),
     updateMessage(){
+      if(localStorage.getItem('role') === 'organizer'){
+        const announcement = {
+          OrganizerId:localStorage.getItem("eventId"),
+          content:this.currentUser.message,
+          date:Date.now()
+        }
+        db.collection('announcements').add(announcement)
+        .then(response => {
+          this.currentUser.message = ''
+        })
+        .catch(error => console.log(error))
+        return
+      }
       db.collection('participants').doc(this.currentUser.id).update({
         message:this.currentUser.message
       })
@@ -96,22 +113,24 @@ export default ({
       })
       this.currentUser.message = ''
     },
-    addParticipant(){
-      db.collection("participants").doc("IDCOBACOBA2").set({
-        name:"New User",
-        imgUrl:"https://cdn.quasar.dev/img/avatar4.jpg",
-        message:"I'm new",
-        date:Date.now()
-      })
-    },
-    deleteParticipant(participantId){
-      if(this.isOrganizer){
-        console.log(participantId);
+    localDeleteParticipant(participantId){
+      if(localStorage.getItem("role") === "organizer"){
+        this.deleteParticipant(participantId)        
       }
     }
   },
+  created(){
+    if(localStorage.getItem("access_token")){
+      this.currentUser.id = localStorage.getItem("id")
+      this.currentUser.role = localStorage.getItem("role")
+      this.currentUser.name = localStorage.getItem("name")
+      this.currentUser.message = ""
+      this.currentUser.eventId = localStorage.getItem("eventId")
+      this.currentUser.imgUrl = 'https://robohash.org/' + localStorage.getItem("name")
+    }
+  },
   mounted(){
-    db.collection("participants").orderBy('date')
+    db.collection("participants").where("OrganizerId", '==', localStorage.getItem("eventId")).orderBy('date')
       .onSnapshot((snapshot) => {
         snapshot.docChanges().forEach((change) => {
           let participantChange = change.doc.data()

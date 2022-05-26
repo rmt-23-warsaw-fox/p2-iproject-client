@@ -19,7 +19,7 @@
         <q-separator />
   
         <q-card-actions class="flex-center" >
-          <q-btn flat :key="organizer.id" @click.prevent="joinEvent(organizer.id)">Join</q-btn>
+          <q-btn flat :key="organizer.id" @click.prevent="localJoinEvent(organizer.id)">Join</q-btn>
         </q-card-actions>
       </q-card>
     </div>
@@ -29,6 +29,8 @@
 
 <script>
 import db from '../boot/firebase'
+import { useCounterStore } from 'src/stores/info';
+import { mapActions } from 'pinia';
 
   export default {
     name:"EventPage",
@@ -38,8 +40,13 @@ import db from '../boot/firebase'
       }
     },
     methods:{
-      joinEvent(id){
-        console.log(id);
+      ...mapActions(useCounterStore, ['createParticipant', 'fetchImgUrl', 'fetchJoke', 'joinEvent']),
+      async localJoinEvent(id){
+        await this.joinEvent(id)
+        await this.fetchJoke()
+        this.fetchImgUrl()
+        this.createParticipant()
+        this.$router.push('/')
       }
     },
     mounted(){

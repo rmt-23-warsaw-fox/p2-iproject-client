@@ -23,6 +23,16 @@ const routes = [{
   component: () => import('pages/EventPage.vue'),
   name: "Events"
 },
+{
+  path:"/organizers/login",
+  component: () => import('pages/LoginOrganizerPage.vue'),
+  name: "Login Organizer"
+},
+{
+  path:"/organizers/create-event",
+  component: () => import('pages/CreateEventPage.vue'),
+  name: "Create Event"
+},
 // Always leave this as last one,
 // but you can also remove it
 {

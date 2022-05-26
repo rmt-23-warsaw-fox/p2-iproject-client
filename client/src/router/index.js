@@ -27,10 +27,14 @@ export default route(function (/*{ store, ssrContext } */) {
   })
 
   Router.beforeEach((to, from, next) => {
-    if (!localStorage.getItem('access_token') && to.path === '/') {
+    if (!localStorage.getItem('access_token') && (to.path === '/' || to.path ==='/events')) {
       next({ path : '/login' })
+    } else if (!localStorage.getItem("eventId") && to.path === '/'){
+      next({ path : '/events' })
     } else if (localStorage.getItem("access_token") && to.path === '/login'){
-      next({ path : '/' })
+      next({ path : from.path })
+    } else if (localStorage.getItem("eventId") && to.path === '/events'){
+      next({ path : from.path })
     } else {
       next()
     }
