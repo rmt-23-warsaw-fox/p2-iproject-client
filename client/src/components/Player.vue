@@ -4,7 +4,6 @@ import { useRadioStore } from "../stores/counter";
 import AudioPlayer from "vue3-audio-player";
 // import AudioVisual from 'vue-audio-visual'
 import "vue3-audio-player/dist/style.css";
-import { useMusicStore } from "../stores/music";
 
 export default {
   components: {
@@ -113,23 +112,30 @@ export default {
     id="music"
   />
   <div class="container">
+    <div class="center">
     <button
       class="btn btn-primary"
       v-if="this.$route.name === 'detailMusic'"
       @click.prevent="move('music')"
     >
-      back
+      <fa icon="arrow-left"/>Back
     </button>
-    <button 
-    class="btn btn-primary"
-    v-if="this.$route.name === 'player'" @click.prevent="move('radios')">
-      back
-    </button>
+      <button 
+      class="btn btn-primary"
+      v-if="this.$route.name === 'player'" @click.prevent="move('radios')">
+        <fa icon="arrow-left"/>Back
+      </button>
+    </div>
   </div>
 
 </template>
 
 <style>
+
+.center {
+  display: flex;
+  justify-content: center;
+}
 
 #audio-visual {
   height: 70px;

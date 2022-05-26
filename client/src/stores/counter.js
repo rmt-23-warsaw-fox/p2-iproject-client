@@ -6,11 +6,11 @@ export const useRadioStore = defineStore({
   state: () => ({
     counter: 0,
     listRadio: [],
-    baseUrl: 'http://localhost:3000',
+    baseUrl: 'https://radioox-player.herokuapp.com',
     totalPage: '',
     oneData: '',
     searchName: '',
-    page: '',
+    page: 0,
     allMusic: '',
     songName: '',
     oneData: '',
@@ -25,16 +25,18 @@ export const useRadioStore = defineStore({
   actions: {
     async getAllRadio(page) {
       try {
-        this.page = page
-        page == typeof ('NaN') ? page = 0 : page
-        let url = this.baseUrl + `/?page=${page - 1}&radioName=${this.searchName}`
+        if(page){
+          this.page = page
+        }
+
+        let url = this.baseUrl + `/`
         if(this.votes === true) {
           url += `&votes=desc`
         }
         let resposnse = await axios(url)
+        console.log(resposnse);
         this.listRadio = resposnse.data.data
         this.totalPage = resposnse.data.totalPage
-        console.log(resposnse);
         this.router.push(`/radios`)
         this.searchName = ''
         this.votes = false
