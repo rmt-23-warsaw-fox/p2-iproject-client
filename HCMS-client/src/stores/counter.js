@@ -1,7 +1,8 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 import Swal from "sweetalert2";
-const BASE_URL = "http://localhost:3000";
+// const BASE_URL = "http://localhost:3000";
+const BASE_URL = "https://hcms-server-edgar.herokuapp.com";
 export const useCounterStore = defineStore({
   id: "counter",
   state: () => ({
@@ -101,6 +102,7 @@ export const useCounterStore = defineStore({
         localStorage.setItem("customer_id", response.data.customer_id);
         localStorage.setItem("customer_email", response.data.customer_email);
         this.access_token1 = response.data.access_token;
+        return true;
       } catch (err) {
         Swal.fire({
           title: "Error!",
@@ -108,6 +110,7 @@ export const useCounterStore = defineStore({
           icon: "error",
           confirmButtonText: "Ok",
         });
+        return false;
       }
     },
 

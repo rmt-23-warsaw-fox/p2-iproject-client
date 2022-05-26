@@ -15,11 +15,14 @@ export default {
   },
   methods: {
     ...mapActions(useCounterStore, ["loginGoogle", "loginP"]),
-    loginSubmit(payload) {
+    async loginSubmit(payload) {
       console.log("loginSubmit");
       console.log(payload, "<<<< payload");
-      this.loginP(payload);
-      this.$router.push("/diagnose");
+      const success = await this.loginP(payload);
+      console.log("success", success);
+      if (success) {
+        await this.$router.push("/diagnose");
+      }
     },
     async googleOAuth() {
       console.log("google oauth yow");
@@ -44,6 +47,11 @@ export default {
     loginDoctor() {
       this.$router.push("/doctor/login");
     },
+  },
+  created() {
+    if (localStorage.getItem("access_token")) {
+      this.$router.push("/");
+    }
   },
 };
 </script>
