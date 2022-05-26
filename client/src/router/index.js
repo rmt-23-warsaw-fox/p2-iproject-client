@@ -6,6 +6,7 @@ import ProfileView from '../views/ProfileView.vue'
 import LiveChatView from '../views/LiveChatView.vue'
 import MatchesView from '../views/MatchesView.vue'
 import ForumView from '../views/ForumView.vue'
+import LoginGoogleView from '../views/LoginGoogleView.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -43,6 +44,11 @@ const router = createRouter({
       path : '/forum',
       name: 'forum',
       component : ForumView
+    },
+    {
+      path : '/google-login',
+      name : 'googleLogin',
+      component : LoginGoogleView
     }
   ]
 })

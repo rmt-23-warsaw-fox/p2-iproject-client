@@ -45,12 +45,15 @@ export default {
     >ValoKuy</div>
     <div class="flex gap-4 mr-4">
       <button
+      v-if="isLogin"
       @click.prevent="goToChat"
       >Livechat</button>
       <button
+      v-if="isLogin"
       @click.prevent="goToMm"
       >My Matches</button>
       <button
+      v-if="isLogin"
       @click.prevent="goToForum"
       >Forum</button>
       <button
@@ -58,6 +61,7 @@ export default {
       v-if="!isLogin"
       >Sign In</button>
       <button
+      v-if="isLogin"
       @click.prevent="logout"
       >Sign Out</button>
     </div>

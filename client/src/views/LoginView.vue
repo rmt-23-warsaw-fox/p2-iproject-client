@@ -17,8 +17,8 @@ export default {
     async dologin() {
       this.login(this.objUser)
     },
-    async handleClickSignIn() {
-
+    goToGSI() {
+      this.$router.push('/google-login')
     },
   },
   data() {
@@ -83,7 +83,7 @@ export default {
 
       <button
         class="bg-white py-1 w-full rounded-md transition ease-in-out delay-150 text-gray-400 text-xl hover:bg-red-500 h-12 hover:text-white hover:-translate-y-1 hover:scale-105 mt-2"
-        
+        @click.prevent="goToGSI"
       >
         <span>
           <span class="text-sm">sign in with</span>
