@@ -22,6 +22,7 @@ export default {
 <template>
   <main class="main" id="top">
   <NavBar />
+  <!-- <LoginPage/> -->
   <RouterView/>
   <Footer />
   </main>
