@@ -16,6 +16,9 @@ export default {
     }
   },
   watch: {
+    testcommit(){
+      console.log('test commit ke 3')
+    },
     messages(newMessages,oldMessages){
       getMessages().then((x)=>{
         this.messages = x
