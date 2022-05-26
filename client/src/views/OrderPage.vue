@@ -3,14 +3,18 @@
     <div class="order-container my-5">
       <h1 class="text-center">Your Order</h1>
       <div class="order-detail my-5">
-        <h3 class="text-center">
-          Virtual Account: {{ orderDetail.virtualAccount }}
-        </h3>
+        <h3 class="text-center">Virtual Account: {{ order.virtualAccount }}</h3>
         <p class="order-note">
           Please note that if you click the button mean that the process is
           already done
         </p>
-        <button class="btn btn-success">Done</button>
+        <button
+          v-if="order.virtualAccount"
+          @click="clickDone(orderDetail.external_id, orderDetail.totalPrice)"
+          class="btn btn-success"
+        >
+          Done
+        </button>
       </div>
     </div>
   </div>
@@ -21,14 +25,28 @@ import { useOrderStore } from "../stores/order";
 import { mapActions, mapState } from "pinia";
 export default {
   name: "orderPage",
+  data() {
+    return {
+      order: {},
+    };
+  },
   methods: {
-    ...mapActions(useOrderStore, ["getOrder"]),
+    ...mapActions(useOrderStore, ["getOrder", "payOrder"]),
+    async clickDone(external_id, totalPrice) {
+      try {
+        await this.payOrder(external_id, totalPrice);
+        this.$router.push("/");
+      } catch (err) {
+        console.log(err);
+      }
+    },
   },
   computed: {
     ...mapState(useOrderStore, ["orderDetail"]),
   },
   async created() {
     await this.getOrder();
+    this.order = this.orderDetail;
   },
 };
 </script>

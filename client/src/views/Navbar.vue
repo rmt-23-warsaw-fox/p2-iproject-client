@@ -26,14 +26,12 @@
                 <RouterLink to="/bookmarks" class="nav-link"
                   >Bookmarks</RouterLink
                 >
-                <RouterLink to="/order" class="nav-link"
-                  >Order</RouterLink
-                >
+                <RouterLink to="/order" class="nav-link">Order</RouterLink>
               </div>
             </div>
             <div class="col-2">
               <div class="navbar-nav">
-                <RouterLink class="nav-link" to="" v-if="!isLogin"
+                <RouterLink class="nav-link" to="/register" v-if="!isLogin"
                   >Register</RouterLink
                 >
                 <RouterLink v-if="!isLogin" class="nav-link" to="/login"

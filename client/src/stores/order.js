@@ -21,5 +21,22 @@ export const useOrderStore = defineStore({
         console.log(err);
       }
     },
+    async payOrder(ei, tp) {
+      try {
+        const res = await instance({
+          method: "post",
+          url: "xendit/pay",
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+          data: {
+            external_id: ei,
+            totalPrice: tp,
+          },
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    },
   },
 });

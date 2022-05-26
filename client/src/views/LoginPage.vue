@@ -30,7 +30,10 @@
                     Login
                   </button>
                   <p class="mt-2">Or</p>
-                  <button class="btn google-btn">
+                  <button
+                    @click.prevent="clickLoginGoogle"
+                    class="btn google-btn"
+                  >
                     <img
                       class="google-logo"
                       src="../assets/google-logo-9824.png"
@@ -68,13 +71,31 @@ export default {
     ...mapWritableState(useLoginStore, ["email", "password"]),
   },
   methods: {
-    ...mapActions(useLoginStore, ["login"]),
+    ...mapActions(useLoginStore, ["login", "loginGoogle"]),
     async clickLogin() {
       try {
         this.email = this.localEmail;
         this.password = this.localPassword;
         const res = await this.login();
-        console.log(res);
+        localStorage.setItem("access_token", res.data.access_token);
+        this.$emit("changeStatusIsLogin");
+        this.$router.push("/");
+      } catch (err) {
+        this.$swal.fire({
+          icon: "error",
+          title: err.response.status,
+          text: err.response.data.message,
+        });
+      }
+    },
+    async clickLoginGoogle() {
+      try {
+        const googleUser = await this.$gAuth.signIn();
+        if (!googleUser) {
+          return null;
+        }
+        const token = googleUser.getAuthResponse().id_token;
+        const res = await this.loginGoogle(token);
         localStorage.setItem("access_token", res.data.access_token);
         this.$emit("changeStatusIsLogin");
         this.$router.push("/");

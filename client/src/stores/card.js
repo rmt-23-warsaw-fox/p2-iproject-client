@@ -5,23 +5,19 @@ export const useCardStore = defineStore({
   state: () => ({}),
   getters: {},
   actions: {
-    async addBookmark(id, name, thumb) {
-      try {
-        const res = await instance({
-          method: "post",
-          url: "/public/bookmarks",
-          headers: {
-            access_token: localStorage.getItem("access_token"),
-          },
-          data: {
-            idMeal: id,
-            strMeal: name,
-            strMealThumb: thumb,
-          },
-        });
-      } catch (err) {
-        console.log(err);
-      }
+    addBookmark(id, name, thumb) {
+      return instance({
+        method: "post",
+        url: "/public/bookmarks",
+        headers: {
+          access_token: localStorage.getItem("access_token"),
+        },
+        data: {
+          idMeal: id,
+          strMeal: name,
+          strMealThumb: thumb,
+        },
+      });
     },
   },
 });

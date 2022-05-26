@@ -7,7 +7,7 @@
       </div>
       <button
         v-if="this.$route.name !== `bookmarkPage`"
-        @click.prevent="addBookmark(el.idMeal, el.strMeal, el.strMealThumb)"
+        @click.prevent="clickBookmark(el.idMeal, el.strMeal, el.strMealThumb)"
         class="btn btn-primary"
       >
         Bookmark
@@ -24,6 +24,17 @@ export default {
   props: ["data"],
   methods: {
     ...mapActions(useCardStore, ["addBookmark"]),
+    async clickBookmark(id, name, img) {
+      try {
+        await this.addBookmark(id, name, img);
+      } catch (err) {
+        this.$swal.fire({
+          icon: "error",
+          title: err.response.status,
+          text: err.response.data.message,
+        });
+      }
+    },
   },
 };
 </script>

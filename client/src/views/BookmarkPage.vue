@@ -32,13 +32,13 @@
             aria-label="Default select example"
           >
             <option value="" disabled selected>Open this select bank</option>
-            <option value="BCA">BCA</option>
             <option value="MANDIRI">MANDIRI</option>
           </select>
         </div>
       </div>
       <div class="container-button my-3">
         <button
+          v-if="bookmarks.length !== 0"
           @click="clickOrder"
           class="btn btn-primary button-order"
           type="button"
@@ -88,6 +88,7 @@ export default {
           va.account_number,
           va.external_id
         );
+        this.$router.push("/order");
       } catch (err) {
         console.log(err);
       }

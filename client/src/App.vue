@@ -15,10 +15,15 @@ export default {
     changeStatusIsLogin() {
       this.isLogin = true;
     },
-    logout() {
-      localStorage.removeItem("access_token");
-      this.isLogin = false;
-      this.$router.push("/login");
+    async logout() {
+      try {
+        await this.$gAuth.signOut();
+        localStorage.removeItem("access_token");
+        this.isLogin = false;
+        this.$router.push("/login");
+      } catch (err) {
+        console.log(err);
+      }
     },
   },
   created() {

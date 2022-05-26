@@ -1,5 +1,9 @@
 <template>
   <div id="homePage-customer">
+    <h1 class="text-center mt-5">Welcome to Homie website</h1>
+    <h4 class="text-center mt-3">
+      A platform for hiring world class chef to your home exclusively
+    </h4>
     <div id="carousel-container">
       <div
         id="carouselExampleControls"
@@ -79,7 +83,6 @@ export default {
   },
   async created() {
     await this.getFoods();
-    console.log(this.foods);
   },
 };
 </script>
@@ -91,7 +94,7 @@ export default {
 
 #carousel-container {
   height: 350px;
-  margin: 100px 0;
+  margin: 70px 0;
   box-shadow: 10px 10px 22px;
 }
 .carousel {

@@ -18,5 +18,18 @@ export const useLoginStore = defineStore({
         },
       });
     },
+    async loginGoogle(token) {
+      try {
+        return await instance({
+          method: "post",
+          url: "/public/login-google",
+          data: {
+            token: token,
+          },
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    },
   },
 });
