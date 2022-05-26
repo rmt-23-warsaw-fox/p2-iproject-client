@@ -29,7 +29,6 @@ export default {
         <a href="#destination" class="links"> <i class="fas fa-arrow-right"></i> destination </a>
         <a href="#services" class="links"> <i class="fas fa-arrow-right"></i> services </a>
         <a href="#gallery" class="links"> <i class="fas fa-arrow-right"></i> gallery </a>
-        <a href="#blogs" class="links"> <i class="fas fa-arrow-right"></i> blogs </a>
       </div>
 
       <div class="box">

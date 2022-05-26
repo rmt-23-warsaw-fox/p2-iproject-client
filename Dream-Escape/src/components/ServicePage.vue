@@ -1,4 +1,8 @@
-<script></script>
+<script>
+export default {
+  name: "ServicePage"
+}
+</script>
 
 <template>
   <section class="services" id="services">

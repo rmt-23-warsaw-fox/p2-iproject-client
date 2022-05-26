@@ -1,20 +1,20 @@
 <script>
-import { useFoodyBuddyStore } from "../stores/allInOne";
+import { useDestinationStore } from "../stores/destination";
 import { mapActions, mapState } from "pinia";
 export default {
   name: "DetailView",
   computed: {
-    ...mapState(useFoodyBuddyStore, ["detailFood", "qrCode"]),
+    ...mapState(useDestinationStore, ["detailDestination", "qrCode"]),
   },
   methods: {
-    ...mapActions(useFoodyBuddyStore, ["fetchDetail", "addFavs", "getQR"]),
+    ...mapActions(useDestinationStore, ["fetchDetail", "getQR"]),
+
     changeCurrencyToRupiah(value) {
       return new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR" }).format(value);
     },
   },
   created() {
     this.fetchDetail(this.$route.params.id);
-    this.getQR(this.$route.params.id);
   },
 };
 </script>
@@ -22,24 +22,20 @@ export default {
 <template>
   <section class="detail">
     <div class="image">
-      <img v-bind:src="detailFood.imgUrl" alt="" />
+      <img v-bind:src="detailDestination.imageUrl" alt="" />
     </div>
 
     <div class="content">
-      <h3 class="title">{{ detailFood.name }}</h3>
-      <h3 class="subTitle">{{ detailFood.category }}</h3>
-
+      <h3 class="title">{{ detailDestination.name }}</h3>
       <p>
-        {{ detailFood.description }}
+        {{ detailDestination.description }}
       </p>
-      <span class="price">{{ changeCurrencyToRupiah(detailFood.price) }}</span
+      <span class="price">{{ changeCurrencyToRupiah(detailDestination.price) }} / people</span
       ><br />
-      <a v-on:click="addFavs(detailFood.id)" class="btn" id="add-to-favs-button"
-        >add to favorites</a
-      >
-      <br />
-      <br />
-      <img v-bind:src="qrCode" alt="" />
     </div>
   </section>
 </template>
+
+<style>
+
+</style>

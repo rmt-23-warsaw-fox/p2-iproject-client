@@ -6,7 +6,7 @@ export const useDestinationStore = defineStore({
     state: () => ({
         baseUrl: "http://localhost:3000",
         destinationData: [],
-        detailFood: [],
+        detailDestination: [],
     }),
     getters: {
 
@@ -24,9 +24,8 @@ export const useDestinationStore = defineStore({
 
         async fetchDetail(id) {
             try {
-                const response = await axios.get(`${this.baseUrl}/food/${id}`)
-
-                this.$state.detailFood = response.data.data
+                const response = await axios.get(`${this.baseUrl}/destination/${id}`)
+                this.$state.detailDestination = response.data.data
             } catch (err) {
                 console.log(err)
             }

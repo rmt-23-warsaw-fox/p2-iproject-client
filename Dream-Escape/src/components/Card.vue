@@ -25,7 +25,9 @@ export default {
     <div class="content">
       <h3>{{ destination.name }}</h3>
       <p>{{ destination.description }}</p>
-      <a href="#">read more <i class="fas fa-angle-right"></i></a>
+      <a v-on:click="clickDetail(destination.id)" href="#"
+        >read more <i class="fas fa-angle-right"></i
+      ></a>
     </div>
   </div>
 </template>
