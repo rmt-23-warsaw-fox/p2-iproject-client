@@ -108,6 +108,14 @@ export default {
               </tr>
             </tbody>
           </table>
+          <div class="flex justify-end mt-4">
+            <button @click="getTeams(this.$route.params.page - 1)" class="text-sky-600 mx-6">
+              prev
+            </button>
+            <button @click="getTeams(+this.$route.params.page + 1)" class="text-sky-600">
+              next
+            </button>
+          </div>
         </div>
       </div>
     </div>
