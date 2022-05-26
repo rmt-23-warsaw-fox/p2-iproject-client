@@ -46,17 +46,11 @@ export default {
       </div>
       <div>
         <button
-          v-if="!this.signedin"
-          class="mr-4 cursor-pointer block mt-4 lg:inline-block lg:mt-0 text-sky-100 hover:text-white"
-        >
-          Signin
-        </button>
-        <a
-          @click.prevent="signout()"
+          @click="signout()"
           class="cursor-pointer block mt-4 lg:inline-block lg:mt-0 text-sky-100 hover:text-white"
         >
           Sign Out
-        </a>
+        </button>
       </div>
     </div>
   </nav>

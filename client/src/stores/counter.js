@@ -18,6 +18,8 @@ export const usePoofStore = defineStore({
     },
     signedin: false,
     teams: null,
+    team: null,
+    playerDetail: null,
   }),
   getters: {
     doubleCount: (state) => state.counter * 2,
@@ -28,10 +30,10 @@ export const usePoofStore = defineStore({
     },
     signout() {
       localStorage.clear()
-      Toast.fire({
-        icon: "info",
-        title: "You've Signed Out",
-      })
+      // Toast.fire({
+      //   icon: "info",
+      //   title: "You've Signed Out",
+      // })
       this.move("/signin")
       this.signedin = false
     },
@@ -81,13 +83,12 @@ export const usePoofStore = defineStore({
 
     async getTeams(page) {
       try {
-        page--
         const { data } = await axios({
           method: "get",
           url: `${this.URL}/dota/teams`,
           headers: {
             access_token: localStorage.getItem("access_token"),
-            page: page,
+            page: page - 1,
           },
         })
         this.teams = data.teams
@@ -97,10 +98,33 @@ export const usePoofStore = defineStore({
       }
     },
 
-    async getProfile() {
+    async getTeamDetail(id) {
       try {
-        this.move("/profile")
-      } catch (err) {}
+        const { data } = await axios({
+          method: "get",
+          url: `${this.URL}/dota/teams/${id}`,
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        })
+        this.team = data.data
+        this.move(`/teams/detail/${id}`)
+      } catch (err) {
+        console.log(err)
+      }
+    },
+
+    async getProProfile(id) {
+      try {
+        const { data } = await axios({
+          method: "get",
+          url: `https://api.opendota.com/api/players/${id}`,
+        })
+        this.playerDetail = data
+        this.move(`/profile/${id}`)
+      } catch (err) {
+        console.log(err)
+      }
     },
     //! END OF LINE
   },
