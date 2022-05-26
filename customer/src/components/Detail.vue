@@ -20,52 +20,49 @@ export default {
     RouterLink,
   },
   created() {
-    // console.log(this.$route.params.id, "__THIS IS PARAMS___");
     this.detail(this.$route.params.id);
-    // console.log(this.oneMovie, "HEYO");
   },
 };
 </script>
 
 <template>
-  <div class="card">
-    <div class="container">
+  <div
+    class="card"
+    :style="{
+      'background-image': `url(${oneMovie.backdrop_path})`,
+      width: '100%',
+    }"
+  >
+    <div
+      class="container"
+      style="background-color: aliceblue; padding: 0%; margin-left: 5%"
+    >
       <div class="row">
         <div class="col-sm-4">
           <img
-            :src="oneMovie.backdrop_path"
+            :src="oneMovie.poster_path"
             :alt="oneMovie.title"
             srcset=""
             style="size: 50px; max-width: 100%"
           />
-          <!-- IMAGE -->
         </div>
         <div class="col">
           <div class="row">
             <h1>
               {{ oneMovie.title }}
-              <!-- NAME -->
             </h1>
+            <h5>{{ oneMovie.tagline }}</h5>
           </div>
+          <div class="row"><br /></div>
           <div class="row">
             <p>
               {{ oneMovie.overview }}
-              <!-- SYNOPSIS -->
             </p>
           </div>
-          <!-- <div class="row">
-            <h4>
-              {{ categoryName }}
-            </h4>
-          </div> -->
           <div class="row">
             <br />
             <h5>{{ priceInRupiah(oneMovie.ticketPrice) }}</h5>
-            <!-- <h5>PRICE</h5> -->
           </div>
-          <!-- <div>
-              <img :src="qrCode" alt="qrCode" />
-            </div> -->
           <RouterLink :to="{ path: `/ticket/${oneMovie.id}` }">
             <button class="btn btn-primary">Booking</button>
           </RouterLink>

@@ -1,5 +1,18 @@
 import { defineStore } from "pinia";
 import axios from "axios";
+import Swal from "sweetalert2";
+
+const Toast = Swal.mixin({
+  toast: true,
+  position: "top-end",
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener("mouseenter", Swal.stopTimer);
+    toast.addEventListener("mouseleave", Swal.resumeTimer);
+  },
+});
 
 const baseUrl = "http://localhost:1000";
 const tmdbUrl = "https://api.themoviedb.org/3";
@@ -20,6 +33,8 @@ export const useAllStore = defineStore({
     oneMovie: {},
     row: [],
     booked: [],
+    currentPage: 1,
+    totalPages: 1,
   }),
   actions: {
     // async home() {
@@ -33,11 +48,17 @@ export const useAllStore = defineStore({
     //     console.log(error);
     //   }
     // },
-    async home() {
+    async home(page) {
       try {
+        let currentPage = "";
+        if (page > 0) {
+          this.$state.currentPage = page;
+          currentPage += `&page=${page}`;
+        }
         const allMovie = await axios.get(
-          `${tmdbUrl}/movie/now_playing?api_key=${api_key}`
+          `${tmdbUrl}/movie/now_playing?api_key=${api_key}${currentPage}`
         );
+        this.$state.totalPages = allMovie.data.total_pages;
         this.$state.allMovies = allMovie.data.results;
         this.$state.allMovies.forEach((movie) => {
           movie.backdrop_path = `${imgUrl}/${movie.backdrop_path}`;
@@ -94,7 +115,7 @@ export const useAllStore = defineStore({
     async register(dataRegister) {
       try {
         const doRegister = await axios.post(
-          `${baseUrl}/users/register/customer`,
+          `${baseUrl}/users/register/customers`,
           {
             username: dataRegister.username,
             email: dataRegister.email,
@@ -103,9 +124,17 @@ export const useAllStore = defineStore({
         );
         if (doRegister) {
           this.router.push("/login");
+          Toast.fire({
+            icon: "success",
+            title: "User registered!",
+          });
         }
       } catch (error) {
         console.log(error);
+        Swal.fire({
+          icon: "error",
+          title: "Oops, something went wrong!",
+        });
       }
     },
     async login(dataLogin) {
@@ -120,8 +149,16 @@ export const useAllStore = defineStore({
         this.$state.isLogin = true;
         if (doLogin) {
           this.router.push("/");
+          Swal.fire({
+            icon: "success",
+            title: "Welcome!",
+          });
         }
       } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops, something went wrong!",
+        });
         console.log(error);
       }
     },
@@ -133,6 +170,10 @@ export const useAllStore = defineStore({
         const access_token = googleLogin.data.access_token;
         localStorage.setItem("access_token", access_token);
         this.$state.isLogin = true;
+        Swal.fire({
+          icon: "success",
+          title: "Welcome!",
+        });
       } catch (error) {
         console.log(error);
       }
@@ -155,10 +196,20 @@ export const useAllStore = defineStore({
           },
           { headers: { access_token: localStorage.getItem("access_token") } }
         );
+        console.log(bookIt.data.payment, "PAYMENT");
+        console.log(bookIt.data["dummy account"], "DUMMY EMAIL");
         if (bookIt) {
           this.router.push("/");
+          Toast.fire({
+            icon: "success",
+            title: "Booking success!",
+          });
         }
       } catch (error) {
+        Toast.fire({
+          icon: "error",
+          title: "Seats is unavailable",
+        });
         console.log(error);
       }
     },

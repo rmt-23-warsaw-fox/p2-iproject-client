@@ -10,8 +10,8 @@ export default {
 </script>
 
 <template>
-  <main>
-    <!-- <TheWelcome /> -->
-    <LoginRegister />
-  </main>
+  <!-- <main> -->
+  <!-- <TheWelcome /> -->
+  <LoginRegister />
+  <!-- </main> -->
 </template>

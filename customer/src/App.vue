@@ -23,10 +23,10 @@ export default {
         <RouterLink to="/about">About</RouterLink>
       </nav>
     </div> -->
-    <Navbar />
+    <Navbar style="margin-left: 10px" />
   </header>
 
-  <RouterView />
+  <RouterView style="margin-left: 10px; background-color: gray" />
 </template>
 
 <!-- <style>

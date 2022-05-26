@@ -42,22 +42,17 @@ export default {
         const tokenGoogle = googleUser.xc.id_token;
         const signIn = await this.signInGoogle(tokenGoogle);
         this.$router.push("/");
-        // if (this.isLogin) {
-        // }
       } catch (error) {
         console.log(error);
       }
     },
-  },
-  created() {
-    // console.log(this.$route.name);
   },
 };
 </script>
 
 <template>
   <form
-    class="Login-form"
+    class="Login-form bg-black"
     v-on:submit.prevent="submit"
     action=""
     method=""
@@ -66,11 +61,11 @@ export default {
       align-items: center;
       display: flex;
       justify-content: center;
-      margin-top: 5%;
+      padding: 50px;
     "
   >
-    <div class="card" style="background-color: aquamarine; display: flex">
-      <div class="card-header" style="display: flex; justify-content: center">
+    <div class="card bg-info" style="background-color: aquamarine; width: 50%">
+      <div class="card-header" style="justify-content: center">
         <h1>{{ Title }}</h1>
         <br />
       </div>
@@ -116,26 +111,10 @@ export default {
         />
         <br />
         <br />
-        <!-- <a
-          href="#"
-          v-on:click.prevent="toRegister"
-          style="float: left"
-          v-if="$route.name === 'login'"
-          >Not registered yet?</a
-        >
-        <button
-          v-on:click.prevent="toLogin"
-          style="width: 100%"
-          class="btn btn-outline-secondary"
-          id="loginButton"
-          v-if="$route.name === 'register'"
-        >
-          Login
-        </button> -->
         <button
           v-on:click.prevent="signGoogle"
           style="width: 100%"
-          class="btn btn-outline-secondary"
+          class="btn btn-outline-dark"
           id="loginGoogle"
         >
           Use Google Account

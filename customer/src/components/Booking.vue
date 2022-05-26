@@ -25,8 +25,7 @@ export default {
 </script>
 
 <template>
-  <div class="card">
-    <!-- IMG, HEADER -->
+  <div class="card" style="align-items: center">
     <img
       :src="oneMovie.backdrop_path"
       :alt="oneMovie.title"
@@ -37,7 +36,6 @@ export default {
       <label for="seatNumber">Choose your seat :</label><br />
       <select name="seatNumber" v-model="seatNumber" id="seatNumber">
         <option value="" disabled selected>--- Select category ---</option>
-        <!-- <option value="">COBA</option> -->
         <template v-for="element in row">
           <option v-for="number in 21" :value="`${element.row}-${number}`">
             {{ element.row }}-{{ number }}
