@@ -29,7 +29,8 @@ export const useRadioStore = defineStore({
           this.page = page
         }
 
-        let url = this.baseUrl + `/`
+        let url = this.baseUrl + `/?page=${this.page}&name=${this.searchName}`
+
         if(this.votes === true) {
           url += `&votes=desc`
         }
