@@ -1,7 +1,7 @@
 <script>
 import SearchComp from '../components/SearchComp.vue'
-
 import RoomList from '../components/RoomListComp.vue'
+
 export default {
   name: "HomeView",
   components: {
@@ -13,7 +13,7 @@ export default {
 
 <template>
   <div>
-    <div id="demo" class="carousel slide" data-bs-ride="carousel">
+    <div id="demo" class="carousel slide banner-carousel" data-bs-ride="carousel">
       <div class="carousel-indicators">
         <button
           type="button"
@@ -60,12 +60,8 @@ export default {
       
         <SearchComp />
         <RoomList>
-          <h3>Rekomendasi Apartemen & Rumah</h3>
+          <h3>Accomodations List Available</h3>
         </RoomList>
-
-      <RoomList>
-          <h3>Apartemen Terbaik Saat Ini</h3>
-      </RoomList>
 
       <div class="information bg-white mt-4 shadow">
         <div class="d-flex">

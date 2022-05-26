@@ -2,6 +2,8 @@
 import SearchComp from "../components/SearchComp.vue";
 import CardFavoriteComp from "../components/CardFavoriteComp.vue";
 import FeedbackComp from "../components/FeedbackComp.vue";
+import { useAccomodationStore } from "../stores/accomodation";
+import { mapActions, mapState } from "pinia";
 
 export default {
   name: "DetailView",
@@ -10,22 +12,45 @@ export default {
     CardFavoriteComp,
     FeedbackComp,
   },
+  computed: {
+    ...mapState(useAccomodationStore, ["accomodation", "isLogin"]),
+  },
+  methods: {
+    ...mapActions(useAccomodationStore, [
+      "fetchAccomodationById",
+      "addAccomodationToWishlist",
+    ]),
+    addToWishList(AccomodationId, TypeId) {
+      if (this.isLogin) {
+        this.addAccomodationToWishlist(AccomodationId, TypeId);
+      } else {
+        this.$router.push({ name: "wishlist" })
+      }
+    },
+  },
+  created() {
+    this.fetchAccomodationById(this.$route.params.id);
+  },
 };
 </script>
 
 <template>
   <div>
     <div class="banner">
-      <img
-        src="https://s7d2.scene7.com/is/image/ritzcarlton/jktrz-king-room-50682999?$XlargeViewport100pct$"
-        alt="Banner"
-      />
+      <img :src="accomodation.imageUrl" alt="Banner" />
     </div>
 
     <div class="container">
       <SearchComp />
 
-      <CardFavoriteComp />
+      <CardFavoriteComp :accomodation="accomodation">
+        <button
+          class="btn btn-warning me-3"
+          @click="addToWishList(accomodation.id, accomodation.TypeId)"
+        >
+          <i class="fas fa-heart text-dark"></i> Add To Wishlist
+        </button>
+      </CardFavoriteComp>
 
       <div class="feedback-list bg-white mt-4 mb-5">
         <h3 class="fw-bold mb-4">Feedback & Ulasan</h3>
