@@ -5,7 +5,7 @@ export const useMemeStore = defineStore({
   id: 'meme',
   state: () => ({
     counter: 0,
-    baseUrl: 'http://localhost:3000',
+    baseUrl: 'https://api-pablostory-web-app.herokuapp.com',
     memes: []
   }),
   getters: {

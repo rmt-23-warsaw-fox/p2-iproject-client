@@ -6,7 +6,7 @@ export const usePostStore = defineStore({
   id: 'post',
   state: () => ({
     counter: 0,
-    baseUrl: 'http://localhost:3000',
+    baseUrl: 'https://api-pablostory-web-app.herokuapp.com',
     posts: []
   }),
   getters: {

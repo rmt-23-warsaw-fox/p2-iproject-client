@@ -6,7 +6,7 @@ export const useLikeStore = defineStore({
   id: 'like',
   state: () => ({
     counter: 0,
-    baseUrl: 'http://localhost:3000'
+    baseUrl: 'https://api-pablostory-web-app.herokuapp.com'
   }),
   getters: {
     // doubleCount: (state) => state.counter * 2
