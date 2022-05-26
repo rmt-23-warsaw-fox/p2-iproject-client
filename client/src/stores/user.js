@@ -75,6 +75,26 @@ export const useUserStore = defineStore({
       } catch (err) {
         console.log(err)
       }
+    },
+
+    async googleLogin(object){
+      try {
+        console.log(object)
+        const {data} = await axiosInstance({
+          method : 'POST',
+          url : 'users/google-login',
+          data: object
+        })
+        Swal({
+          title : 'Success',
+          text : data.message,
+          icon : 'success'
+        })
+
+        this.router.push('/myprofile')
+      } catch (err) {
+        console.log(err)
+      }
     }
   }
 })

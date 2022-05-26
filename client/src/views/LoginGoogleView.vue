@@ -6,24 +6,42 @@ export default {
   name: "LoginForm",
   props: [],
   emits: [],
+  data(){
+    return{
+      objUser : {
+        tagline : '',
+        ign : '',
+      }
+    }
+  },
   computed: {
     ...mapWritableState(useUserStore, []),
   },
   methods: {
+    ...mapActions(useUserStore,['googleLogin']),
     async handleClickSignIn() {
-
+      try {
+        const googleUser = await this.$gAuth.signIn()
+        const id_token = googleUser.getAuthResponse().id_token
+        const ignad = this.objUser.ign
+        const taglinez = this.objUser.tagline
+        const data ={
+          token : id_token,
+          ign : ignad,
+          tagline : taglinez
+        }
+        console.log(data)
+        this.googleLogin(data)
+      } catch (err) {
+        console.log(err)
+      }
     },
   },
-  data() {
-    return {
-      objUser: {
-        ign: "",
-        tagline: "",
-      },
-    };
-  },
   setup() {
-
+    const Vue3GoogleOauth = inject("Vue3GoogleOauth");
+    return {
+      Vue3GoogleOauth,
+    };
   },
 };
 </script>

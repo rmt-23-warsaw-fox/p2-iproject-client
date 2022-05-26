@@ -14,8 +14,15 @@ export default {
     goToLoginPage(){
       this.$router.push('/login')
     },
+    logoutGoogle() {
+      var auth2 = gapi.auth2.getAuthInstance();
+      auth2.signOut().then(function () {
+        console.log("User signed out.");
+      });
+    },
     logout(){
       localStorage.removeItem("access_token")
+      this.logoutGoogle()
       this.$router.push('/login')
     },
     goToChat(){
