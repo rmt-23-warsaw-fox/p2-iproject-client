@@ -4,7 +4,7 @@ import axios from "axios"
 export const usePoofStore = defineStore({
   id: "poof",
   state: () => ({
-    URL: "http://localhost:3000",
+    URL: "https://dota2poof.herokuapp.com",
     username: null,
     signinData: {
       email: null,
