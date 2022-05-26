@@ -21,19 +21,19 @@ export default {
       <div class="box">
         <img src="../assets/images/gallery-img-2.jpg" alt="" />
         <span>travel spot</span>
-        <h3>raja ampat</h3>
+        <h3>bali</h3>
       </div>
 
       <div class="box">
         <img src="../assets/images/gallery-img-4.jpg" alt="" />
         <span>travel spot</span>
-        <h3>raja ampat</h3>
+        <h3>gunung bromo</h3>
       </div>
 
       <div class="box">
         <img src="../assets/images/gallery-img-5.jpg" alt="" />
         <span>travel spot</span>
-        <h3>raja ampat</h3>
+        <h3>pulau seribu</h3>
       </div>
 
       <div class="box">

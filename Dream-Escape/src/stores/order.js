@@ -12,7 +12,6 @@ export const useOrderStore = defineStore({
 
         async finishOrder(objOrder, id) {
             try {
-
                 const response = await axios.post(`${baseurl}/destination/${id}/snap`, {
                     fullName: objOrder.fullName,
                     email: objOrder.email,
