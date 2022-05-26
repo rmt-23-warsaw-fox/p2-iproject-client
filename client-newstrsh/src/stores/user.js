@@ -3,13 +3,14 @@ import axios from 'axios';
 
 // http://localhost:3000
 // https://iproject-trshnews.herokuapp.com
-const baseurl = 'http://localhost:3000';
+const baseurl = 'https://iproject-trshnews.herokuapp.com';
 
 export const useUserStore = defineStore({
   id: 'user',
   state: () => ({
     loginStatus: false,
-    premium: localStorage.getItem('premium') === 'true' ? true : false,
+    premium: false,
+    run: false,
   }),
   getters: {},
   actions: {

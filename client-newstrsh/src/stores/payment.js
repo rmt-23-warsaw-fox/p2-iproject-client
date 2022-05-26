@@ -1,15 +1,17 @@
 import { defineStore } from 'pinia';
-import { mapActions } from 'pinia';
+import { mapActions, mapWritableState } from 'pinia';
 import { useUserStore } from '@/stores/user';
 import axios from 'axios';
 
 // http://localhost:3000
 // https://iproject-trshnews.herokuapp.com
-const baseurl = 'http://localhost:3000';
+const baseurl = 'https://iproject-trshnews.herokuapp.com';
 
 export const usePaymentStore = defineStore({
   id: 'payment',
-  state: () => ({}),
+  state: () => ({
+    ...mapWritableState(useUserStore, ['run']),
+  }),
   getters: {},
   actions: {
     ...mapActions(useUserStore, ['loginCheck']),
@@ -39,7 +41,17 @@ export const usePaymentStore = defineStore({
               }
             );
             localStorage.setItem('premium', true);
-            this.$router.push('/');
+            this.run = true;
+
+            // this.$router.push({
+            //   name: '',
+            // });
+
+            this.$router.push({
+              name: 'home',
+            });
+
+            // this.$router.push('/');
           },
           onError: async (result) => {
             console.log(result);

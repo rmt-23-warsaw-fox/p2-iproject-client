@@ -19,8 +19,13 @@ export default {
   methods: {
     ...mapActions(useNewsStore, ['fetchApiData', 'loginCheck']),
   },
-  created() {
-    this.fetchApiData();
+  beforeCreate() {},
+  async created() {
+    try {
+      await this.fetchApiData();
+    } catch (error) {
+      console.log(error);
+    }
   },
 };
 </script>
