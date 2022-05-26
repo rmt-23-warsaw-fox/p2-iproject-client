@@ -16,8 +16,8 @@ export default {
     selectFile() {
       this.selectedSong = this.$refs.music.files;
       this.selectedPicture = this.$refs.picture.files;
-      // console.log(this.selectedSong);
-      // console.log(this.selectedPicture);
+      console.log(this.selectedSong);
+      console.log(this.selectedPicture);
     },
   },
   computed: {
