@@ -6,6 +6,7 @@ import ActorDetail from "../components/actors/ActorDetail.vue"
 import LoginForm from "../views/LoginForm.vue"
 import RegisterForm from "../views/RegisterForm.vue"
 import ProfileForm from "../views/ProfileForm.vue"
+import NotFound from "../views/NotFound.vue"
 
 const router = createRouter({
   history: createWebHistory(),
@@ -44,6 +45,11 @@ const router = createRouter({
       path: "/profile/:id",
       name: "ProfileForm",
       component: ProfileForm,
+    },
+    {
+      path: "/:catchAll(.*)", 
+      name: "NotFound",
+      component: NotFound,
     },
   ]
 })
