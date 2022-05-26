@@ -9,6 +9,7 @@ export const useCounterStore = defineStore({
     symptomps: [],
     ailments: [],
     readDoctors: [],
+    readPatients: [],
     page: 1,
     access_token1: "",
     input: {
@@ -86,19 +87,28 @@ export const useCounterStore = defineStore({
     },
 
     async loginP(payload) {
-      const response = await axios({
-        method: "POST",
-        url: `${BASE_URL}/patient/login`,
-        data: {
-          email: payload.email,
-          password: payload.password,
-        },
-      });
-      console.log(response, "<<< response pada saat login");
-      localStorage.setItem("access_token", response.data.access_token);
-      localStorage.setItem("customer_id", response.data.customer_id);
-      localStorage.setItem("customer_email", response.data.customer_email);
-      this.access_token1 = response.data.access_token;
+      try {
+        const response = await axios({
+          method: "POST",
+          url: `${BASE_URL}/patient/login`,
+          data: {
+            email: payload.email,
+            password: payload.password,
+          },
+        });
+        console.log(response, "<<< response pada saat login");
+        localStorage.setItem("access_token", response.data.access_token);
+        localStorage.setItem("customer_id", response.data.customer_id);
+        localStorage.setItem("customer_email", response.data.customer_email);
+        this.access_token1 = response.data.access_token;
+      } catch (err) {
+        Swal.fire({
+          title: "Error!",
+          text: err.response.data.message,
+          icon: "error",
+          confirmButtonText: "Ok",
+        });
+      }
     },
 
     async getDoctors(input) {
@@ -157,8 +167,8 @@ export const useCounterStore = defineStore({
       }
     },
 
-    async getDoctors2(input) {
-      console.log("getDoctorsStore2");
+    async getPatients(input) {
+      console.log("get patients");
       console.log(input);
       try {
         let condition = {
@@ -174,15 +184,14 @@ export const useCounterStore = defineStore({
 
         const response = await axios({
           method: "GET",
-          url: `${BASE_URL}/patient/myAppointments`,
+          url: `${BASE_URL}/doctor/myAppointments`,
           headers: {
             access_token: this.access_token1,
           },
           params: condition,
         });
-        this.readDoctors = response.data
-        console.log(response.data)
-        
+        this.readPatients = response.data;
+        console.log(response.data);
       } catch (err) {
         Swal.fire({
           title: "Error!",
@@ -190,6 +199,57 @@ export const useCounterStore = defineStore({
           icon: "error",
           confirmButtonText: "Ok",
         });
+      }
+    },
+
+    async loginD(payload) {
+      console.log("payload login D", payload);
+      try {
+        const response = await axios({
+          method: "POST",
+          url: `${BASE_URL}/doctor/login`,
+          data: {
+            email: payload.email,
+            password: payload.password,
+          },
+        });
+        console.log(response, "<<< response pada saat login");
+        localStorage.setItem("access_token", response.data.access_token);
+        localStorage.setItem("doctor_id", response.data.doctor_id);
+        localStorage.setItem("doctor_email", response.data.doctor_email);
+        this.access_token1 = response.data.access_token;
+        console.log(this.access_token1);
+        return true;
+      } catch (err) {
+        console.log(err);
+        Swal.fire({
+          title: "Error!",
+          text: err.response.data.message,
+          icon: "error",
+          confirmButtonText: "Ok",
+        });
+        return false;
+      }
+    },
+
+    async approve(id, patientId) {
+      console.log("approve", id);
+      console.log("patient", patientId);
+      try {
+        const response = await axios({
+          method: "PUT",
+          url: `${BASE_URL}/doctor/approve/${id}`,
+          data: {
+            patientId,
+          },
+          headers: {
+            access_token: this.access_token1,
+            "Content-Type": "application/json",
+          },
+        });
+        console.log(response, "<<<< response");
+      } catch (err) {
+        console.log(err);
       }
     },
 
