@@ -7,15 +7,24 @@ export default {
   methods: {
     ...mapActions(mainStore, ["logOut"]),
     imageSource() {
+      function arrayBufferToBase64(buffer) {
+        var binary = "";
+        var bytes = new Uint8Array(buffer);
+        var len = bytes.byteLength;
+        for (var i = 0; i < len; i++) {
+          binary += String.fromCharCode(bytes[i]);
+        }
+        return btoa(binary);
+      }
       if (this.profilePicture === null) {
         return null;
       } else {
         if (this.profilePicture.imageType === "url") {
-          return this.profilePicture.imageData;
+          const x = this.profilePicture.imageData.data;
+          return `data:${this.profilePicture.imageType};base64,${arrayBufferToBase64(x)})}`;
         } else {
-          return `data:${
-            this.profilePicture.imageType
-          };base64,${this.profilePicture.imageData.data.toString("base64")}`;
+          const x = this.profilePicture.imageData.data;
+          return `data:${this.profilePicture.imageType};base64,${arrayBufferToBase64(x)}`;
         }
       }
     },
@@ -29,12 +38,6 @@ export default {
         ? JSON.parse(localStorage.getItem("User_Profile")).Profile_Picture
         : null,
     };
-  },
-  created() {
-    const x = JSON.parse(localStorage.getItem("User_Profile")).Profile_Picture
-    console.log(x);
-    console.log(x.imageData.data.join(''));
-    console.log(atob(x.imageData.data.join('')));
   },
 };
 </script>

@@ -11,7 +11,35 @@ export default {
     TableComponent,
     Footer,
   },
-  methods: {},
+  methods: {
+    imageSource() {
+      function arrayBufferToBase64(buffer) {
+        var binary = "";
+        var bytes = new Uint8Array(buffer);
+        console.log(bytes);
+        var len = bytes.byteLength;
+        for (var i = 0; i < len; i++) {
+          binary += String.fromCharCode(bytes[i]);
+        }
+        return btoa(binary);
+      }
+      if (this.User_Profile.Profile_Picture === null) {
+        return null;
+      } else {
+        if (this.User_Profile.Profile_Picture.imageType === "url") {
+          const x = this.User_Profile.Profile_Picture.imageData.data;
+          return `data:${
+            this.User_Profile.Profile_Picture.imageType
+          };base64,${arrayBufferToBase64(x)})}`;
+        } else {
+          const x = this.User_Profile.Profile_Picture.imageData.data;
+          return `data:${
+            this.User_Profile.Profile_Picture.imageType
+          };base64,${arrayBufferToBase64(x)}`;
+        }
+      }
+    },
+  },
   data() {
     return {
       activeSection: 1,
@@ -38,15 +66,11 @@ export default {
       >
         <div class="card w-96 bg-base-100 shadow-xl">
           <figure class="px-10 pt-10">
-            <img
-              src="https://api.lorem.space/image/shoes?w=400&h=225"
-              alt="Shoes"
-              class="rounded-full profile-picture"
-            />
+            <img :src="imageSource()" alt="Shoes" class="rounded-full profile-picture" />
           </figure>
           <div class="card-body items-center text-center">
-            <h2 class="card-title">{{User_Profile.displayName}}</h2>
-            <p>{{User_Profile.email}}</p>
+            <h2 class="card-title">{{ User_Profile.displayName }}</h2>
+            <p>{{ User_Profile.email }}</p>
           </div>
         </div>
       </div>
