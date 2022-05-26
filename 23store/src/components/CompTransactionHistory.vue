@@ -4,32 +4,60 @@ export default {
   components: {
     RouterLink,
   },
+  props: ["transaction"],
+  data() {
+    return {
+      detailProduct: `/detail/${this.transaction.detailProduct}`,
+    };
+  },
 };
 </script>
 
 <template>
   <div class="row my-4 bg-light rounded border p-2">
     <h5>
-      Order ID: iProject-32234
+      Order ID: {{ transaction.orderId }}
       <span class="text-success">(ORDER BERHASIL)</span>
     </h5>
     <table class="table">
       <tbody>
         <tr>
-          <th scope="row" style="width: 25%">Nama Produk</th>
+          <th scope="row" style="width: 25%">Total Harga</th>
           <td>
-            <RouterLink to="/detail/apple_iphone_se_(2022)-11410" class=""
-              >Samsung</RouterLink
+            <h5>{{ transaction.priceTotal }}</h5>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row" style="width: 25%">Brand</th>
+          <td>
+            <h5>{{ transaction.brand }}</h5>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row" style="width: 25%">Product</th>
+          <td>
+            <RouterLink v-bind:to="detailProduct">
+              <h5>{{ transaction.productName }}</h5></RouterLink
             >
           </td>
         </tr>
         <tr>
-          <th scope="row" style="width: 25%">Banyak</th>
-          <td>2</td>
+          <th scope="row" style="width: 25%">Harga satuan</th>
+          <td>
+            <h5>{{ transaction.price }}</h5>
+          </td>
         </tr>
         <tr>
-          <th scope="row" style="width: 25%">Total harga</th>
-          <td>Rp. 3.000.000,00</td>
+          <th scope="row" style="width: 25%">Banyak</th>
+          <td>
+            <h5>{{ transaction.amount }}</h5>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row" style="width: 25%">Tanggal transaksi</th>
+          <td>
+            <h5>{{ transaction.createdAt }}</h5>
+          </td>
         </tr>
       </tbody>
     </table>
