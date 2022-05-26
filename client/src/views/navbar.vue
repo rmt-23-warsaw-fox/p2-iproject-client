@@ -31,7 +31,7 @@ export default {
     <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
       <div class="text-sm lg:flex-grow">
         <button
-          @click="home"
+          @click="home(1)"
           class="cursor-pointer block mt-4 lg:inline-block lg:mt-0 text-sky-100 hover:text-white mr-4"
         >
           Home

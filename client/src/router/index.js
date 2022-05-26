@@ -5,6 +5,7 @@ import home from "@/views/home.vue"
 import teams from "@/views/teams.vue"
 import profile from "@/views/profile.vue"
 import teamDetail from "@/views/teamDetail.vue"
+import heroDetail from "@/views/heroDetail.vue"
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -20,7 +21,7 @@ const router = createRouter({
       component: signup,
     },
     {
-      path: "/",
+      path: "/:page",
       name: "home",
       component: home,
     },
@@ -39,6 +40,11 @@ const router = createRouter({
       name: "profile",
       component: profile,
     },
+    {
+      path: "/heroes/:id",
+      name: "heroDetail",
+      component: heroDetail,
+    },
   ],
 })
 
@@ -49,7 +55,8 @@ router.beforeEach((to, from) => {
     (to.name === "home" ||
       to.name === "teams" ||
       to.name === "profile" ||
-      to.name === "teamDetail") &&
+      to.name === "teamDetail" ||
+      to.name === "heroDetail") &&
     !localStorage.getItem("access_token")
   ) {
     return { name: "signin" }
