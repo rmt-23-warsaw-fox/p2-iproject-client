@@ -6,6 +6,7 @@ export const useCustomerStore = defineStore({
   id: "customerStore",
   state: () => ({
     isLoggedIn: false,
+    histories: [],
   }),
   getters: {},
   actions: {
@@ -26,10 +27,27 @@ export const useCustomerStore = defineStore({
         data: {
           email: userRegister.email,
           password: userRegister.password,
-          phoneNumber: userRegister.phoneNumber,
-          address: userRegister.address,
         },
       });
+    },
+    async fetchHistory() {
+      try {
+        const response = await axios({
+          method: "get",
+          url: `${baseUrl}/history`,
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        });
+
+        this.histories = response.data.histories;
+      } catch (error) {
+        console.log(error);
+        this.$toast.error("Something went wrong", {
+          position: "top-right",
+          duration: 3000,
+        });
+      }
     },
   },
 });

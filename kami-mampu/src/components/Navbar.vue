@@ -25,14 +25,27 @@ export default {
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-      <router-link to="/">
-        <div>
-          <a class="navbar-brand">Trivastop</a>
-        </div>
-      </router-link>
+      <div class="icon">
+        <router-link to="/" class="icon">
+          <div>
+            <img src="../assets/exp-share.png" alt="icon" />
+          </div>
+          <div>
+            <a class="navbar-brand">KamiMampu</a>
+          </div>
+        </router-link>
+      </div>
       <div>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <router-link to="/history">
+              <li v-if="isLoggedIn" class="nav-item">
+                <a class="nav-link">Help History</a>
+              </li>
+            </router-link>
+            <li v-if="isLoggedIn" class="nav-item">
+              <a class="nav-link">Order Hands</a>
+            </li>
             <router-link to="/login">
               <li v-if="!isLoggedIn" class="nav-item">
                 <a class="nav-link">Sign In</a>
@@ -60,6 +73,11 @@ export default {
 <style scoped>
 .navbar {
   background-color: #499fa4 !important;
+}
+
+.icon {
+  display: flex;
+  flex-direction: row;
 }
 
 .nav-item {

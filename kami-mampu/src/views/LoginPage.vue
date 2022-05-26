@@ -15,7 +15,7 @@ export default {
     ...mapWritableState(useCustomerStore, ["isLoggedIn"]),
   },
   methods: {
-    ...mapActions(useCustomerStore, ["login", "loginGoogle"]),
+    ...mapActions(useCustomerStore, ["login"]),
 
     async loginButtonHandler() {
       try {
