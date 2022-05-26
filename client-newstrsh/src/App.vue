@@ -1,5 +1,5 @@
 <script>
-// deploy link:
+// deploy link: https://trsher-iproject-vue.web.app
 import { RouterView } from 'vue-router';
 import NavBar from '@/components/NavBar.vue';
 import { mapState, mapActions, mapWritableState } from 'pinia';
