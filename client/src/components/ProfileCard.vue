@@ -32,8 +32,8 @@ export default {
         <img :src="myProfile.smallImage" class="rounded-full" alt="">
       </div>
       <div class="flex-col">
-        <p class="text-sm"> account level {{myProfile.accountLevel}}</p>
-        <p class="text-xl font-bold text-gray-100">{{myProfile.name}} #{{myProfile.tag}}</p>
+        <p class="text-xl"> account level {{myProfile.accountLevel}}</p>
+        <p class="text-4xl font-bold text-gray-100">{{myProfile.name}} #{{myProfile.tag}}</p>
       </div>
     </div>
   </div>
