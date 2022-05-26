@@ -7,7 +7,16 @@ export default {
       ...mapWritableState(useAccomodationStore, ['dataLogin'])
   },
   methods: {
-      ...mapActions(useAccomodationStore, ['login'])
+      ...mapActions(useAccomodationStore, ['login', 'loginWithGoogle']),
+      async getTokenId() {
+      try {
+        const googleUser = await this.$gAuth.signIn();
+        const token = googleUser.getAuthResponse().id_token;
+        this.loginWithGoogle(token);
+      } catch (err) {
+        console.log(err);
+      }
+    },
   },
 };
 </script>
@@ -41,7 +50,7 @@ export default {
           Login
         </button>
         <div class="d-flex justify-content-center mb-3 text-dark">Atau</div>
-        <div class="btn-google">
+        <div class="btn-google" @click="getTokenId">
           <img src="../assets/btn_google_dark_normal_ios.svg" alt="" />
           <div class="btn-google-text">Sign In With Google</div>
           <div class="layer"></div>

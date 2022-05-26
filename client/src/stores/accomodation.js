@@ -212,6 +212,21 @@ export const useAccomodationStore = defineStore("accomodation", {
         });
       }
     },
+    async loginWithGoogle(token) {
+      try {
+        const { data } = await baseUrl.post("/public/user/signin-with-google", {
+          token,
+        });
+        localStorage.setItem("access_token", data.access_token);
+        this.router.push({ path: "/" });
+      } catch ({ response }) {
+        Swal.fire({
+          icon: "error",
+          title: "Login Failed!",
+          text: response.data.message,
+        });
+      }
+    },
     async register() {
       try {
         const { data } = await baseUrl.post("/public/user/register", {

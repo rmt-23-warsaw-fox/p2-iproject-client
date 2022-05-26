@@ -8,7 +8,7 @@ export default {
     RouterLink,
   },
   computed: {
-    ...mapState(useAccomodationStore, ['isLogin'])
+    ...mapState(useAccomodationStore, ["isLogin"]),
   },
   methods: {
     logout() {
@@ -19,6 +19,10 @@ export default {
         showCancelButton: true,
       }).then((result) => {
         if (result.isConfirmed) {
+          const auth2 = gapi.auth2.getAuthInstance();
+          auth2.signOut().then(function () {
+            localStorage.removeItem("access_token");
+          });
           localStorage.removeItem("access_token");
           this.$router.push({ name: "login" });
         }
@@ -42,11 +46,13 @@ export default {
       </button>
       <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav ms-auto me-5">
-          <li class="nav-item"  v-if="isLogin">
+          <li class="nav-item" v-if="isLogin">
             <RouterLink to="/wishlist" class="nav-link">Wishlist</RouterLink>
           </li>
-          <li class="nav-item"  v-if="isLogin">
-            <RouterLink to="/transactions" class="nav-link">Transaction</RouterLink>
+          <li class="nav-item" v-if="isLogin">
+            <RouterLink to="/transactions" class="nav-link"
+              >Transaction</RouterLink
+            >
           </li>
           <li class="nav-item" v-if="!isLogin">
             <RouterLink to="/login" class="nav-link">Login</RouterLink>
@@ -54,7 +60,7 @@ export default {
           <li class="nav-item" v-if="!isLogin">
             <RouterLink to="/register" class="nav-link">Register</RouterLink>
           </li>
-          <li class="nav-item"  v-if="isLogin">
+          <li class="nav-item" v-if="isLogin">
             <a class="nav-link" @click.prevent="logout">Logout</a>
           </li>
         </ul>
@@ -65,5 +71,5 @@ export default {
 <style>
 .nav-item {
   cursor: pointer;
-} 
+}
 </style>
