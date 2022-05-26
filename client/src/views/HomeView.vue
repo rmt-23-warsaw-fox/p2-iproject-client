@@ -5,7 +5,7 @@ import { useCounterStore } from "../stores/counter";
 export default {
   name: "Home Page",
   methods: {
-    ...mapActions(useCounterStore, ["fetchMarkets"]),
+    ...mapActions(useCounterStore, ["fetchMarkets", "logout"]),
     fetchMarketsChild(id) {
       this.fetchMarkets(id);
     },
@@ -14,7 +14,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(useCounterStore, ["markets"]),
+    ...mapState(useCounterStore, ["markets", "loggedIn"]),
   },
   created() {
     this.fetchMarkets();
@@ -23,6 +23,29 @@ export default {
 </script>
 
 <template>
+  <nav
+    class="container d-flex justify-content-between align-items-center mt-3 mb-3"
+  >
+    <router-link
+      to="/"
+      class="h3 mb-0"
+      style="text-decoration: none; color: #2ed14e"
+      >CryptoSphere</router-link
+    >
+    <div>
+      <div v-if="loggedIn" class="d-flex flex-row justify-content-center align-items-center">
+        <router-link to="/watchlist" class="mb-0 mr-3 h5" style="text-decoration:none;color:gray">Watchlist</router-link>
+        <a @click.prevent="logout" class="btn btn-dark pt-1 pb-1 pl-3 pr-3">Logout</a>
+      </div>
+      <router-link
+        v-else
+        to="/login"
+        class="btn btn-dark pt-1 pb-1 pl-3 pr-3"
+        >Login / Signup</router-link
+      >
+      
+    </div>
+  </nav>
   <div class="">
     <div
       id="MainSection"
@@ -61,7 +84,10 @@ export default {
           </td>
           <td>$ {{ coin.current_price.toLocaleString("en-EN") }}</td>
           <td>
-            <p class="mb-1 highlow">{{ coin.high_24h.toLocaleString("en-EN") }} / {{coin.low_24h.toLocaleString("en-EN") }}</p>
+            <p class="mb-1 highlow">
+              {{ coin.high_24h.toLocaleString("en-EN") }} /
+              {{ coin.low_24h.toLocaleString("en-EN") }}
+            </p>
           </td>
           <td v-if="coin.price_change_percentage_24h > 0" class="text-success">
             {{ coin.price_change_percentage_24h.toFixed(2) }}%
