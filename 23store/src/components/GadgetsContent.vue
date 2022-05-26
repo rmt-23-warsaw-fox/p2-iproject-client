@@ -39,9 +39,9 @@ export default {
 </script>
 
 <template>
-  <div class="container mt-5">
+  <div class="container mt-4">
     <div class="row g-5">
-      <div class="col-md-4 col-lg-3 order-md-start">
+      <div class="col-md-4 col-lg-3 order-md-start p-4">
         <h4 class="d-flex justify-content-between align-items-center mb-3">
           <span class="text-primary">Pilih Brand</span>
         </h4>
@@ -72,8 +72,8 @@ export default {
           </div>
         </form>
       </div>
-      <div class="col-md-8 col-lg-9">
-        <h4 class="mb-3">Gadget</h4>
+      <div class="col-md-8 col-lg-9 bg-light rounded border p-4">
+        <h4 class="mb-3 fw-bold">New Gadget For You</h4>
         <div class="row row-cols-1 row-cols-lg-2 row-cols-xxl-3 g-3">
           <CompGadgetContent
             v-for="(gadget, iGadget) in gadgetsStore.gadgets"

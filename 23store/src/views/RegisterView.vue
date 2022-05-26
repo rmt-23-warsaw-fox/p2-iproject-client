@@ -14,6 +14,28 @@ export default {
     ...mapStores(useAuthStore),
   },
   methods: {
+    async checkToken() {
+      try {
+        const { data } = await this.authStore.checkToken();
+        this.authStore.userProfile.id = data.data.id;
+        this.authStore.userProfile.email = data.data.email;
+        this.authStore.userProfile.firstName = data.data.profile.firstName;
+        this.authStore.userProfile.lastName = data.data.profile.lastName;
+        this.authStore.userProfile.phone = data.data.profile.phone;
+        this.authStore.userProfile.address = data.data.profile.address;
+      } catch (error) {
+        localStorage.clear();
+        this.authStore.isLogin = false;
+        this.authStore.userProfile = {
+          id: "",
+          email: "",
+          firstName: "",
+          lastName: "",
+          phone: "",
+          address: "",
+        };
+      }
+    },
     async register() {
       try {
         const { data } = await this.authStore.register();
@@ -32,6 +54,7 @@ export default {
     },
   },
   created() {
+    this.checkToken();
     this.authStore.inputUser = {
       email: "",
       password: "",
@@ -56,6 +79,7 @@ export default {
             <input
               v-model="authStore.inputUser.email"
               type="email"
+              id="email"
               class="form-control"
               placeholder="name@example.com"
             />
@@ -65,6 +89,7 @@ export default {
             <input
               v-model="authStore.inputUser.password"
               type="password"
+              id="password"
               class="form-control"
               placeholder="Password"
             />

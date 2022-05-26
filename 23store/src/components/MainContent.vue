@@ -14,7 +14,6 @@ export default {
       try {
         const data = await this.gadgetsStore.getDashboardGadgets();
         this.gadgetsStore.dashboardGadgets = data.data;
-        console.log(this.gadgetsStore.dashboardGadgets);
       } catch (error) {
         this.$toast.error(error.response.data.message, {
           position: "top-right",
@@ -30,14 +29,13 @@ export default {
 </script>
 
 <template>
-  <div class="container mt-3 text-center">
+  <div class="container mt-5 text-center px-4">
     <div class="row">
       <div class="col-md-12">
-        <h3>Produk baru di toko kami</h3>
+        <h5 class="display-5 fw-bold">Produk baru di 23-Store</h5>
       </div>
     </div>
-    <hr />
-    <div class="row row-cols-1 row-cols-lg-2 g-3">
+    <div class="row row-cols-1 row-cols-lg-2 g-3 mt-1">
       <CompMainContent
         v-for="(gadget, iGadget) in gadgetsStore.dashboardGadgets"
         v-bind:key="iGadget"

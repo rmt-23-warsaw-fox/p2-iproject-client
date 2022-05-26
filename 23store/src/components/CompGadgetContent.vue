@@ -11,7 +11,7 @@ export default {
 
 <template>
   <div class="col text-center">
-    <div class="card bg-light">
+    <div class="card bg-light shadow-sm">
       <div class="card-body">
         <a
           class="text-dark"

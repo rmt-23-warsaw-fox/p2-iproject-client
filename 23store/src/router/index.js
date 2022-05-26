@@ -4,6 +4,9 @@ import LoginView from "../views/LoginView.vue";
 import RegisterView from "../views/RegisterView.vue";
 import GadgetsView from "../views/GadgetsView.vue";
 import DetailView from "../views/DetailView.vue";
+import ProfileView from "../views/ProfileView.vue";
+import TransactionHistoryView from "../views/TransactionHistoryView.vue";
+import NotFound from "../views/NotFound.vue";
 
 const routes = [
   {
@@ -22,6 +25,16 @@ const routes = [
     component: RegisterView,
   },
   {
+    path: "/profile",
+    name: "profile",
+    component: ProfileView,
+  },
+  {
+    path: "/transaction-history",
+    name: "transaction-history",
+    component: TransactionHistoryView,
+  },
+  {
     path: "/gadgets",
     name: "gadgets",
     component: GadgetsView,
@@ -30,6 +43,11 @@ const routes = [
     path: "/detail/:detail",
     name: "detail",
     component: DetailView,
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    name: "not-found",
+    component: NotFound,
   },
 ];
 
@@ -44,6 +62,12 @@ router.beforeEach((to, from, next) => {
       next({ name: "home" });
     } else {
       next();
+    }
+  } else if (to.name === "profile" || to.name === "transaction-history") {
+    if (localStorage.getItem("access_token")) {
+      next();
+    } else {
+      next({ name: "login" });
     }
   } else {
     next();
