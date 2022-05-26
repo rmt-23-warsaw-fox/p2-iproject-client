@@ -138,6 +138,10 @@ export const usePoofStore = defineStore({
       }
     },
 
+    async getUser() {
+      try {
+      } catch (err) {}
+    },
     //! END OF LINE
   },
 })
