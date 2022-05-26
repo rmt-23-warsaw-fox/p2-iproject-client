@@ -14,9 +14,18 @@ const routes = [
   },
   {
     path: "/register",
-    name: "register",
+    name: "Register",
     component: () => import("../views/RegisterView.vue"),
   },
+  {
+    path: "/profile",
+    name: "Profile",
+    component: () => import("../views/ProfileView.vue"),
+  },{
+    path:"/upload",
+    name: "Upload",
+    component: () => import("../views/UploadView.vue")
+  }
 ];
 
 const router = createRouter({
@@ -27,6 +36,8 @@ const router = createRouter({
 router.beforeEach((to, from) => {
   if (localStorage.getItem("access_token") && to.name === "Login") {
     return { name: "Home" };
+  } else if (!localStorage.getItem("access_token") && to.name === "Profile") {
+    return { name: "Login" };
   } else if (!localStorage.getItem("access_token") && to.name === "Home") {
     return { name: "Login" };
   }

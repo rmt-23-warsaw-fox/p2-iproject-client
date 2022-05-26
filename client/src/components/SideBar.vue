@@ -1,6 +1,10 @@
 <script>
+
+import { mapState } from "pinia";
+import { useCounterStore } from "../stores/counter";
+
 export default {
-  props: ["username"],
+  props: ["profile"],
 };
 </script>
 
@@ -12,7 +16,8 @@ export default {
     >
       <div class="img bg-wrap text-center py-4">
         <div class="user-logo">
-          <h3>{{ username }}</h3>
+          <img :src="profile.profilePicture" width="70" height="70" alt="" /><br>
+          <h3>{{ profile.User.userName }}</h3>
         </div>
       </div>
       <hr />

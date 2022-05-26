@@ -1,12 +1,14 @@
 <script>
-export default {};
+export default {
+  props:["content"]
+};
 </script>
 
 <template>
-  <div class="col-12 col-lg-4">
+  <div class="col-12 col-lg-4" v-for="next in content" :key="next.id"> 
     <div class="card box-shadow my-5 mx-auto" style="width: 18rem">
       <img
-        src="https://images.unsplash.com/photo-1517849845537-4d257902454a?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=60&raw_url=true&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8cHJvZmlsZSUyMHBpY3R1cmV8ZW58MHx8MHx8&auto=format&fit=crop&w=500"
+        :src="next.upload"
         class="card-img-top"
         style="border-top-left-radius: 0px; border-top-right-radius: 0px"
         alt="..."
@@ -14,35 +16,7 @@ export default {};
       <div class="card-body">
         <h5 class="card-title">Tulipe</h5>
         <hr />
-        <p class="card-text">Some quick example</p>
-      </div>
-    </div>
-  </div>
-  <div class="col-12 col-lg-4">
-    <div class="card box-shadow my-5 mx-auto" style="width: 18rem">
-      <img
-        src="https://nsm09.casimages.com/img/2021/06/26//21062602461725998217475199.jpg"
-        class="card-img-top"
-        alt="..."
-      />
-      <div class="card-body">
-        <h5 class="card-title">Tulipe</h5>
-        <hr />
-        <p class="card-text">Some quick example</p>
-      </div>
-    </div>
-  </div>
-  <div class="col-12 col-lg-4">
-    <div class="card box-shadow my-5 mx-auto" style="width: 18rem">
-      <img
-        src="https://nsm09.casimages.com/img/2021/06/26//21062602461725998217475199.jpg"
-        class="card-img-top"
-        alt="..."
-      />
-      <div class="card-body">
-        <h5 class="card-title">Tulipe</h5>
-        <hr />
-        <p class="card-text">Some quick example</p>
+        <p class="card-text">{{next.caption}}</p>
       </div>
     </div>
   </div>

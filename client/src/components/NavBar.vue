@@ -1,11 +1,19 @@
 <script>
-export default {};
+export default {
+  props: ["profile"],
+  methods: {
+    signOut() {
+      localStorage.clear();
+      this.$router.push("/");
+    },
+  },
+};
 </script>
 
 <template>
-  <section class="container-sm sticky-top" style="background-color:#808080;">
+  <section class="container-sm sticky-top" style="background-color: #808080">
     <nav class="navbar navbar-expand-lg navbar-light">
-      <a class="navbar-brand" href="#"> 
+      <a class="navbar-brand" href="#">
         <h3>HelloWorld!</h3>
       </a>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -13,8 +21,11 @@ export default {};
           class="navbar-nav ms-auto align-items-center .bg-gradient-light text-white"
         >
           <li class="nav-item">
-            <a class="nav-link mx-2" href="#!"
-              >Home</a
+            <a class="nav-link mx-2" href="#!">Home</a>
+          </li>
+          <li class="nav-item">
+            <router-link to="/upload" class="nav-link mx-2" href="#!"
+              >Upload Content</router-link
             >
           </li>
           <li class="nav-item">
@@ -27,7 +38,7 @@ export default {};
                 aria-expanded="false"
               >
                 <img
-                  src="https://github.com/mdo.png"
+                  :src="profile.profilePicture"
                   alt="mdo"
                   width="50"
                   height="50"
@@ -39,22 +50,26 @@ export default {};
                 aria-labelledby="dropdownUser3"
                 style=""
               >
-                <li><a class="dropdown-item" href="#">Profile</a></li>
+                <li>
+                  <router-link to="/profile" class="dropdown-item" href="#"
+                    >Profile</router-link
+                  >
+                </li>
                 <li>
                   <hr class="dropdown-divider" />
                 </li>
-                <li><a class="dropdown-item" href="#">Sign out</a></li>
+                <li>
+                  <a class="dropdown-item" href="#" @click.prevent="signOut"
+                    >Sign out</a
+                  >
+                </li>
               </ul>
             </div>
           </li>
         </ul>
       </div>
-      <hr>
+      <hr />
     </nav>
   </section>
 </template>
-<style>
-
-</style>
-
-
+<style></style>

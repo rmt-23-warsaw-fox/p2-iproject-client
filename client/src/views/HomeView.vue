@@ -3,7 +3,7 @@ import NavBar from "@/components/NavBar.vue";
 import SideBar from "@/components/SideBar.vue";
 import ContentCard from "@/components/ContentCard.vue";
 import ChatCard from "@/components/ChatCard.vue";
-import { mapState } from "pinia";
+import { mapActions, mapState } from "pinia";
 import { useCounterStore } from "../stores/counter";
 export default {
   components: {
@@ -12,11 +12,21 @@ export default {
     ContentCard,
     ChatCard,
   },
+  methods: {
+    ...mapActions(useCounterStore, ["getProfile"]),
+  },
+  computed: {
+    ...mapState(useCounterStore, ["profile"]),
+  },
+
+  created() {
+    this.getProfile();
+  },
 };
 </script>
 <template>
-  <!-- <NavBar /> -->
-<!-- 
+  <NavBar v-for="data in profile" :key="data.id" :profile="data" />
+
   <div class="container-sm">
     <div class="d-flex justify-content-evenly">
       <div class="d-flex flex-column bd-highlight mb-3">
@@ -24,9 +34,9 @@ export default {
           <ContentCard />
         </div>
       </div>
-      <SideBar :username="username" />
+      <SideBar v-for="data in profile" :key="data.id" :profile="data" />
     </div>
-  </div> -->
+  </div>
   <ChatCard />
 </template>
 
