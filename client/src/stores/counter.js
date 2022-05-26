@@ -81,13 +81,12 @@ export const usePoofStore = defineStore({
 
     async getTeams(page) {
       try {
-        page--
         const { data } = await axios({
           method: "get",
           url: `${this.URL}/dota/teams`,
           headers: {
             access_token: localStorage.getItem("access_token"),
-            page: page,
+            page: page - 1,
           },
         })
         this.teams = data.teams
