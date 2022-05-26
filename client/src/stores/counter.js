@@ -4,7 +4,7 @@ import swal from "sweetalert";
 
 export const useNontonStore = defineStore("nonton", {
   state: () => ({
-    baseUrl: "http://localhost:3001",
+    baseUrl: "https://i-project-server.herokuapp.com",
     user: {},
     dataMovies: [],
     dataDetail: {},
