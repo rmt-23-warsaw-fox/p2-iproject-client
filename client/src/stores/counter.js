@@ -11,7 +11,7 @@ export const useCounterStore = defineStore({
     markets: [],
     coin: {},
     history: [],
-    loggedIn: true,
+    loggedIn: false,
     watchlist: [],
     news: [],
     compareInfo: {},

@@ -74,10 +74,6 @@ export default {
             Don't have an account yet?
             <router-link to="/signup" href="#">Sign Up</router-link>
           </p>
-          <p class="card-subtitle mb-3 text-muted small text-center mb-0">
-            Or Sign In with Google
-          </p>
-          <button class="btn btn-dark">Sign In</button>
         </div>
       </div>
     </div>
