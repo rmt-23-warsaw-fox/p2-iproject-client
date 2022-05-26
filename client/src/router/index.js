@@ -41,7 +41,7 @@ router.beforeEach((to, from) => {
     console.log('to name', to.name);
     return {name: 'home'}
   } else if (localStorage.getItem('access_token') === null && (to.name === 'post' || to.name === 'chat')) {
-    return {name: 'home'}
+    return {name: 'login'}
   } 
 })
 
