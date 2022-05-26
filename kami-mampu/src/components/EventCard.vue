@@ -8,6 +8,11 @@ export default {
     ...mapWritableState(useEventStore, ["events"]),
     ...mapWritableState(useCustomerStore, ["isLoggedIn"]),
   },
+  methods: {
+    dateFormat(date) {
+      return new Date(date).toLocaleString();
+    },
+  },
 };
 </script>
 
@@ -27,7 +32,7 @@ export default {
       <div class="card-body">
         <h3 class="card-title">{{ event.nameOfEvent }}</h3>
         <h5 class="card-text">{{ event.description }}</h5>
-        <h6 class="card-text">{{ event.dateOfEvent }}</h6>
+        <h6 class="card-text">{{ dateFormat(event.dateOfEvent) }}</h6>
         <h4 class="card-text">Received Hands</h4>
         <div class="progress" style="height: 40px; width: 250px">
           <div
@@ -38,7 +43,7 @@ export default {
             aria-valuemin="0"
             aria-valuemax="100"
           >
-            {{ event.percentage }}%
+            {{ event.receivedHands }}/{{ event.requiredHands }}
           </div>
         </div>
         <button v-if="isLoggedIn === true" class="btn">Give a hand!</button>
@@ -67,11 +72,10 @@ export default {
 
 .card-text {
   margin-top: 20px;
-  margin-bottom: 20px;
 }
 
 .btn {
-  margin-top: 20px;
+  margin-top: 30px;
   height: 40px;
   width: 120px;
   background-color: #b5dfd6;

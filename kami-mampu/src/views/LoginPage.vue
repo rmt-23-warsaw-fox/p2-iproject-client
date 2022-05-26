@@ -38,31 +38,6 @@ export default {
         });
       }
     },
-    async loginGoogleButtonHandler() {
-      try {
-        let googleUser = await this.$gAuth.signIn();
-        let token = googleUser.getAuthResponse().id_token;
-        const { data } = await this.loginGoogle(token);
-
-        localStorage.setItem("access_token", data.access_token);
-        localStorage.setItem("CustomerId", data.CustomerId);
-
-        this.isLoggedIn = true;
-
-        this.$router.push("/");
-        this.$router.push("/");
-
-        this.$toast.success("Logged in successfully", {
-          position: "top-rightt",
-          duration: 3000,
-        });
-      } catch (error) {
-        this.$toast.error(error.response.data.message, {
-          position: "top-right",
-          duration: 3000,
-        });
-      }
-    },
   },
 };
 </script>

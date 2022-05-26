@@ -63,11 +63,6 @@ export default {
       <div>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <router-link to="/list">
-              <li class="nav-item">
-                <a class="nav-link">Event List</a>
-              </li>
-            </router-link>
             <router-link to="/history">
               <li v-if="isLoggedIn" class="nav-item">
                 <a class="nav-link">Help History</a>
