@@ -16,13 +16,6 @@ export default {
     }
   },
   watch: {
-    /* inputMsg(newInputMsg,oldInputMsg){
-      if(oldInputMsg.length>0 && newInputMsg.length===0){
-        getMessages().then((messages)=>{
-          this.messages = messages
-        })
-      }
-    }, */
     messages(newMessages,oldMessages){
       getMessages().then((x)=>{
         this.messages = x
