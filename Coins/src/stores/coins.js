@@ -20,7 +20,7 @@ export const useCoinsStore = defineStore({
       try {
         const { data } = await axios({
           method: "POST",
-          url: "http://localhost:5000/users/login",
+          url: "https://iprojecttitamulyana.herokuapp.com/users/login",
           data: {
             email: email,
             password: password,
@@ -54,7 +54,7 @@ export const useCoinsStore = defineStore({
         console.log(token);
         const { data } = await axios({
           method: "PUT",
-          url: "http://localhost:5000/users/login?token=" + token,
+          url: "https://iprojecttitamulyana.herokuapp.com/users/login?token=" + token,
         });
         console.log(data);
         swal.fire({
@@ -79,7 +79,7 @@ export const useCoinsStore = defineStore({
       try {
         const { data } = await axios({
           method: "POST",
-          url: "http://localhost:5000/users/register",
+          url: "https://iprojecttitamulyana.herokuapp.com/users/register",
           data: {
             username: username,
             email: email,
@@ -110,7 +110,7 @@ export const useCoinsStore = defineStore({
       try {
         const { data } = await axios({
           method: "GET",
-          url: "http://localhost:5000/coins",
+          url: "https://iprojecttitamulyana.herokuapp.com/coins",
           headers: {
             access_token: localStorage.getItem("access_token"),
           },
@@ -145,7 +145,7 @@ export const useCoinsStore = defineStore({
       try {
         const { data } = await axios({
           method: "POST",
-          url: "http://localhost:5000/coins/add",
+          url: "https://iprojecttitamulyana.herokuapp.com/coins/add",
           headers: {
             access_token: localStorage.getItem("access_token"),
           },
@@ -179,7 +179,7 @@ export const useCoinsStore = defineStore({
       try {
         const { data } = await axios({
           method: "GET",
-          url: "http://localhost:5000/coins/news",
+          url: "https://iprojecttitamulyana.herokuapp.com/coins/news",
           headers: {
             access_token: localStorage.getItem("access_token"),
           },
@@ -202,7 +202,7 @@ export const useCoinsStore = defineStore({
       try {
         const { data } = await axios({
           method: "GET",
-          url: "http://localhost:5000/coins/mycoins",
+          url: "https://iprojecttitamulyana.herokuapp.com/coins/mycoins",
           headers: {
             access_token: localStorage.getItem("access_token"),
           },
@@ -223,7 +223,7 @@ export const useCoinsStore = defineStore({
       try {
         const { data } = await axios({
           method: "DELETE",
-          url: "http://localhost:5000/coins/mycoins",
+          url: "https://iprojecttitamulyana.herokuapp.com/coins/mycoins",
           headers: {
             access_token: localStorage.getItem("access_token"),
           },
@@ -253,7 +253,7 @@ export const useCoinsStore = defineStore({
       try {
         const { data } = await axios({
           method: "PUT",
-          url: "http://localhost:5000/coins/mycoins",
+          url: "https://iprojecttitamulyana.herokuapp.com/coins/mycoins",
           headers: {
             access_token: localStorage.getItem("access_token"),
           },
