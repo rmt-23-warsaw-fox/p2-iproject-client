@@ -7,9 +7,9 @@ export default {
 </script>
 
 <template>
-  <div class="card w-50 bg-base-100 shadow-xl image-full">
+  <div class="card w-60 bg-base-100 shadow-xl image-full">
     <figure>
-      <img :src="music.currentSong.imageUrl" alt="Song Cover" />
+      <img :src="music.currentSong.imageUrl" alt="Song Cover" class="w-60"/>
     </figure>
     <div class="card-body">
       <h2 class="card-title">{{ music.currentSong.title }}</h2>

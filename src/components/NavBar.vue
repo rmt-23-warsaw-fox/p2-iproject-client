@@ -21,7 +21,7 @@ export default {
       } else {
         if (this.profilePicture.imageType === "url") {
           const x = this.profilePicture.imageData.data;
-          return `data:${this.profilePicture.imageType};base64,${arrayBufferToBase64(x)})}`;
+          return `${arrayBufferToBase64(x)}`;
         } else {
           const x = this.profilePicture.imageData.data;
           return `data:${this.profilePicture.imageType};base64,${arrayBufferToBase64(x)}`;
