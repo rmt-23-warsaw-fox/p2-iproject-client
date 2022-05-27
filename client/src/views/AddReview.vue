@@ -1,6 +1,22 @@
 <script>
+import { mapActions, mapState, mapWritableState } from "pinia";
+import { useNontonStore } from "../stores/counter";
+
 export default {
   name: "AddReview",
+  computed: {
+    ...mapState(useNontonStore, ["dataDetail"]),
+    ...mapWritableState(useNontonStore, ["toPostReview"]),
+  },
+  methods: {
+    ...mapActions(useNontonStore, ["postReview"]),
+    postClick(MovieId) {
+      this.postReview(MovieId);
+    },
+  },
+  created() {
+    this.dataDetail.id;
+  },
 };
 </script>
 
@@ -10,57 +26,27 @@ export default {
     style="margin-left: 25vw; margin-top: 5%"
   >
     <div class="card-body">
-      <h2 style="text-align: center">Welcome to our app!</h2>
-      <h4 style="text-align: center">Please Register</h4>
+      <h2 style="text-align: center">Add a review</h2>
+      <p style="text-align: center">For movie: {{ dataDetail.title }}</p>
       <form>
         <div class="mb-3">
-          <label for="fullname" class="form-label">Full Name</label>
-          <input
-            type="text"
+          <label for="review" class="form-label">Your review here</label>
+          <textarea
             class="form-control"
-            id="fullname"
-            aria-describedby="emailHelp"
-          />
-          <div id="emailHelp" class="form-text" style="color: white">
-            Format: (First Name) (Last Name)
-          </div>
-        </div>
-        <div class="mb-3">
-          <label for="exampleInputEmail1" class="form-label"
-            >Email address</label
-          >
-          <input
-            type="email"
-            class="form-control"
-            id="exampleInputEmail1"
-            aria-describedby="emailHelp"
-          />
-          <div id="emailHelp" class="form-text" style="color: white">
-            We'll never share your email with anyone else.
-          </div>
-        </div>
-        <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">Password</label>
-          <input
-            type="password"
-            class="form-control"
-            id="exampleInputPassword1"
-          />
+            id="review"
+            rows="3"
+            v-model="toPostReview.review"
+          ></textarea>
         </div>
         <button
           type="submit"
           class="btn btn-primary"
           style="margin-left: 45%"
-          @click.prevent="registerClick"
+          @click.prevent="postClick(this.dataDetail.id)"
         >
-          Register Me
+          Post a review
         </button>
       </form>
-      <br />
-      <p style="text-align: center">
-        Have an account?
-        <router-link to="/login" style="color: greenyellow">Log In</router-link>
-      </p>
     </div>
   </div>
 </template>

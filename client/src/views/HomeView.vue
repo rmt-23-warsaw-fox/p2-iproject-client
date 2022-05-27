@@ -5,9 +5,14 @@ import { useNontonStore } from "../stores/counter";
 export default {
   name: "HomeView",
   methods: {
-    ...mapActions(useNontonStore, ["fetchTrending", "movieDetail"]),
+    ...mapActions(useNontonStore, [
+      "fetchTrending",
+      "movieDetail",
+      "generateQR",
+    ]),
     detailClick(MovieId) {
       this.movieDetail(MovieId);
+      this.generateQR(MovieId);
       this.$router.push(`/movie-detail/${MovieId}`);
     },
   },
