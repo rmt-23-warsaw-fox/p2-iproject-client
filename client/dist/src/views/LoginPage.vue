@@ -2,27 +2,13 @@
 import axiosInstance from "../api";
 import { useInventoryStore } from "../stores/inventory";
 import { mapWritableState } from "pinia";
-import { inject } from "vue";
 
 export default {
   name: "LoginPage",
-  props: {
-    msg: String,
-  },
-
   data() {
     return {
       email: "",
       password: "",
-      user: "",
-    };
-  },
-
-  setup() {
-    const Vue3GoogleOauth = inject("Vue3GoogleOauth");
-
-    return {
-      Vue3GoogleOauth,
     };
   },
 
@@ -43,24 +29,6 @@ export default {
         this.isLogin = true;
       } catch (error) {
         console.log(error);
-      }
-    },
-
-    async handleSignIn() {
-      try {
-        console.log("oke");
-        const googleUser = await this.$gAuth.signIn();
-
-        // console.log(this.$gAuth.signIn());
-
-        this.user = googleUser.getBasicProfile().getEmail();
-
-        if (!googleUser) {
-          return null;
-        }
-      } catch (error) {
-        console.log(error);
-        return null;
       }
     },
   },
@@ -116,17 +84,14 @@ export default {
           <div class="sideline">OR</div>
           <div>
             <!-- <a href="/auth/facebook"> -->
-            <a>
+            <a href="">
               <button type="submit" class="btn btn-primary w-100 font-weight-bold mt-2">
                 <i class="fa fa-facebook" aria-hidden="true"></i> Login With Facebook
               </button>
             </a>
           </div>
           <div>
-            <!-- <h1>{{ msg }}</h1>
-            <h1>IS initiate: {{ Vue3GoogleOauth.isInit }}</h1>
-            <h1>IS AuthZ: {{ Vue3GoogleOauth.isAuthorized }}</h1> -->
-            <a @click="handleSignIn">
+            <a href="">
               <button type="submit" class="btn btn-primary w-100 font-weight-bold mt-2">
                 <i class="fas fa-google" aria-hidden="true"></i>
                 Login With Google
