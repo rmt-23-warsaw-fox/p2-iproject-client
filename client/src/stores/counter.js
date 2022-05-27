@@ -5,10 +5,13 @@ import swal from "sweetalert";
 export const useNontonStore = defineStore("nonton", {
   state: () => ({
     baseUrl: "https://i-project-server.herokuapp.com",
+    // baseUrl: "http://localhost:3001",
     user: {},
     dataMovies: [],
     dataDetail: {},
+    toPostReview: {},
     isLoggedIn: false,
+    qrCode: "",
   }),
   getters: {},
   actions: {
@@ -82,6 +85,18 @@ export const useNontonStore = defineStore("nonton", {
       }
     },
 
+    async generateQR(MovieId) {
+      try {
+        const { data } = await axios({
+          method: "get",
+          url: `https://api.happi.dev/v1/qrcode?data=http://localhost:3000/movie-detail/${MovieId}&width=300&dots=000000&bg=FFFFFF&apikey=214863U44LabmbxDJcynHBF5VNV6Q57JCxcmqe8NzVzcYXMSZBiP1WUx`,
+        });
+        this.qrCode = data.qrcode;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
     async movieDetail(MovieId) {
       try {
         const { data } = await axios({
@@ -90,7 +105,6 @@ export const useNontonStore = defineStore("nonton", {
         });
         this.dataDetail = data;
         console.log(data);
-        this.router.push(`/movie-detail/${MovieId}`);
       } catch (error) {
         console.log(error);
       }
@@ -98,7 +112,18 @@ export const useNontonStore = defineStore("nonton", {
 
     async postReview(MovieId) {
       try {
-        console.log(MovieId);
+        const { data } = await axios({
+          method: "post",
+          url: this.baseUrl + `/reviews/add/${MovieId}`,
+          headers: {
+            access_token: localStorage.access_token,
+          },
+          data: {
+            review: this.toPostReview.review,
+          },
+        });
+        console.log(data);
+        this.router.push("/");
       } catch (error) {
         console.log(error);
       }
